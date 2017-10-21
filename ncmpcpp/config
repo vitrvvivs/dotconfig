@@ -1,0 +1,62 @@
+ncmpcpp_directory = ~/.config/ncmpcpp
+
+# Visualizer
+visualizer_fifo_path = "~/.config/mpd/fifo"
+visualizer_output_name = "my_fifo"
+visualizer_sync_interval = "30"
+visualizer_in_stereo = "yes"
+visualizer_type = "spectrum"
+visualizer_look = "●▋"
+
+# Playlist
+#song_columns_list_format = "$L(10)[white]{l} (20)[red]{a} (30)[green]{b}$R(20)[cyan]{t}"
+#now_playing_prefix = "$b"
+#now_playing_subfix = "/$b"
+playlist_display_mode = "columns" (classic/columns)
+autocenter_mode = "no"
+centered_cursor = "no"
+cyclic_scrolling = "yes"
+mouse_list_scroll_whole_page = "no"
+#song_list_format = " $0$8%l |{$5 %a $8|$6 %b $8-$7 %t$8 $R} $4%f$0"
+
+song_library_format = "{%n > }{%t}|{%f}"
+
+# Bars
+progressbar_look = "▀▀ "
+#song_status_format = "{%a - }{%t - }{%b}"
+titles_visibility = "no"
+header_visibility = "no"
+statusbar_visibility = "no"
+
+# Browser
+browser_playlist_prefix = "$2plist »$9 "
+browser_display_mode = "classic" (classic/columns)
+
+# Colors
+discard_colors_if_item_is_selected = "yes"
+header_window_color = "white"
+volume_color = "cyan"
+state_line_color = "white"
+state_flags_color = "green"
+main_window_color = "blue"
+color1 = "cyan"
+color2 = "white"
+main_window_highlight_color = "white"
+progressbar_color = "black"
+progressbar_elapsed_color = "blue"
+statusbar_color = "white"
+active_column_color = "red"
+visualizer_color = "cyan"
+
+# Others
+song_window_title_format = "MPD: {%a > }{%t}{ [%b{ Disc %d}]}|{%f}"
+search_engine_display_mode = "columns" (classic/columns)
+follow_now_playing_lyrics = "yes"
+
+song_list_format = " $1%a $5//$8 %t"
+song_status_format = " $2%a $4⟫$3⟫ $8%t $4⟫$3⟫ $5%b "
+
+now_playing_prefix = "$b$2⟩$3⟩ "
+now_playing_suffix = "$8$/b"
+
+song_columns_list_format = "(5)[]{} (22)[red]{a} (20)[white]{t|f} (49)[blue]{b} (4)[red]{l}"

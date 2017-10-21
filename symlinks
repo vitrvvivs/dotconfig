@@ -1,0 +1,5 @@
+.bash_profile -> $HOME/.config/bash_profile
+.gitconfig -> $HOME/.config/gitconfig
+.profile -> $HOME/.config/profile
+.xinitrc -> $HOME/.config/xinitrc
+.zshenv -> $HOME/.config/zshenv

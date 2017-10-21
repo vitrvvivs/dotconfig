@@ -1,0 +1,29 @@
+search .conf
+search .con
+search zsh
+search profile
+help
+mkdir downloads
+mkdir images
+mkdir documents
+mkdir stacks
+search mod
+search .config
+search ssh
+rename id_rsa-matt
+rename id_rsa-vitruvius
+rename id_rsa-gekkey
+rename .bash_history
+rename .viminfo
+rename .Xauthority
+open_with 
+rename .zshenv
+rename .profile
+default_linemode 
+rename .xinitrc
+rename .bash_profile
+rename .gitconfig
+touch symlinks
+
+delete 
+wq
