@@ -1,0 +1,38 @@
+" Plugins
+" vim-plug
+" vim-jedi
+" vim-youcompleteme-git
+call plug#begin('~/.config/vim/plugged')
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'pangloss/vim-javascript'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+call plug#end()
+
+" Vim
+set number
+set hidden
+
+" YCM
+let g:ycm_global_ycm_extra_conf = '/usr/share/vim/vimfiles/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_server_python_interpreter = '/usr/bin/python2'
+let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_goto_buffer_command = 'same-buffer'
+
+" gitgutter
+let g:updatetime = 250
+let g:gitgutter_eager = 1
+let g:gitgutter_realtime = 1
+
+" airline
+let g:airline_powerline_fonts = 1
+
+" Keybinds
+map <F1> <Esc>
+imap <F1> <Esc>
+nmap ; :
+nnoremap * :YcmCompleter GoTo<CR>

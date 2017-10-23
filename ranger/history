@@ -24,6 +24,11 @@ rename .xinitrc
 rename .bash_profile
 rename .gitconfig
 touch symlinks
-
-delete 
 wq
+
+rename ssh_config
+rename .env
+rename bspwm-configure-desktops
+delete 
+rename restart-sxhkd
+search yaou

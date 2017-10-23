@@ -1,0 +1,13 @@
+Include ~/.ssh/config_private
+
+Host firewall
+	hostname 24.237.218.121
+	user	gekkey
+	IdentityFile ~/.ssh/id_rsa-gekkey
+	IdentitiesOnly yes
+
+Host celtra.github.com
+	HostName github.com
+	User git
+	IdentityFile ~/.ssh/id_rsa-matt
+	IdentitiesOnly yes

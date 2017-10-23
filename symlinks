@@ -1,5 +1,9 @@
-.bash_profile -> $HOME/.config/bash_profile
-.gitconfig -> $HOME/.config/gitconfig
-.profile -> $HOME/.config/profile
-.xinitrc -> $HOME/.config/xinitrc
-.zshenv -> $HOME/.config/zshenv
+$HOME/.bash_profile -> bash_profile
+$HOME/.gitconfig -> gitconfig
+$HOME/.profile -> profile
+$HOME/.xinitrc -> xinitrc
+$HOME/.zshenv -> zsh/.zshenv
+$HOME/.env -> env
+$HOME/.ssh/config -> ssh_config
+$HOME/.vim -> vim
+$HOME/.vimrc -> vim/vimrc

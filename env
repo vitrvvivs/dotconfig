@@ -1,6 +1,13 @@
 # compatible with all shells
+# run at the start of each
+#
 export TERM="xterm-256color"
 export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$HOME/bin:$PATH"
 export EDITOR="vim"
 export PAGER="less"
+
+# Aliases
+alias ls='ls --color=tty'
+alias lsblk="lsblk --output NAME,SIZE,LABEL,FSTYPE,UUID"
+alias nw="urxvt &"

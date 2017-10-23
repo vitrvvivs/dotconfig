@@ -223,7 +223,7 @@ label-volume-foreground = ${colors.foreground}
 
 format-muted-prefix = " "
 format-muted-foreground = ${colors.foreground-alt}
-label-muted = "─────────────────────────────────"
+label-muted = "X"
 
 bar-volume-width = 33
 bar-volume-foreground = ${colors.foreground}

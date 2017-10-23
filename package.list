@@ -49,6 +49,7 @@ core/nano 2.8.7-1 (base)
 core/netctl 1.14-1 (base)
 extra/networkmanager 1.8.4-1 (gnome)
 core/openssh 7.6p1-1
+community/otf-font-awesome 4.7.0-5
 local/package-query 1.9-2
 core/pacman 5.0.2-2 (base base-devel)
 extra/parted 3.2-6
