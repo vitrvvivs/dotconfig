@@ -14,7 +14,7 @@ HYPHEN_INSENSITIVE="true"
 unsetopt autocd
 setopt extended_glob
 
-autoload -Uz compinit promptinit
+autoload -Uz compinit promptinit vsc_info zmv
 compinit
 promptinit
 
@@ -36,6 +36,9 @@ if [[ $(tty) == /dev/tty* ]]; then
 	POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=($POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS time battery)
 	POWERLEVEL9K_BATTERY_ICON="B" # fucks up location of first character when an icon is double width in definition (default power icon), but single width in practice (placeholder char)
 fi
+# vcs is hella slow on sshfs; quick way to disable it
+function disable-vcs-line() { POWERLEVEL9K_LEFT_PROMPT_ELEMENTS[(i)vcs]=(); }
+function enable-vcs-line() { disable-vcs-line; POWERLEVEL9K_LEFT_PROMPT_ELEMENTS+=(vcs); }
 
 antigen theme "$ZDOTDIR/themes/powerlevel9k"
 antigen apply

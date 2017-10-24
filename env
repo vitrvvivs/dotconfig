@@ -6,6 +6,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$HOME/bin:$PATH"
 export EDITOR="vim"
 export PAGER="less"
+export PYTHONPATH=".:$PYTHONPATH"
 
 # Aliases
 alias ls='ls --color=tty'
