@@ -1,4 +1,5 @@
-*.log
+*log
+*.sw[po]
 /vim/plugged
 /configstore
 /zsh/.zcompdump
@@ -7,3 +8,8 @@
 /dconf
 /pulse
 /ranger/bookmarks
+/ranger/history
+/gtk-*
+/mpd/*
+!/mpd/mpd.conf
+/pavucontrol.ini

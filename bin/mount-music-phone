@@ -1,0 +1,7 @@
+TARGET_DIR=~/music/phone
+if ! mountpoint -q $TARGET_DIR; then
+	fusermount -u $TARGET_DIR
+	jmtpfs $TARGET_DIR
+	ls $TARGET_DIR &>/dev/null
+	ls $TARGET_DIR/Internal\ Storage &>/dev/null
+fi

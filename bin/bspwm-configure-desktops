@@ -1,0 +1,8 @@
+#!/bin/bash
+i=1
+n=`bspc query -M | wc -l`
+per=$(( 10 / n ))
+for m in `bspc query -M`; do
+	bspc monitor $m -d `seq -s ' ' $i $(( i + per - 1 ))`
+	(( i += per ))
+done

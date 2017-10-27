@@ -11,3 +11,7 @@ Host celtra.github.com
 	User git
 	IdentityFile ~/.ssh/id_rsa-matt
 	IdentitiesOnly yes
+
+Host github.com
+	IdentityFile ~/.ssh/id_rsa-gekkey
+

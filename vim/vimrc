@@ -30,6 +30,7 @@ let g:gitgutter_realtime = 1
 
 " airline
 let g:airline_powerline_fonts = 1
+let g:airline_exclude_preview = 1
 
 " Keybinds
 map <F1> <Esc>

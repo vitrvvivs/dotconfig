@@ -1,0 +1,2 @@
+#!/bin/bash
+[ ! -z "$1" ] && printf '\e]710;%s\007' "xft:Inconsolata For Powerline:pixelsize=$1"

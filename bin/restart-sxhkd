@@ -1,0 +1,2 @@
+killall sxhkd &>/dev/null
+(cd ~ && .Xauthority DISPLAY=:0 sxhkd &>/dev/null) &

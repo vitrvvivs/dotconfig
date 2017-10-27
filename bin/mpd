@@ -1,0 +1,10 @@
+#!/usr/bin/zsh
+MPD="/usr/bin/mpd"
+
+[ ! -z "$1" ] && $MPD $1 && exit $?
+
+if [ ! -s ~/.config/mpd/pid ]; then 
+	$MPD ~/.config/mpd/mpd.conf
+else
+	$MPD
+fi

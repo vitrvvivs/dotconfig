@@ -1,0 +1,17 @@
+#!/bin/bash
+# provides some handy defaults for xrandr
+primary=`xrandr | grep 'connected primary' | awk '{print $1}'`
+
+if [ -z "$1" ]; then
+	echo "must give monitor to connect"
+	exit 1
+fi
+new=$1
+
+if [ ! -z "$2" ]; then
+	[ -z "$3" ] && 3=primary # replace "--right-of" with "--right-of primary
+	loc=$(echo "$2 $3" | sed "s/primary/${primary}/") # replace "--right-of primary" with "--right-of LVDS-1"
+fi
+shift; shift; shift;
+
+echo xrandr --auto --output $new $loc $@

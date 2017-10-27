@@ -12,3 +12,13 @@ export PYTHONPATH=".:$PYTHONPATH"
 alias ls='ls --color=tty'
 alias lsblk="lsblk --output NAME,SIZE,LABEL,FSTYPE,UUID"
 alias nw="urxvt &"
+
+# Functions
+function git-ignore() { 
+	topdir="$(git rev-parse --show-toplevel)"
+	target=$(pwd)/$*
+	if [ -e $1 ] 2>/dev/null && target=$(realpath $*)
+	echo "$(echo $target | sed "s;$topdir;;g")" >> "$topdir/.gitignore"
+}
+alias gi="git-ignore"
+alias ga="git add -A"

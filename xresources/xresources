@@ -8,15 +8,15 @@
 ! vapour
 
 ! Font
-*.font:	xft:Inconsolata for Powerline:pixelsize=12,xft:WenQuanYi Micro Hei Mono:antialias=true
-
+*.font:	xft:Inconsolata For Powerline:pixelsize=12,xft:InconsolataGo Nerd Font Mono:pixelsize=20,xft:WenQuanYi Micro Hei Mono:antialias=true
 
 ! URXVT
 ! font
-URxvt.letterSpace:		1.5
 Xft.antialias:   		true
 Xft.hinting:     		true
-Xft.hintstyle:    		hintslight
+Xft.hintstyle:    		hintmedium
+Xft.rgba:			rgb
+URxvt.letterSpace:		1
 
 ! appearance
 URxvt.internalBorder: 		1

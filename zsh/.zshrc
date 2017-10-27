@@ -1,7 +1,6 @@
 # Import
 source "$HOME/.env"
 ADOTDIR="$ZDOTDIR/antigen"
-source "$ADOTDIR/antigen.zsh"
 
 # ZSH itself
 HISTFILE=~/.bash_history
@@ -18,16 +17,8 @@ autoload -Uz compinit promptinit vsc_info zmv
 compinit
 promptinit
 
-## Antigen
-# Plugins
-antigen bundle vi-mode
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zaw
-
 # Theme
-POWERLEVEL9K_MODE='powerline'
+POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv virtualenv aws vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs vi_mode)
 # Theme on tty
@@ -40,7 +31,15 @@ fi
 function disable-vcs-line() { POWERLEVEL9K_LEFT_PROMPT_ELEMENTS[(i)vcs]=(); }
 function enable-vcs-line() { disable-vcs-line; POWERLEVEL9K_LEFT_PROMPT_ELEMENTS+=(vcs); }
 
-antigen theme "$ZDOTDIR/themes/powerlevel9k"
+## Antigen
+source "$ADOTDIR/antigen.zsh"
+# Plugins
+antigen bundle vi-mode
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zaw
+antigen theme bhilburn/powerlevel9k
 antigen apply
 
 # Key Commands
@@ -51,11 +50,14 @@ bindkey -M viins '^R' zaw-history
 bindkey -M viins '^F' zaw-history
 bindkey -M filterselect '^R' down-line-or-history
 bindkey -M filterselect '^F' up-line-or-history
+bindkey -M filterselect '' send-break
+bindkey '' autosuggest-execute
+
 # tty
 bindkey "[1~"		beginning-of-line
 bindkey "[4~"		end-of-line
 bindkey "[3~"		delete-char
- 
+
 # zaw-history
 zstyle ':filter-select:highlight' matched fg=green,bold
 zstyle ':filter-select' max-lines 20 # use 10 lines for filter-select

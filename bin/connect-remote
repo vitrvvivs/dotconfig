@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -e
+REMOTE=$1
+SSH_DIR="$HOME/.ssh"
+MOUNT_DIR="$HOME/remote"
+REMOTE_DIR=$MOUNT_DIR/$REMOTE
+CONTROL_PATH=$SSH_DIR/$REMOTE.conn
+FUNCTION_PATH=$SSH_DIR/$REMOTE.func
+SSH_COMMAND="ssh -o ControlMaster=auto -o ControlPath=$CONTROL_PATH -o ServerAliveInterval=120"
+SSHFS_OPTS="reconnect,cache=yes,dir_cache=yes,kernel_cache,cache_timeout=86400,attr_timeout=86400,entry_timeout=86400"
+
+[[ -z $REMOTE ]] && echo "no host given" && exit 1
+
+if [[ -f $SSH_DIR/$REMOTE.pid ]]; then
+	xargs kill < "$SSH_DIR/$REMOTE.pid" &>/dev/null || true
+fi
+ssh -M -o ControlPath="$CONTROL_PATH" "$REMOTE" sleep infinity &>/dev/null &
+echo "$!" > "$SSH_DIR/$REMOTE.pid"
+
+mkdir -p "$REMOTE_DIR"
+fusermount3 -u "$REMOTE_DIR" &> /dev/null || true
+sshfs "$REMOTE:." "$REMOTE_DIR" -o ssh_command="$SSH_COMMAND,$SSHFS_OPTS"
+
+cat > "$FUNCTION_PATH" << EOF
+#!/usr/bin/env bash
+function _in_$REMOTE() { # turns PWD into remote dir or None
+	[[ ! \$(pwd) =~ "$REMOTE_DIR" ]] && return 1
+	[[ \$1 == "-q" ]] && return 0
+	pwd | sed 's;$REMOTE_DIR/\?;;'
+}
+function $REMOTE() {
+	if _in_$REMOTE -q; then
+		$SSH_COMMAND "$REMOTE" cd "\$(_in_$REMOTE) && \$*"
+	else
+		$SSH_COMMAND "$REMOTE" "\$@"
+	fi
+}
+function git() {
+	# small hack to speed up git from 20 minutes to 5 seconds;
+	# still need to remove git section from powerline to be usable
+	if _in_$REMOTE -q; then
+		$SSH_COMMAND "$REMOTE" cd "\$(_in_$REMOTE)" && git "\$*"
+	else
+		/usr/bin/git "\$@"
+	fi
+}
+function disconnect-$REMOTE() {
+	kill "\$(cat $SSH_DIR/$REMOTE.pid)"
+	fusermount3 -u $REMOTE_DIR
+}
+EOF
+echo "now run \`source $FUNCTION_PATH\`"

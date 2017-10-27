@@ -1,0 +1,3 @@
+if ! mountpoint -q ~/music/ftp; then
+	curlftpfs ftp://firewall/upload/music/ ~/music/ftp
+fi
