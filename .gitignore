@@ -13,3 +13,12 @@
 /mpd/*
 !/mpd/mpd.conf
 /pavucontrol.ini
+/Franz
+/autostart
+/gconf
+/mimeapps.list
+/google-chrome
+/vim/view
+/composer
+/menus
+/shell_functions/*

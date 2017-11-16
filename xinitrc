@@ -10,8 +10,8 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Button Mapping En
 
 # Assume DP-1 is the one at work
 if extant-monitor DP-1; then
-	xrandr --output eDP-1 --pos 0x720
 	xrandr --output DP-1 --auto --right-of eDP-1 --rotate left
+	xrandr --output eDP-1 --pos 0x720
 fi
 
 # Load xresources

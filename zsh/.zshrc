@@ -18,7 +18,10 @@ compinit
 promptinit
 
 # Theme
+# Due to antigen's caching, 'source antigen.zsh' runs the later bundle commands; the theme needs to be configured before it's started
 POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='↑'
+POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='↓'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv virtualenv aws vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs vi_mode)
 # Theme on tty

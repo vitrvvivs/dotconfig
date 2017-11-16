@@ -1,5 +1,5 @@
 # compatible with all shells
-# run at the start of each
+# sourced by each *rc
 #
 export TERM="xterm-256color"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -9,16 +9,10 @@ export PAGER="less"
 export PYTHONPATH=".:$PYTHONPATH"
 
 # Aliases
-alias ls='ls --color=tty'
+alias ls="ls --color=tty --group-directories-first --hide='*.pyc'"
 alias lsblk="lsblk --output NAME,SIZE,LABEL,FSTYPE,UUID"
+alias gitignore="git-ignore"
 alias nw="urxvt &"
 
 # Functions
-function git-ignore() { 
-	topdir="$(git rev-parse --show-toplevel)"
-	target=$(pwd)/$*
-	if [ -e $1 ] 2>/dev/null && target=$(realpath $*)
-	echo "$(echo $target | sed "s;$topdir;;g")" >> "$topdir/.gitignore"
-}
-alias gi="git-ignore"
-alias ga="git add -A"
+source $HOME/.config/shell_functions/*

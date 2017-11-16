@@ -14,4 +14,4 @@ if [ ! -z "$2" ]; then
 fi
 shift; shift; shift;
 
-echo xrandr --auto --output $new $loc $@
+xrandr --output $new --auto $loc $@

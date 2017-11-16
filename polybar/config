@@ -16,7 +16,14 @@ red = 		${xrdb:color1}
 green = 	${xrdb:color2}
 yellow = 	${xrdb:color3}
 blue = 		${xrdb:color4}
+purple =	${xrdb:color5}
 cyan =		${xrdb:color6}
+black =		${xrdb:color0}
+grey0 =		${xrdb:color18}
+grey1 =		${xrdb:color19}
+grey2 =		${xrdb:color20}
+grey3 =		${xrdb:color21}
+white =		${xrdb:color15}
 
 ok =		${self.green}
 warn =		${self.yellow}
@@ -29,12 +36,11 @@ margin-bottom = 0
 
 [bar/topbar]
 monitor = ${env:MONITOR:LVDS-1}
-width = 100%
-height = 20
-offset-x = 0
-offset-y = 0
+width = ${env:WIDTH:100%}
+height = ${env:height:20}
+offset-x = ${env:PADDING:0}
+offset-y = ${env:PADDING:0}
 
-;background = ${xrdb:color9}
 background = ${colors.background}
 foreground = ${colors.foreground}
 
@@ -45,30 +51,27 @@ border-size = 0
 
 padding-left = 0
 padding-right = 2
-module-margin = 1
+module-margin = 3
 
-font-0 = FontAwesome:size=8;0
-font-1 = ${xrdb:font}:pixelsize=10;0
+font-0 = FontAwesome:size=8;1
+font-1 = ${xrdb:font}:pixelsize=10;2
+font-2 = WenQuanYi Micro Hei Mono:pixelsize=9;1
 
 modules-left = bspwm
 modules-center = mpd
-modules-right = eth wlan volume memory battery temperature date powermenu
+modules-right = eth wlan nettotal volume memory battery temperature date powermenu
 
 tray-position = right
 tray-padding = 2
-;tray-transparent = true
-;tray-background = #0063ff
 
 wm-restack = bspwm
-;wm-restack = i3
 
-;override-redirect = true
+[bar/offbar]
+inherit = bar/topbar
 
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+modules-left = bspwm
+modules-center =
+modules-right = date
 
 
 [module/xwindow]
@@ -87,45 +90,50 @@ label-indicator-underline = ${colors.secondary}
 
 [module/filesystem]
 type = internal/fs
-interval = 25
-
+interval = 60
 mount-0 = /
 mount-1 = /home
-mount-2 = /invalid/mountpoint
-
 label-mounted = %mountpoint%: %percentage_free%%
-
 label-unmounted = %mountpoint%: not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
 [module/bspwm]
 type = internal/bspwm
+format = <label-state>
 
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
-label-focused-padding = 1
-
-label-occupied = %index%
+label-occupied = %name%
+label-occupied-foreground = ${colors.foreground}
 label-occupied-padding = 1
 
-label-urgent = %index%!
-label-urgent-background = ${colors.alert}
-label-urgent-foreground = ${colors.background-alt}
-label-urgent-padding = 1
-
-label-empty = %index%
-label-empty-foreground = ${colors.background-alt}
+label-empty = %name%
+label-empty-foreground = ${colors.grey0}
 label-empty-padding = 1
+
+label-dimmed = %name%
+label-dimmed-background = ${colors.background}
+label-dimmed-padding = 1
+
+label-focused = %name%
+label-focused-background = ${colors.grey1}
+label-focused-padding = 1
+
+label-urgent = %name%
+label-urgent-foreground = ${colors.warn}
+label-urgent-padding = 1
 
 [module/mpd]
 type = internal/mpd
 
-format-online = <label-song> <icon-prev> <toggle> <icon-next> <icon-repeat> <icon-random>
+;format-online = <label-song> <icon-prev> <toggle> <icon-next> <icon-repeat> <icon-random>
+;format-online = <label-song> <icon-music> <label-album>
+format-online = <label-song>
 
-label-song = " %album% - %title%    "
+label-song = "%title%  %album%"
+label-album = %album%"
 label-song-maxlen = 200
 label-song-ellipsis = False
 
+icon-music = 
 icon-prev = 
 icon-seekb = 
 icon-stop = 
@@ -173,32 +181,42 @@ label = %percentage%%
 type = internal/memory
 interval = 2
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-label = %gb_used%/%gb_total%
+format-prefix-foreground = ${colors.purple}
+label = %mb_used%
 
 [module/wlan]
 type = internal/network
 interface = ${env:WLAN:wlp3s0}
-interval = 3.0
+interval = 5.0
+ping-interval = 0
 
 format-connected = <label-connected>
 format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
+format-connected-prefix-foreground = ${colors.cyan}
 
 label-connected = %essid%
 format-packetloss = <label-connected>
-format-packetloss-prefix = " "
-
+format-packetloss-prefix = " "
+format-packetloss-prefix-foreground = ${colors.alert}
 
 [module/eth]
 type = internal/network
 interface = ${env:ETH:enp0s25}
-interval = 3.0
+interval = 5.0
 
 format-connected-format = <label-connected>
 format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.cyan}
+
 label-connected = %local_ip%
 
+[module/nettotal]
+type = internal/network
+interface = wlp2s0
+interval = 1.0
+accumulate-stats = true
+format = <label-connected>
+label-connected =  %downspeed%  %upspeed%
 
 [module/date]
 type = internal/date
@@ -218,12 +236,12 @@ mapping = true
 
 format-volume = <label-volume>
 format-volume-prefix = " "
+format-volume-prefix-foreground = ${colors.yellow}
 label-volume = "%percentage%%"
-label-volume-foreground = ${colors.foreground}
 
-format-muted-prefix = " "
+format-muted-prefix = ""
 format-muted-foreground = ${colors.foreground-alt}
-label-muted = "X"
+label-muted = ""
 
 bar-volume-width = 33
 bar-volume-foreground = ${colors.foreground}
@@ -236,32 +254,32 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/battery]
 type = internal/battery
-adapter = AC
+adapter = ADP0
 battery = BAT0
-full-at = 84
+full-at = 95
 
-label-charging = %time%
+label-charging = %percentage%
 format-charging = <animation-charging> <label-charging>
 
-label-discharging = %time%
+label-discharging = %percentage%
 format-discharging = <ramp-capacity> <label-discharging>
 
-label-full = 
-format-full-foreground = ${colors.foreground-alt}
+format-full = 
+format-full-foreground = ${colors.green}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
+ramp-capacity-foreground = ${colors.cyan}
 
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
-animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-foreground = ${colors.purple}
 animation-charging-framerate = 750
 
 [module/temperature]
@@ -269,13 +287,13 @@ type = internal/temperature
 thermal-zone = 0
 warn-temperature = 80
 
-format =
-format-foreground = ${colors.foreground-alt}
-format-warn = <label-warn>
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.red}
+format-foreground = ${colors.grey0}
 format-warn-foreground = ${colors.warn}
 
 label = %temperature%
-label-warn = %temperature%
 label-warn-foreground = ${colors.warn}
 
 ramp-0 = 

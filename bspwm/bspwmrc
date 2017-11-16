@@ -1,7 +1,6 @@
 #! /bin/sh
 
 sxhkd &
-~/.config/polybar/launch.sh $
 compton --config ~/.config/compton.conf -b &
 ~/bin/bspwm-configure-desktops &
 
@@ -14,3 +13,5 @@ bspc config gapless_monocle	true
 
 bspc config click_to_focus	true
 bspc config remove_disabled_monitor true
+
+~/.config/polybar/launch.sh $

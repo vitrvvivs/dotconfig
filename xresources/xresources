@@ -8,7 +8,7 @@
 ! vapour
 
 ! Font
-*.font:	xft:Inconsolata For Powerline:pixelsize=12,xft:InconsolataGo Nerd Font Mono:pixelsize=20,xft:WenQuanYi Micro Hei Mono:antialias=true
+*.font:	xft:Inconsolata For Powerline:pixelsize=12,xft:InconsolataGo Nerd Font Mono,xft:WenQuanYi Micro Hei Mono:antialias=true
 
 ! URXVT
 ! font
@@ -48,4 +48,4 @@ rofi.color-urgent:		base00, base05, base01, base0D, base00
 ! style
 rofi.separator-style:		solid
 rofi.columns:       		2
-
+rofi.font:			Inconsolata For Powerline 14

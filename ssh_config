@@ -12,6 +12,10 @@ Host celtra.github.com
 	IdentityFile ~/.ssh/id_rsa-matt
 	IdentitiesOnly yes
 
+Host vitruvius.github.com
+	Hostname github.com
+	IdentityFile ~/.ssh/id_rsa-vitruvius
+
 Host github.com
-	IdentityFile ~/.ssh/id_rsa-gekkey
+	IdentityFile ~/.ssh/id_rsa-matt
 

@@ -1,1 +1,2 @@
+ip addr | grep inet | awk '{print $2}'
 python -m pyftpdlib --write

@@ -10,18 +10,28 @@ Plug 'pangloss/vim-javascript'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'kchmck/vim-coffee-script'
+Plug 'Konfekt/FastFold'
+Plug 'tmhedberg/SimpylFold'
+Plug 'kopischke/vim-stay'
 call plug#end()
 
 " Vim
 set number
 set hidden
+set hlsearch
+set viewoptions=cursor,folds,slash,unix
 
 " YCM
 let g:ycm_global_ycm_extra_conf = '/usr/share/vim/vimfiles/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_server_python_interpreter = '/usr/bin/python2'
-let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_goto_buffer_command = 'same-buffer'
+if !empty($VIRTUAL_ENV)
+  let g:ycm_python_binary_path = $VIRTUAL_ENV.'/bin/python'
+else
+  let g:ycm_python_binary_path = '/usr/bin/python3'
+endif
 
 " gitgutter
 let g:updatetime = 250
@@ -31,9 +41,35 @@ let g:gitgutter_realtime = 1
 " airline
 let g:airline_powerline_fonts = 1
 let g:airline_exclude_preview = 1
+let g:airline_theme='base16_shell'
+function! AirlineThemePatch(palette)
+  if g:airline_theme == 'base16_shell'
+    let a:palette.normal.airline_a = [ '', '', 18, 02 ]| " darken "NORMAL" to be legible
+  endif
+endfunction
+let g:airline_theme_patch_func = 'AirlineThemePatch'
+
+" other colors
+hi Folded ctermbg=18
+
+" ctrlp
+let g:ctrlp_regexp = 1
+" allow spaces
+let g:ctrlp_abbrev = {
+\ 'gmode': 'i',
+\ 'abbrevs': [
+  \ {
+    \ 'pattern': '\(^@.\+\|\\\@<!:.\+\)\@<! ',
+    \ 'expanded': '.*',
+    \ 'mode': 'prfz',
+  \ },
+\ ]
+\ }
 
 " Keybinds
 map <F1> <Esc>
 imap <F1> <Esc>
 nmap ; :
-nnoremap * :YcmCompleter GoTo<CR>
+nnoremap # :YcmCompleter GoTo<CR>
+nnoremap gUT :s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>| " title case current line
+nmap <silent> <Space> :nohlsearch<CR>
