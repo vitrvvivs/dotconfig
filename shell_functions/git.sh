@@ -8,6 +8,6 @@ alias gitignore=git-ignore
 alias gi=git-ignore
 
 function git-commit-push {
-	eval "git commit -am \"$@\"" && git push origin $(git rev-parse --abbrev-ref HEAD)
+	git commit -am '$@' && git push origin $(git rev-parse --abbrev-ref HEAD)
 }
 alias gcp=git-commit-push
