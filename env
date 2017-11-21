@@ -13,6 +13,9 @@ alias ls="ls --color=tty --group-directories-first --hide='*.pyc'"
 alias lsblk="lsblk --output NAME,SIZE,LABEL,FSTYPE,UUID"
 alias gitignore="git-ignore"
 alias nw="urxvt &"
+alias waifu2x="waifu2x-converter-cpp"
 
 # Functions
-source $HOME/.config/shell_functions/*
+for file in $HOME/.config/shell_functions/*; do
+	source $file
+done

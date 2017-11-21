@@ -6,16 +6,12 @@ Host firewall
 	IdentityFile ~/.ssh/id_rsa-gekkey
 	IdentitiesOnly yes
 
-Host celtra.github.com
+Host gekkey.github.com
 	HostName github.com
 	User git
-	IdentityFile ~/.ssh/id_rsa-matt
+	IdentityFile ~/.ssh/id_rsa-gekkey
 	IdentitiesOnly yes
 
-Host vitruvius.github.com
-	Hostname github.com
-	IdentityFile ~/.ssh/id_rsa-vitruvius
-
 Host github.com
-	IdentityFile ~/.ssh/id_rsa-matt
+	IdentityFile ~/.ssh/id_rsa-vitruvius
 

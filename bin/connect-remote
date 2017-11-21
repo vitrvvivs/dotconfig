@@ -6,7 +6,7 @@ MOUNT_DIR="$HOME/remote"
 REMOTE_DIR=$MOUNT_DIR/$REMOTE
 PID_FILE="/tmp/$REMOTE.pid"
 CONTROL_PATH=$SSH_DIR/$REMOTE.conn
-FUNCTION_PATH="$HOME/.config/shell_functions/$REMOTE.sh"
+FUNCTION_PATH="$HOME/.config/shell_functions/$REMOTE.remote.sh"
 SSH_COMMAND="ssh -o ControlMaster=auto -o ControlPath=$CONTROL_PATH -o ServerAliveInterval=120"
 SSHFS_OPTS="reconnect,cache=yes,dir_cache=yes,kernel_cache,cache_timeout=86400,attr_timeout=86400,entry_timeout=86400"
 
@@ -30,28 +30,19 @@ sshfs "$REMOTE:." "$REMOTE_DIR" -o ssh_command="$SSH_COMMAND,$SSHFS_OPTS"
 # functions to make running remote commands easier
 cat > "$FUNCTION_PATH" << EOF
 #!/usr/bin/env bash
-function _in_$REMOTE() { # turns PWD into remote dir or None
-	[[ ! \$(pwd) =~ "$REMOTE_DIR" ]] && echo "" && return 1
+function _in_$REMOTE() { # find where we are in the remote dir
+	[[ ! \$(pwd) =~ "$REMOTE_DIR" ]] && return 1
 	[[ \$1 == "-q" ]] && return 0
 	pwd | sed 's;$REMOTE_DIR/\?;;'
 }
 function $REMOTE() {
-	remote_path="\$(_in_$REMOTE)"
-	if [[ ! -z "\$path" ]] && [[ ! -z "\$*" ]]; then
-		$SSH_COMMAND "$REMOTE" "cd \$remote_path && \$*"
-	elif [[ ! -z "\$path" ]]; then
-		$SSH_COMMAND -t "$REMOTE" "cd \$remote_path && exec \\\$SHELL -l"
+	local remote_dir="\$(_in_$REMOTE)"
+	if [[ ! -z "\$remote_dir" ]] && [[ ! -z "\$*" ]]; then
+		$SSH_COMMAND "$REMOTE" "cd \$remote_dir && \$*"
+	elif [[ ! -z "\$remote_dir" ]]; then
+		$SSH_COMMAND -t "$REMOTE" "cd \$remote_dir && exec \\\$SHELL -l"
 	else
 		$SSH_COMMAND "$REMOTE" "\$@"
-	fi
-}
-function git() {
-	# small hack to speed up git from 20 minutes to 5 seconds;
-	# still need to remove git section from powerline to be usable
-	if _in_$REMOTE -q; then
-		$SSH_COMMAND "$REMOTE" cd "\$(_in_$REMOTE)" && git "\$*"
-	else
-		/usr/bin/git "\$@"
 	fi
 }
 function disconnect-$REMOTE() {
@@ -59,6 +50,21 @@ function disconnect-$REMOTE() {
 	rm $PID_FILE
 	fusermount3 -u $REMOTE_DIR
 	rmdir $REMOTE_DIR
+}
+
+function _in_remote() { # figure out which remote_dir we're in
+	[[ ! \$(pwd) =~ "$MOUNT_DIR/" ]] && return 1
+	pwd | sed -e 's;$MOUNT_DIR/\?\([^/]*\)/\?.*;\1;'
+}
+function git() {
+	# small hack to speed up git from 20 minutes to 5 seconds;
+	# still need to remove git section from powerline to be usable
+	local remote_dir=\$(_in_remote)
+	if [[ ! -z \$remote_dir ]]; then
+		$SSH_COMMAND "$REMOTE" "cd \$(_in_\$remote_dir) && git \$*"
+	else
+		/usr/bin/git "\$@"
+	fi
 }
 EOF
 echo "now \`source $FUNCTION_PATH\`"

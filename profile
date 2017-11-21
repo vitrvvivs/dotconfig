@@ -5,6 +5,7 @@ else
 	xset -b
 fi
 
-[ ! -s ~/.config/mpd/pid ] && $HOME/bin/mpd &
+eval `ssh-agent` && ssh-add
 
+[ ! -s ~/.config/mpd/pid ] && $HOME/bin/mpd &
 [ $(tty) = "/dev/tty1" ] && startx &

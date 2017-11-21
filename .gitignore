@@ -21,4 +21,4 @@
 /vim/view
 /composer
 /menus
-/shell_functions/*
+/shell_functions/*.remote.sh
