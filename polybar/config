@@ -211,12 +211,9 @@ format-connected-prefix-foreground = ${colors.cyan}
 label-connected = %local_ip%
 
 [module/nettotal]
-type = internal/network
-interface = wlp2s0
-interval = 1.0
-accumulate-stats = true
-format = <label-connected>
-label-connected =  %downspeed%  %upspeed%
+type = custom/script
+exec = $NETTOTAL_SCRIPT -FPc -p 2 -f Mb
+tail = true
 
 [module/date]
 type = internal/date

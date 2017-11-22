@@ -12,3 +12,5 @@ git-commit-push() {
 	git commit -am "$*" && git push origin "$(git rev-parse --abbrev-ref HEAD)"
 }
 alias gcp=git-commit-push
+
+alias git-stat="git log --stat --pretty=short"

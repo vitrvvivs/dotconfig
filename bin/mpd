@@ -1,9 +1,9 @@
-#!/usr/bin/zsh
+#!/usr/bin/sh
 MPD="/usr/bin/mpd"
 
-[ ! -z "$@" ] && $MPD $@ && exit $?
+[[ ! -z "$*" ]] && $MPD "$@" && exit $?
 
-if ! pidof mpd; then 
+if pidof mpd; then
 	$MDP --kill
-else
+fi
 $MPD ~/.config/mpd/mpd.conf

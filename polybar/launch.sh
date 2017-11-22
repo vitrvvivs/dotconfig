@@ -15,14 +15,15 @@ ETH=$(ip link show | grep " enp" | sed -E 's/^[0-9]+: (enp.*):.*/\1/') \
 WIDTH=$(( $(xrandr | grep ' connected primary' | cut -d' ' -f4 | sed 's/x.*$//') - $gap )) \
 HEIGHT=$(( $gap + 5 )) \
 PADDING=$(( $gap / 2 )) \
-polybar topbar 2> $HOME/.config/polybar/error-primary.log &
+NETTOTAL_SCRIPT="$HOME/bin/nettotal" \
+polybar topbar &> $HOME/.config/polybar/primary.log &
 
 # other monitors
-monitors=($(xrandr | grep " connected" | awk '{print $1, $3}'))
+monitors=($(xrandr | grep " connected" | grep -v "primary" | awk '{print $1, $3}'))
 for name res in $monitors; do
 	MONITOR=$name \
 	WIDTH=$(( $(echo $res | sed 's/x.*$//') - $gap )) \
 	HEIGHT=$(( $gap + 5 )) \
 	PADDING=$(( $gap / 2 )) \
-	polybar offbar 2> $HOME/.config/polybar/error-${name}.log &
+	polybar offbar 2> $HOME/.config/polybar/${name}.log &
 done
