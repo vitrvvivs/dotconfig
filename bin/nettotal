@@ -4,9 +4,9 @@ from time import time, sleep
 from sys import exit, stderr
 from re import match
 
-DEFAULT_FORMAT = '{name} {downspeed} {upspeed}'
+DEFAULT_FORMAT = '{name} {downspeed}{downunit} {upspeed}{upunit}'
 SOURCE = "/proc/net/dev"
-INTERVAL = 1
+INTERVAL = 1.0
 PREFIXES = {"": 1, 'K': 1024, 'M': 1024**2, 'G': 1024**3}
 IGNORE = ['lo', 'docker0']
 
@@ -46,20 +46,20 @@ def print_format(name, values, unit="", template=DEFAULT_FORMAT, bits=False, pre
     for k in keys:
         values[k] *= (8 if bits else 1)
 
-    # or calculate prefixes if not given
+    # or calculate units if not given
     if unit:
-        prefixes = {k: unit for k in keys}
+        units = {k: unit for k in keys}
     else:
-        prefixes = {k: largest_prefix(values[k]) for k in keys}
+        units = {k: largest_prefix(values[k]) for k in keys}
     # divide values by proper power
     for k in keys:
-        values[k] /= PREFIXES[prefixes[k]]
-        prefixes[k] += {True: 'b', False: 'B'}[bits] + ('/s' if follow else '')
+        values[k] /= PREFIXES[units[k]]
+        units[k] += {True: 'b', False: 'B'}[bits]
 
     upprecision, downprecision = (precision,) * 2
     details = {"name": name,
-               "upprefix": prefixes["tx_bytes"],
-               "downprefix": prefixes["rx_bytes"],
+               "upunit": units["tx_bytes"],
+               "downunit": units["rx_bytes"],
                "upspeed": ("{:.%df}" % upprecision).format(values["tx_bytes"]),
                "downspeed": ("{:.%df}" % downprecision).format(values["rx_bytes"])}
 
@@ -67,16 +67,18 @@ def print_format(name, values, unit="", template=DEFAULT_FORMAT, bits=False, pre
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-F', '--follow', action="store_true",
+    parser.add_argument('-f', '--follow', action="store_true",
             help="print number of <format> transfered each second")
     parser.add_argument('-t', '--template', default=DEFAULT_FORMAT,
             help="python string template to print\n" +\
-                 "valid args: {name} {upspeed} {downspeed} {upprefix} {downprefix}")
+                 "valid args: {name} {upspeed} {downspeed} {upunits} {downunits}")
     parser.add_argument('-c', '--combine', action="store_true",
             help="print total of all interfaces")
     parser.add_argument('-u', '--unit', default='B',
             help="[KMG]?[Bb]: optional si prefix + <b>its or <B>ytes")
-    parser.add_argument('-p', '--precision', type=int, default=2,
+    parser.add_argument('-i', '--interval', type=float, default=INTERVAL,
+            help="how many seconds between each print")
+    parser.add_argument('-p', '--precision', type=int, default=0,
             help="number of decimal places")
     args = parser.parse_args()
 
@@ -87,8 +89,9 @@ if __name__ == "__main__":
 
     # coerce args for print_format()
     args.bits = {'b': True, 'B': False}[args.unit[-1]]
-    args.unit = vars(args).pop("unit")[:-1]
+    args.unit = args.unit[:-1]
     combine = vars(args).pop("combine")
+    interval = vars(args).pop("interval")
 
     # get the key
     source = open(SOURCE, 'r')
@@ -105,21 +108,15 @@ if __name__ == "__main__":
         # get new data
         source.seek(0)
         data = source.read().strip().split('\n')[2:]
-        status = []
-
-        while data:
-            status.append(line_to_status(data.pop(0), key))
+        status = [line_to_status(line, key) for line in data]
 
         # compare to previous data
         diff = {}
         for values in status:
             iface = values["iface"]
-            if iface not in previous_status: continue
+            if iface not in previous_status or iface in IGNORE: continue
             previous_values = previous_status[iface]
-            diff[iface] = {k: (values[k] - previous_values[k]) // INTERVAL for k in key[1:]}
-
-        for iface in IGNORE:
-            if iface in diff: del diff[iface]
+            diff[iface] = {k: (values[k] - previous_values[k]) / interval for k in key[1:]}
 
         if combine:
             diff = {"total": {k: sum(d[k] for d in diff.values()) for k in key[1:]}}
@@ -130,7 +127,7 @@ if __name__ == "__main__":
 
         # set up for next time
         previous_status = {values["iface"]: values for values in status}
-        sleep(INTERVAL + time() - start)
+        sleep(time() + interval - start)
     else:
         for index, status in previous_status.items():
             print_format(status.pop("iface"), status, **vars(args))
