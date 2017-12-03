@@ -22,3 +22,7 @@
 /composer
 /menus
 /shell_functions/*.remote.sh
+/Atom
+/docker/
+!/docker/daemon.conf
+/mpv

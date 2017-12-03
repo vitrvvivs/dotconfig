@@ -212,7 +212,7 @@ label-connected = %local_ip%
 
 [module/nettotal]
 type = custom/script
-exec = $NETTOTAL_SCRIPT -FPc -p 2 -f Mb
+exec = $NETTOTAL_SCRIPT -Fc -p 2 -u Mb -t '{name}  {downspeed} {downprefix}  {upspeed} {upprefix}'
 tail = true
 
 [module/date]

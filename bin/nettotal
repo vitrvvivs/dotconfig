@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 import argparse
 from time import time, sleep
+from sys import exit, stderr
+from re import match
 
-PRETTY = '{name}  {downspeed:.%df} {prefix}  {upspeed:.%df} {prefix}'
+DEFAULT_FORMAT = '{name} {downspeed} {upspeed}'
 SOURCE = "/proc/net/dev"
 INTERVAL = 1
-PREFIXES = {'K': 1024, 'M': 1024**2, 'G': 1024**3}
+PREFIXES = {"": 1, 'K': 1024, 'M': 1024**2, 'G': 1024**3}
+IGNORE = ['lo', 'docker0']
 
 def get_key(header_str):
     key = []
@@ -13,42 +16,79 @@ def get_key(header_str):
         key += [prefix + attr for attr in attrs.strip().split()]
     return key
 
+def line_to_status(line, key):
+    status = {k: try_int(v) for k, v in zip(key, line.strip().split())}
+    status["iface"] = status["iface"].rstrip(":")
+    return status
+
+def get_status(data, key):
+    return {v["iface"]: v for v in [line_to_status(line, key) for line in data]}
+
+def largest_prefix(value):
+    if  value <= 1024:
+        return ''
+    for prefix in PREFIXES.keys():
+        if  value > 1024:
+            value /= 1024
+        else:
+            return prefix
+    return prefix
+
 def try_int(x):
     try:
         return int(x)
     except ValueError:
         return x
 
-def line_to_status(line, key):
-    status = {k: try_int(v) for k, v in zip(key, line.strip().split())}
-    status["iface"] = status["iface"].rstrip(":")
-    return status
+def print_format(name, values, unit="", template=DEFAULT_FORMAT, bits=False, precision=2, follow=False):
+    # only do math on useful values
+    keys = ["rx_bytes", "tx_bytes"]
+    for k in keys:
+        values[k] *= (8 if bits else 1)
 
-def print_format(name, values, prefix="", bits=False, precision=3, pretty=False, follow=False):
-    if prefix:
-        values = {k: v / PREFIXES[prefix] * (8 if bits else 1) for k, v in values.items()}
-
-    prefix += {True: 'b', False: 'B'}[bits]
-    if follow: prefix += '/s'
-    if pretty:
-        print((PRETTY % (precision, precision)).format(name=name, prefix=prefix, downspeed=values["rx_bytes"], upspeed=values["tx_bytes"]), flush=True)
+    # or calculate prefixes if not given
+    if unit:
+        prefixes = {k: unit for k in keys}
     else:
-        print(name, values["rx_bytes"], values["tx_bytes"], flush=True)
+        prefixes = {k: largest_prefix(values[k]) for k in keys}
+    # divide values by proper power
+    for k in keys:
+        values[k] /= PREFIXES[prefixes[k]]
+        prefixes[k] += {True: 'b', False: 'B'}[bits] + ('/s' if follow else '')
+
+    upprecision, downprecision = (precision,) * 2
+    details = {"name": name,
+               "upprefix": prefixes["tx_bytes"],
+               "downprefix": prefixes["rx_bytes"],
+               "upspeed": ("{:.%df}" % upprecision).format(values["tx_bytes"]),
+               "downspeed": ("{:.%df}" % downprecision).format(values["rx_bytes"])}
+
+    print(template.format(**details), flush=True)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-F', '--follow', action="store_true")
-    parser.add_argument('-P', '--pretty', action="store_true")
-    parser.add_argument('-c', '--combine', action="store_true")
-    parser.add_argument('-f', '--format', default='b')
-    parser.add_argument('-p', '--precision', type=int, default=3)
+    parser.add_argument('-F', '--follow', action="store_true",
+            help="print number of <format> transfered each second")
+    parser.add_argument('-t', '--template', default=DEFAULT_FORMAT,
+            help="python string template to print\n" +\
+                 "valid args: {name} {upspeed} {downspeed} {upprefix} {downprefix}")
+    parser.add_argument('-c', '--combine', action="store_true",
+            help="print total of all interfaces")
+    parser.add_argument('-u', '--unit', default='B',
+            help="[KMG]?[Bb]: optional si prefix + <b>its or <B>ytes")
+    parser.add_argument('-p', '--precision', type=int, default=2,
+            help="number of decimal places")
     args = parser.parse_args()
 
-    # distinguish between Mb and MB
-    if (args.format and args.format[-1] not in ('b', 'B')) or not args.format:
-        args.format += 'b'
-    args.bits = {'b': True, 'B': False}[args.format[-1]]
-    args.format = args.format[:-1]
+    # Error on bad format
+    if not match("^[KMG]?[Bb]$", args.unit):
+        stderr.write("Invalid unit\n")
+        exit(1)
+
+    # coerce args for print_format()
+    args.bits = {'b': True, 'B': False}[args.unit[-1]]
+    args.unit = vars(args).pop("unit")[:-1]
+    combine = vars(args).pop("combine")
 
     # get the key
     source = open(SOURCE, 'r')
@@ -56,12 +96,7 @@ if __name__ == "__main__":
     key = get_key(data[1])
 
     # set the baseline for comparison
-    previous_status = {}
-    data = data[2:]
-    i = 0
-    while data:
-        previous_status[i] = line_to_status(data.pop(0), key)
-        i += 1
+    previous_status = get_status(data[2:], key)
 
     # print the status
     while args.follow:
@@ -83,18 +118,19 @@ if __name__ == "__main__":
             previous_values = previous_status[iface]
             diff[iface] = {k: (values[k] - previous_values[k]) // INTERVAL for k in key[1:]}
 
-        if "lo" in diff: del diff["lo"]
+        for iface in IGNORE:
+            if iface in diff: del diff[iface]
 
-        if args.combine:
+        if combine:
             diff = {"total": {k: sum(d[k] for d in diff.values()) for k in key[1:]}}
 
         # print diff
         for iface, values in diff.items():
-            print_format(iface, values, prefix=args.format, bits=args.bits, precision=args.precision, pretty=args.pretty, follow=args.follow)
+            print_format(iface, values, **vars(args))
 
         # set up for next time
         previous_status = {values["iface"]: values for values in status}
         sleep(INTERVAL + time() - start)
     else:
         for index, status in previous_status.items():
-            print_format(status.pop("iface"), status, prefix=args.format, bits=args.bits, precision=args.precision, pretty=args.pretty, follow=args.follow)
+            print_format(status.pop("iface"), status, **vars(args))
