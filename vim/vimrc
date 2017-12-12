@@ -73,3 +73,8 @@ nmap ; :
 nnoremap # :YcmCompleter GoTo<CR>
 nnoremap gUT :s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>| " title case current line
 nmap <silent> <Space> :nohlsearch<CR>
+
+" spacing
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
+autocmd FileType css setlocal shiftwidth=2 tabstop=2
