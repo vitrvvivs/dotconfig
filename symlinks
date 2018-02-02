@@ -7,3 +7,5 @@ $HOME/.env -> env
 $HOME/.ssh/config -> ssh_config
 $HOME/.vim -> vim
 $HOME/.vimrc -> vim/vimrc
+$HOME/.mozilla/firefox/*.default/chrome/userChrome.css -> userChrome.css
+$HOME/.mozilla/firefox/*.default/chrome/userContent.css -> userContent.css

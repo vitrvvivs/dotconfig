@@ -10,7 +10,7 @@ visualizer_look = "●▋"
 
 # Interface
 user_interface =                        "alternative"
-alternative_header_first_line_format = 	"$(white)─┤ $b$(magenta)%a$(end)$/b ├─$(end)"
+alternative_header_first_line_format = 	"$(white)─┤ $b{$(magenta)%a$(end)} {%b}|{%D}$/b ├─$(end)"
 alternative_header_second_line_format =	"$(16){%t}|{%f} {(%y)}$(end)"
 alternative_ui_separator_color =        "cyan"
 

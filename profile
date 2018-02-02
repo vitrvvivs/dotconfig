@@ -1,4 +1,7 @@
 # run some configuration commands
+export PYTHONPATH=".:$HOME/.config/pythonlib:$PYTHONPATH"
+export PATH="$HOME/bin:$PATH"
+
 if [ -z $DISPLAY ]; then
 	setterm -term linux -blength 0
 else

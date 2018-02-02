@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -e
-REMOTE=$1
+REMOTE="$1"
 SSH_DIR="$HOME/.ssh"
 MOUNT_DIR="$HOME/remote"
-REMOTE_DIR=$MOUNT_DIR/$REMOTE
+REMOTE_DIR="$MOUNT_DIR/$REMOTE"
 PID_FILE="/tmp/$REMOTE.pid"
-CONTROL_PATH=$SSH_DIR/$REMOTE.conn
+CONTROL_PATH="$SSH_DIR/$REMOTE.conn"
 FUNCTION_PATH="$HOME/.config/shell_functions/$REMOTE.remote.sh"
-SSH_COMMAND="ssh -o ControlMaster=auto -o ControlPath=$CONTROL_PATH -o ServerAliveInterval=120"
+SSH_COMMAND="ssh -o ControlMaster=auto -o ControlPath=$CONTROL_PATH -o ServerAliveInterval=120 -o LogLevel=QUIET"
 SSHFS_OPTS="reconnect,cache=yes,dir_cache=yes,kernel_cache,cache_timeout=86400,attr_timeout=86400,entry_timeout=86400"
 
 # check a remote server is given
@@ -15,7 +15,8 @@ SSHFS_OPTS="reconnect,cache=yes,dir_cache=yes,kernel_cache,cache_timeout=86400,a
 
 # kill existing connection
 if [[ -f "$PID_FILE" ]]; then
-	xargs kill < "$PID_FILE" &>/dev/null || true
+	kill "$(cat "$PID_FILE")" &>/dev/null
+	rm "$PID_FILE"
 fi
 
 # create connection
@@ -30,38 +31,40 @@ sshfs "$REMOTE:." "$REMOTE_DIR" -o ssh_command="$SSH_COMMAND,$SSHFS_OPTS"
 # functions to make running remote commands easier
 cat > "$FUNCTION_PATH" << EOF
 #!/usr/bin/env bash
+function _in_remote() { # figure out which remote dir we're in
+	[[ ! \$(pwd) =~ "$MOUNT_DIR/" ]] && return 1
+	pwd | sed -e 's;$MOUNT_DIR/\\?\\([^/]*\\)/\\?.*;\\1;'
+}
 function _in_$REMOTE() { # find where we are in the remote dir
 	[[ ! \$(pwd) =~ "$REMOTE_DIR" ]] && return 1
-	[[ \$1 == "-q" ]] && return 0
-	pwd | sed 's;$REMOTE_DIR/\?;;'
+	pwd | sed 's;$REMOTE_DIR/\\?;;'
 }
-function $REMOTE() {
-	local remote_dir="\$(_in_$REMOTE)"
+function $REMOTE() { # run command on remote machine in current directory with pseudo-tty
+	local remote_dir
+	remote_dir="\$(_in_$REMOTE)"
 	if [[ ! -z "\$remote_dir" ]] && [[ ! -z "\$*" ]]; then
-		$SSH_COMMAND "$REMOTE" "cd \$remote_dir && \$*"
+		$SSH_COMMAND -t "$REMOTE" "cd \$remote_dir && \$*"
 	elif [[ ! -z "\$remote_dir" ]]; then
 		$SSH_COMMAND -t "$REMOTE" "cd \$remote_dir && exec \\\$SHELL -l"
 	else
-		$SSH_COMMAND "$REMOTE" "\$@"
+		$SSH_COMMAND -t "$REMOTE" "\$@"
 	fi
 }
 function disconnect-$REMOTE() {
-	kill \$(cat $PID_FILE) 2>/dev/null
+	kill "\$(cat "$PID_FILE")" 2>/dev/null
 	rm $PID_FILE
 	fusermount3 -u $REMOTE_DIR
 	rmdir $REMOTE_DIR
-}
-
-function _in_remote() { # figure out which remote_dir we're in
-	[[ ! \$(pwd) =~ "$MOUNT_DIR/" ]] && return 1
-	pwd | sed -e 's;$MOUNT_DIR/\?\([^/]*\)/\?.*;\1;'
+	rm $FUNCTION_PATH
 }
 function git() {
-	# small hack to speed up git from 20 minutes to 5 seconds;
+	# small hack to speed up 'git status' from 20 minutes to 5 seconds
+	# by wrapping git to always try to run on the remote machine
 	# still need to remove git section from powerline to be usable
-	local remote_dir=\$(_in_remote)
+	local remote_dir
+	remote_dir=\$(_in_remote)
 	if [[ ! -z \$remote_dir ]]; then
-		$SSH_COMMAND "$REMOTE" "cd \$(_in_\$remote_dir) && git \$*"
+		$SSH_COMMAND "$REMOTE" "cd \$("_in_\$remote_dir") && git \$*"
 	else
 		/usr/bin/git "\$@"
 	fi

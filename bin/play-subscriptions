@@ -1,10 +1,13 @@
 #!/bin/bash
 RES=${1:-240}
 MSG="\${media-title}"
+
 if [ "$RES" -eq 0 ]; then
 	FORMAT="bestaudio"
 else
 	FORMAT="bestvideo[height<=$RES]+bestaudio"
 fi
 
-mpv --ytdl-raw-options="username=$EMAIL,password=$PASSWORD,dateafter=now-1week,format=$FORMAT" --term-playing-msg="$MSG" --osd-status-msg="$MSG" --load-unsafe-playlists --force-window=yes "ytdl://:ytsubs"
+[[ -z "$EMAIL" ]] && printf "Email address for YouTube login: " && read EMAIL
+printf "Password for [$EMAIL]: " && read -s PASSWORD && echo
+mpv --ytdl-raw-options="username=$EMAIL,password=$PASSWORD,dateafter=now-1week,format=$FORMAT" --term-playing-msg="$MSG" --osd-status-msg="$MSG" --load-unsafe-playlists "ytdl://:ytsubs"

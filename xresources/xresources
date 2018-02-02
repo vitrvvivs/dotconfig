@@ -7,6 +7,9 @@
 #include "base16/unikitty-dark"
 ! vapour
 
+! X
+Xcursor.size: 16
+
 ! Font
 *.font:	xft:Inconsolata For Powerline:pixelsize=12,xft:InconsolataGo Nerd Font Mono,xft:WenQuanYi Micro Hei Mono:antialias=true
 

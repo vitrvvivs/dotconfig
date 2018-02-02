@@ -16,7 +16,7 @@ WIDTH=$(( $(xrandr | grep ' connected primary' | cut -d' ' -f4 | sed 's/x.*$//')
 HEIGHT=$(( $gap + 5 )) \
 PADDING=$(( $gap / 2 )) \
 NETTOTAL_SCRIPT="$HOME/bin/nettotal" \
-polybar topbar &> $HOME/.config/polybar/primary.log &
+polybar topbar $@ &> $HOME/.config/polybar/primary.log &
 
 # other monitors
 monitors=($(xrandr | grep " connected" | grep -v "primary" | awk '{print $1, $3}'))
@@ -25,5 +25,5 @@ for name res in $monitors; do
 	WIDTH=$(( $(echo $res | sed 's/x.*$//') - $gap )) \
 	HEIGHT=$(( $gap + 5 )) \
 	PADDING=$(( $gap / 2 )) \
-	polybar offbar 2> $HOME/.config/polybar/${name}.log &
+	polybar offbar $@ 2> $HOME/.config/polybar/${name}.log &
 done

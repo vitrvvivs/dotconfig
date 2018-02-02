@@ -1,4 +1,5 @@
 Include ~/.ssh/config_private
+SendEnv LANG
 
 Host firewall
 	user	gekkey
@@ -13,3 +14,7 @@ Host gekkey.github.com
 
 Host github.com
 	IdentityFile ~/.ssh/id_rsa-vitruvius
+
+Host debian
+	HostName localhost
+	Port 10022

@@ -37,7 +37,7 @@ margin-bottom = 0
 [bar/topbar]
 monitor = ${env:MONITOR:LVDS-1}
 width = ${env:WIDTH:100%}
-height = ${env:height:20}
+height = ${env:HEIGHT:20}
 offset-x = ${env:PADDING:0}
 offset-y = ${env:PADDING:0}
 
@@ -53,13 +53,12 @@ padding-left = 0
 padding-right = 2
 module-margin = 3
 
-font-0 = FontAwesome:size=8;1
-font-1 = ${xrdb:font}:pixelsize=10;2
-font-2 = WenQuanYi Micro Hei Mono:pixelsize=9;1
+font-0 = InconsolataGo Nerd Font Mono:pixelsize=12;2
+font-1 = WenQuanYi Micro Hei Mono:pixelsize=9;1
 
 modules-left = bspwm
 modules-center = mpd
-modules-right = eth wlan nettotal volume memory battery temperature date powermenu
+modules-right = eth wlan nettotal volume memory battery date
 
 tray-position = right
 tray-padding = 2

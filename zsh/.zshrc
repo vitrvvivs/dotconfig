@@ -1,5 +1,5 @@
 # Import
-source "$HOME/.env"
+[[ -e "$HOME/.env" ]] && source "$HOME/.env"
 ADOTDIR="$ZDOTDIR/antigen"
 
 # ZSH itself
@@ -9,6 +9,9 @@ SAVEHIST=10000
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
 HYPHEN_INSENSITIVE="true"
+
+# Syntax Highlighting
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 unsetopt autocd
 setopt extended_glob
@@ -31,8 +34,16 @@ if [[ $(tty) == /dev/tty* ]]; then
 	POWERLEVEL9K_BATTERY_ICON="B" # fucks up location of first character when an icon is double width in definition (default power icon), but single width in practice (placeholder char)
 fi
 # vcs is hella slow on sshfs; quick way to disable it
-function disable-vcs-line() { POWERLEVEL9K_LEFT_PROMPT_ELEMENTS[(i)vcs]=(); }
-function enable-vcs-line() { disable-vcs-line; POWERLEVEL9K_LEFT_PROMPT_ELEMENTS+=(vcs); }
+function disable-realtime-extensions() { 
+	POWERLEVEL9K_LEFT_PROMPT_ELEMENTS[(i)vcs]=();
+	ZSH_HIGHLIGHT_HIGHLIGHTERS=()
+}
+function enable-vcs-realtime-extensions() { 
+	disable-realtime-extensions;
+	POWERLEVEL9K_LEFT_PROMPT_ELEMENTS+=(vcs);
+	ZSH_HIGHLIGHT_HIGHLIGHTERS+=(main)
+	ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets)
+}
 
 ## Antigen
 source "$ADOTDIR/antigen.zsh"

@@ -1,12 +1,12 @@
 # compatible with all shells
 # sourced by each *rc
+# This could go in .profile,
+# but then I'd need to log back in to apply changes
 #
 export TERM="xterm-256color"
 export XDG_CONFIG_HOME="$HOME/.config"
-export PATH="$HOME/bin:$PATH"
 export EDITOR="vim"
 export PAGER="less"
-export PYTHONPATH=".:$HOME/.config/pythonlib:$PYTHONPATH"
 
 # Aliases
 alias ls="ls --color=tty --group-directories-first --hide='*.pyc'"

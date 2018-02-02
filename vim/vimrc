@@ -8,12 +8,18 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'pangloss/vim-javascript'
 Plug 'airblade/vim-gitgutter'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'kchmck/vim-coffee-script'
 Plug 'Konfekt/FastFold'
 Plug 'tmhedberg/SimpylFold'
 Plug 'kopischke/vim-stay'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'chriskempson/base16-vim'
+Plug 'jeetsukumaran/vim-indentwise'
+Plug 'AndrewRadev/linediff.vim'
+Plug 'shawncplus/phpcomplete.vim'
+Plug 'chaoren/vim-wordmotion'
 call plug#end()
 
 " Vim
@@ -24,6 +30,7 @@ set viewoptions=cursor,folds,slash,unix
 
 " YCM
 let g:ycm_global_ycm_extra_conf = '/usr/share/vim/vimfiles/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_server_python_interpreter = '/usr/bin/python2'
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_goto_buffer_command = 'same-buffer'
@@ -38,6 +45,10 @@ let g:updatetime = 250
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
 
+" NERDTree
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
+
 " airline
 let g:airline_powerline_fonts = 1
 let g:airline_exclude_preview = 1
@@ -48,9 +59,14 @@ function! AirlineThemePatch(palette)
   endif
 endfunction
 let g:airline_theme_patch_func = 'AirlineThemePatch'
+let g:airline#extensions#cursormode#enabled = 0
 
 " other colors
 hi Folded ctermbg=18
+hi DiffAdd cterm=bold ctermbg=02 ctermfg=18
+hi DiffDelete cterm=bold ctermbg=01 ctermfg=18
+hi DiffChange ctermbg=18
+hi DiffText cterm=bold ctermbg=18 ctermfg=03
 
 " ctrlp
 let g:ctrlp_regexp = 1
@@ -70,11 +86,18 @@ let g:ctrlp_abbrev = {
 map <F1> <Esc>
 imap <F1> <Esc>
 nmap ; :
+nmap Y y$
 nnoremap # :YcmCompleter GoTo<CR>
 nnoremap gUT :s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>| " title case current line
 nmap <silent> <Space> :nohlsearch<CR>
 
-" spacing
-autocmd FileType html setlocal shiftwidth=2 tabstop=2
-autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
-autocmd FileType css setlocal shiftwidth=2 tabstop=2
+
+" Language-specific (spacing and folding)
+autocmd FileType html,htmldjango,css,json
+      \ setlocal shiftwidth=2 tabstop=2 expandtab
+
+autocmd FileType sh,zsh,yaml,python,coffee
+      \ setlocal shiftwidth=4 tabstop=4 expandtab
+
+autocmd FileType json,coffee
+      \ set foldmethod=indent
