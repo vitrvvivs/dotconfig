@@ -1,2 +1,2 @@
 killall sxhkd &>/dev/null
-(cd ~ && .Xauthority DISPLAY=:0 sxhkd &>/dev/null) &
+(cd ~ && XAUTHORITY="$HOME/.Xauthority" DISPLAY=:0 sxhkd &>/dev/null) &

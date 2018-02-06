@@ -16,7 +16,8 @@ focus-exclude = [
 	"class_g = 'URxvt'",
 	"class_g = 'Gimp'",
 	"class_g = 'mpv'",
-	"name *= ' - YouTube -'"
+	"name *= ' - YouTube'"
+	
 ];
 
 # Blur

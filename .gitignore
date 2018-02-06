@@ -20,7 +20,7 @@
 !/rofi/*
 !/polybar/*
 !/neofetch/*
-!/compton/*
+!/compton/config
 !/htop/*
 !/pythonlib/**/*
 !/xresources/**/*

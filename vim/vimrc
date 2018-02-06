@@ -96,7 +96,7 @@ nmap <silent> <Space> :nohlsearch<CR>
 autocmd FileType html,htmldjango,css,json
       \ setlocal shiftwidth=2 tabstop=2 expandtab
 
-autocmd FileType sh,zsh,yaml,python,coffee
+autocmd FileType sh,zsh,yaml,python,coffee,php
       \ setlocal shiftwidth=4 tabstop=4 expandtab
 
 autocmd FileType json,coffee

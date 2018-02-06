@@ -22,7 +22,7 @@ super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-super + ctrl + {x,y,z}
+super + {x,y,z}
 	bspc node -g {locked,sticky,private}
 
 # focus the node in the given direction

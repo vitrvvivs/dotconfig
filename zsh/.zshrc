@@ -41,8 +41,7 @@ function disable-realtime-extensions() {
 function enable-vcs-realtime-extensions() { 
 	disable-realtime-extensions;
 	POWERLEVEL9K_LEFT_PROMPT_ELEMENTS+=(vcs);
-	ZSH_HIGHLIGHT_HIGHLIGHTERS+=(main)
-	ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets)
+	ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 }
 
 ## Antigen
