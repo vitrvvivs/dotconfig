@@ -9,7 +9,7 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Button Mapping En
 # ~/bin/configure_logitech_g502
 
 # Assume DP-1 is the one at work
-if extant-monitor DP-1; then
+if (xrandr | grep "$1 connected"); then
 	# 1920x1200
 	xrandr --output DP-1 --auto --right-of eDP-1 --rotate left
 	xrandr --output eDP-1 --pos 0x720
@@ -23,6 +23,9 @@ fi
 
 # Set desktop background
 [[ -f ~/bin/fehbg ]] && ~/bin/fehbg &
+
+# Start "screensaver"
+xautolock -locker "$HOME/bin/i3lock-next" -time 10 &
 
 # Start the Window Manager
 exec bspwm

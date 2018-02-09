@@ -1,0 +1,1 @@
+/usr/bin/docker -H "unix://$HOME/.config/docker/docker.sock" "$@"

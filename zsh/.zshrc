@@ -32,6 +32,7 @@ if [[ $(tty) == /dev/tty* ]]; then
 	setfont /usr/share/kbd/consolefonts/ter-powerline-v14n.psf.gz
 	POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=($POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS time battery)
 	POWERLEVEL9K_BATTERY_ICON="B" # fucks up location of first character when an icon is double width in definition (default power icon), but single width in practice (placeholder char)
+	POWERLEVEL9K_HOME_ICON="H"
 fi
 # vcs is hella slow on sshfs; quick way to disable it
 function disable-realtime-extensions() { 

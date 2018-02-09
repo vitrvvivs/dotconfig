@@ -1,0 +1,1 @@
+sudo sh -c "nohup dockerd -D --config-file \"$HOME/.config/docker/daemon.json\" &> \"$HOME/.config/docker/docker.log\" &"

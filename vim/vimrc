@@ -99,5 +99,5 @@ autocmd FileType html,htmldjango,css,json
 autocmd FileType sh,zsh,yaml,python,coffee,php
       \ setlocal shiftwidth=4 tabstop=4 expandtab
 
-autocmd FileType json,coffee
+autocmd FileType json,coffee,php
       \ set foldmethod=indent
