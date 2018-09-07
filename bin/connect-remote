@@ -7,7 +7,8 @@ REMOTE_DIR="$MOUNT_DIR/$REMOTE"
 PID_FILE="/tmp/$REMOTE.pid"
 CONTROL_PATH="$SSH_DIR/$REMOTE.conn"
 FUNCTION_PATH="$HOME/.config/shell_functions/$REMOTE.remote.sh"
-SSH_COMMAND="ssh -o ControlMaster=auto -o ControlPath=$CONTROL_PATH -o ServerAliveInterval=120 -o LogLevel=QUIET"
+SSH_COMMAND="ssh -C -o ControlMaster=auto -o ControlPath=$CONTROL_PATH -o ServerAliveInterval=120 -o LogLevel=QUIET"
+SSH_CONNECTION_OPTS=("-fMNC" "-o" "ControlPath=\"$CONTROL_PATH\"")
 SSHFS_OPTS="reconnect,cache=yes,dir_cache=yes,kernel_cache,cache_timeout=86400,attr_timeout=86400,entry_timeout=86400"
 
 # check a remote server is given
@@ -20,7 +21,7 @@ if [[ -f "$PID_FILE" ]]; then
 fi
 
 # create connection
-ssh -M -o ControlPath="$CONTROL_PATH" "$REMOTE" sleep infinity &>/dev/null &
+ssh "${SSH_CONNECTION_OPTS[@]}" "$REMOTE" > "$SSH_DIR/$REMOTE.conn.log" 2> "$SSH_DIR/$REMOTE.conn.err"
 echo "$!" > "$PID_FILE"
 
 # mount connection
@@ -37,7 +38,7 @@ function _in_remote() { # figure out which remote dir we're in
 }
 function _in_$REMOTE() { # find where we are in the remote dir
 	[[ ! \$(pwd) =~ "$REMOTE_DIR" ]] && return 1
-	pwd | sed 's;$REMOTE_DIR/\\?;;'
+    echo "./\$(pwd)" | sed 's;$REMOTE_DIR/\\?;;'
 }
 function $REMOTE() { # run command on remote machine in current directory with pseudo-tty
 	local remote_dir
@@ -61,10 +62,10 @@ function git() {
 	# small hack to speed up 'git status' from 20 minutes to 5 seconds
 	# by wrapping git to always try to run on the remote machine
 	# still need to remove git section from powerline to be usable
-	local remote_dir
-	remote_dir=\$(_in_remote)
-	if [[ ! -z \$remote_dir ]]; then
-		$SSH_COMMAND "$REMOTE" "cd \$("_in_\$remote_dir") && git \$*"
+	local remote
+	remote=\$(_in_remote)
+	if [[ ! -z \$remote ]]; then
+        $SSH_COMMAND "$REMOTE" "cd \$(_in_\$remote) && git \$*"
 	else
 		/usr/bin/git "\$@"
 	fi

@@ -1,0 +1,7 @@
+#!/bin/bash
+action="$1"
+path="$2"
+
+shift; shift;
+
+curl "https://$(cat $HOME/.databricks/domain)/api/2.0/$path" -X "$action" -H "Authorization: Bearer $(cat $HOME/.databricks/token)" "$@"

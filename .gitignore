@@ -1,6 +1,11 @@
+# ignore all files
 *
+# ignore all files in directories
 */**
+# but recognize that directories exists
 !/*/
+# since an "empty" directory will be ignored,
+# this makes it possible to whitelist a directory with one line instead of two
 
 !.gitignore
 !/bash_profile
@@ -27,7 +32,6 @@
 
 !/vim/vimrc
 !/mpd/mpd.conf
-!/docker/daemon.json
 !/openvpn/start-vpn
 !/yaourt/yaourtrc
 !/ncmpcpp/config

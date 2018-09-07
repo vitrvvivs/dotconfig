@@ -1,1 +1,9 @@
-sudo sh -c "nohup dockerd -D --config-file \"$HOME/.config/docker/daemon.json\" &> \"$HOME/.config/docker/docker.log\" &"
+#!/usr/bin/sh
+#
+if [[ $EUID -ne 0 ]];
+then
+    exec sudo -E /bin/sh "$0" "$@"
+    exit
+fi
+
+nohup dockerd -D -H "unix:///$HOME/.config/docker/docker.sock" --data-root="$HOME/containers/docker" -p "$HOME/.config/docker/docker.pid" -b "docker0" &> "$HOME/.config/docker/docker.log" &

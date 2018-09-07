@@ -8,15 +8,8 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Button Mapping En
 # configure mouse
 # ~/bin/configure_logitech_g502
 
-# Assume DP-1 is the one at work
-if (xrandr | grep "$1 connected"); then
-	# 1920x1200
-	xrandr --output DP-1 --auto --right-of eDP-1 --rotate left
-	xrandr --output eDP-1 --pos 0x720
-	# 4k
-	#xrandr --output DP-1 --auto --left-of eDP-1 --rotate left
-	#xrandr --output eDP-1 --pos 2160x2640
-fi
+# monitors
+"$HOME/bin/configure-monitors"
 
 # Load xresources
 [[ -f ~/.config/xresources/xresources ]] && xrdb -merge "$HOME/.config/xresources/xresources"

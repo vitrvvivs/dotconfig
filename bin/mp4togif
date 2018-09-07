@@ -1,0 +1,28 @@
+#!/bin/bash
+function help(){
+	echo "mp4togif <input> <output> [width] [fps]"
+}
+
+if [ $# -lt 2 ]; then
+	echo "Not enough arguments"
+	help
+	exit 1
+fi
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+fi
+
+width="-1"
+fps="15"
+
+if [ ! -z $3 ]; then
+    width="$3"
+fi
+if [ ! -z $4 ]; then
+    fps="$4"
+fi
+
+ffmpeg -y -i "$1" -vf "fps=$fps,scale=$width:-1:flags=lanczos,palettegen" /tmp/palette.png
+ffmpeg -i "$1" -i /tmp/palette.png -filter_complex "fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" "$2"
+rm /tmp/palette.png

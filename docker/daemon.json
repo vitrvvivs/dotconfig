@@ -1,6 +1,0 @@
-{
-	"bridge": "docker0",
-	"data-root": "/home/vitruvius/containers/docker",
-	"pidfile": "/home/vitruvius/.config/docker/docker.pid",
-	"hosts": ["unix:///home/vitruvius/.config/docker/docker.sock"]
-}

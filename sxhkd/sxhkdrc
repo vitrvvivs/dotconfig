@@ -104,6 +104,8 @@ XF86AudioMicMute
 	pactl set-source-mute @DEFAULT_SOURCE@ toggle
 XF86Audio{Raise,Lower}Volume
 	pactl set-sink-volume @DEFAULT_SINK@ {+,-}3%
+XF86{Next,Prev}_VMode
+	pactl set-sink-volume @DEFAULT_SINK@ {+,-}3%
 ctrl + alt + {KP_Add,KP_Subtract}
 	pactl set-sink-volume @DEFAULT_SINK@ {+,-}3%
 

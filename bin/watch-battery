@@ -2,44 +2,48 @@
 from vitruvius.shared import ProcFile
 from time import sleep
 from collections import deque
+from math import inf
 
 # settings
-MEAN_HISTORY = 30
+MEAN_TIME = 30
 UPDATE_DELAY = 6
-Q_LENGTH = MEAN_HISTORY // UPDATE_DELAY
+QUEUE_LENGTH = MEAN_TIME // UPDATE_DELAY
 
 # global objects
-_charge_now = ProcFile("/sys/class/power_supply/BAT0/charge_now")
-_charge_full = ProcFile("/sys/class/power_supply/BAT0/charge_full")
-max = int(_charge_full.read()) / 1000
+file_charge_now = ProcFile("/sys/class/power_supply/BAT0/charge_now")
+file_charge_full = ProcFile("/sys/class/power_supply/BAT0/charge_full")
+max_charge = int(file_charge_full.read()) / 1000
 
 # helpers
-current = lambda: int(_charge_now.read()) / 1000
-percent = lambda: current() / max * 100
+current_charge = lambda: int(file_charge_now.read()) / 1000
+percent_full = lambda: current_charge() 
 
 # loop setup
-last = current()
-q = deque()
-total = 1
+charge_last_tick = current_charge()
+queue = deque([], QUEUE_LENGTH)
+
+# sum(queue) = change in charge over MEAN_TIME
 
 while True:
-    print("{:.1f}%".format(percent()), end=' ')
+    charge_now = current_charge()
 
-    now = current()
-    diff = last - now
-    q.append(diff)
-    total += diff
-    if len(q) == (Q_LENGTH):
-        first = q.popleft()
-        total -= first
-    last = now
+    charge_diff = charge_last_tick - charge_now
+    queue.append(charge_diff)
 
-    if diff < 0:
-        now = (max - now) * -1
-    time_left = now / (total / len(q)) * UPDATE_DELAY
-    seconds = int(time_left)
-    minutes = seconds // 60
-    hours = minutes // 60
-    print("{:02d}:{:02d}:{:02d} remaining".format(hours, minutes % 60, seconds % 60))
+    if sum(queue):
+        time_left = charge_now / (sum(queue) * QUEUE_LENGTH / len(queue)) * MEAN_TIME
+    else:
+        time_left = inf
+    for _ in range(UPDATE_DELAY):
+        print("{:.1f}%".format(charge_now / max_charge * 100), end=' ')
+        if time_left < inf:
+            seconds = int(time_left)
+            minutes = seconds // 60
+            hours = minutes // 60
+            print("{:02d}:{:02d}:{:02d} remaining".format(hours, minutes % 60, seconds % 60))
+            time_left -= 1
+        else:
+            print("Indeterminate time remaining")
+        sleep(1)
 
-    sleep(UPDATE_DELAY)
+    charge_last_tick = charge_now

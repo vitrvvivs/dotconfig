@@ -11,4 +11,8 @@ fi
 [[ -z "$EMAIL" ]] && printf "Email address for YouTube login: " && read EMAIL
 printf "Password for [$EMAIL]: " && read -s PASSWORD && echo
 
-mpv --ytdl-raw-options="username=$EMAIL,password=$PASSWORD,dateafter=now-1week,format=$FORMAT" --term-playing-msg="$MSG" --osd-status-msg="$MSG" --load-unsafe-playlists "ytdl://:ytsubs"
+function play() {
+    mpv --ytdl-raw-options="username=$EMAIL,password=$PASSWORD,dateafter=now-1week,format=$FORMAT" --term-playing-msg="$MSG" --osd-status-msg="$MSG" --load-unsafe-playlists "ytdl://:ytsubs"
+}
+
+play

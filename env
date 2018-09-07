@@ -1,7 +1,10 @@
 # compatible with all shells
 # sourced by each *rc
-# This could go in .profile,
-# but then I'd need to log back in to apply changes
+# for setting to constants
+# compare with .profile:
+#   which modifies
+#   and starts services
+#   at login
 #
 export TERM="xterm-256color"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -17,5 +20,5 @@ alias waifu2x="waifu2x-converter-cpp"
 
 # Functions
 for file in $HOME/.config/shell_functions/*; do
-	source $file
+	source "$file"
 done

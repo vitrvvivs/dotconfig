@@ -50,15 +50,15 @@ underline-size = 0
 border-size = 0
 
 padding-left = 0
-padding-right = 2
-module-margin = 3
+padding-right = 1
+module-margin = 0.5
 
 font-0 = InconsolataGo Nerd Font Mono:pixelsize=12;2
 font-1 = WenQuanYi Micro Hei Mono:pixelsize=9;1
 
 modules-left = bspwm
 modules-center = mpd
-modules-right = eth wlan nettotal volume memory battery date
+modules-right = nettotal eth wlan volume memory battery date
 
 tray-position = right
 tray-padding = 2
@@ -179,9 +179,9 @@ label = %percentage%%
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.purple}
-label = %mb_used%
+label = %mb_used:0:5% MB
 
 [module/wlan]
 type = internal/network
@@ -211,7 +211,7 @@ label-connected = %local_ip%
 
 [module/nettotal]
 type = custom/script
-exec = $NETTOTAL_SCRIPT -fc -p 2 -u Mb -t '{name}  {downspeed} {downunit}/s  {upspeed} {upunit}/s'
+exec = $NETTOTAL_SCRIPT -fc -p 2 -u Mb -T 1 -t '{ ,downspeed,}{,downunit,/s }{,downloss,% }{ ,upspeed,}{,upunit,/s }{,uploss,%}'
 tail = true
 
 [module/date]
@@ -221,7 +221,7 @@ interval = 1
 date = "%Y-%m-%d"
 time = %H:%M:%S
 
-;format-prefix = " "
+format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 
 label = %date% %time%
@@ -231,13 +231,13 @@ type = internal/volume
 mapping = true
 
 format-volume = <label-volume>
-format-volume-prefix = " "
+format-volume-prefix = "  "
 format-volume-prefix-foreground = ${colors.yellow}
 label-volume = "%percentage%%"
 
-format-muted-prefix = ""
+format-muted-prefix = " "
 format-muted-foreground = ${colors.foreground-alt}
-label-muted = ""
+label-muted = " " 
 
 bar-volume-width = 33
 bar-volume-foreground = ${colors.foreground}
@@ -255,12 +255,14 @@ battery = BAT0
 full-at = 95
 
 label-charging = %percentage%
-format-charging = <animation-charging> <label-charging>
+format-charging = " <animation-charging> <label-charging>"
+format-charging-prefix = " "
 
 label-discharging = %percentage%
-format-discharging = <ramp-capacity> <label-discharging>
+format-discharging = " <ramp-capacity> <label-discharging>"
+format-discharging-prefix = " "
 
-format-full = 
+format-full = " "
 format-full-foreground = ${colors.green}
 
 ramp-capacity-0 = 
@@ -268,23 +270,23 @@ ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
-ramp-capacity-foreground = ${colors.cyan}
+ramp-capacity-foreground = ${colors.red}
 
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
-animation-charging-foreground = ${colors.purple}
+animation-charging-foreground = ${colors.cyan}
 animation-charging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
-warn-temperature = 80
+warn-temperature = 70
 
 format = <label>
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.red}
 format-foreground = ${colors.grey0}
 format-warn-foreground = ${colors.warn}

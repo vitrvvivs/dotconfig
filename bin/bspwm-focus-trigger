@@ -1,0 +1,8 @@
+#!/bin/bash
+# script that runs every time the window changes focus
+# unused, since it causes an annoying resize/refresh
+
+xtitle -s | while read; do
+    bspc config -n last border_width 0
+    bspc config -n focused border_width 2
+done
