@@ -13,7 +13,8 @@ Xcursor.size: 16
 *.font:	xft:Inconsolata For Powerline:pixelsize=12,xft:InconsolataGo Nerd Font Mono,xft:WenQuanYi Micro Hei Mono
 Xft.antialias:   		true
 Xft.hinting:     		true
-Xft.hintstyle:    		hintmedium
+!Xft.hintstyle:    		hintmedium
+!Xft.hintstyle:    		hintfull
 Xft.rgba:			rgb
 
 

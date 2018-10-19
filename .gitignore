@@ -42,6 +42,7 @@
 !/ranger/*
 /ranger/bookmarks
 /ranger/history
+/ranger/tagged
 
 !/shell_functions/*
 /shell_functions/*.remote.sh
