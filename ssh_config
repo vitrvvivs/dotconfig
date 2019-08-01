@@ -18,3 +18,8 @@ Host github.com
 Host debian
 	HostName localhost
 	Port 10022
+
+Host nas
+	HostName 10.0.110.109
+	ProxyJump 25.13.182.213
+	User gekkey

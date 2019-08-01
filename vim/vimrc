@@ -1,7 +1,8 @@
-" Plugins
+" System Plugins
 " vim-plug
-" vim-jedi
 " vim-youcompleteme-git
+
+" Vim-plug
 call plug#begin('~/.config/vim/plugged')
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-sensible'
@@ -20,6 +21,11 @@ Plug 'jeetsukumaran/vim-indentwise'
 Plug 'AndrewRadev/linediff.vim'
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'chaoren/vim-wordmotion'
+Plug 'vim-syntastic/syntastic'
+Plug 'tpope/vim-fugitive'
+Plug 'jeetsukumaran/vim-indentwise'
+Plug 'davidhalter/jedi-vim'
+Plug 'pearofducks/ansible-vim'
 call plug#end()
 
 " Vim
@@ -31,7 +37,6 @@ set viewoptions=cursor,folds,slash,unix
 " YCM
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:jedi#completions_enabled = 0
 let g:ycm_global_ycm_extra_conf = '/usr/share/vim/vimfiles/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_server_python_interpreter = '/usr/bin/python3'
@@ -45,10 +50,27 @@ else
   let g:ycm_python_binary_path = '/usr/bin/python3'
 endif
 
+" jedi-vim, for what YCM can't do
+" let g:ycm_use_ultisnips_completer = 1
+" let g:ycm_seed_identifiers_with_syntax = 1
+
+let g:jedi#auto_initialization = 1
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_command = ""
+let g:jedi#show_call_signatures = "1"
+let g:jedi#show_call_signatures_delay = 0
+
+" syntastic
+let g:syntastic_python_checkers = ['flake8', 'pylint']
+let g:syntastic_python_flake8_args = '--max-line-length=120 --ignore=F403,F405,W503'
+let g:syntastic_python_pylint_args = '--max-line-length=120 --disable=C0103,C0111,W0621,W503'
+let g:syntastic_always_populate_loc_list = 1
+
 " gitgutter
-let g:updatetime = 250
-let g:gitgutter_eager = 1
-let g:gitgutter_realtime = 1
+let g:updatetime = 200
 
 " NERDTree
 let g:NERDTreeDirArrowExpandable = ''
@@ -57,14 +79,17 @@ let g:NERDTreeDirArrowCollapsible = ''
 " airline
 let g:airline_powerline_fonts = 1
 let g:airline_exclude_preview = 1
-let g:airline_theme='base16_shell'
+let g:airline_theme='base16_vim'
+let g:base16colorspace=256
 function! AirlineThemePatch(palette)
-  if g:airline_theme == 'base16_shell'
+  if g:airline_theme == 'base16_vim'
     let a:palette.normal.airline_a = [ '', '', 18, 02 ]| " darken "NORMAL" to be legible
+    let a:palette.normal.airline_z = [ '', '', 19, 02 ]
   endif
 endfunction
 let g:airline_theme_patch_func = 'AirlineThemePatch'
 let g:airline#extensions#cursormode#enabled = 0
+let g:airline#extensions#syntastic#enabled = 1
 
 " other colors
 hi Folded ctermbg=18
@@ -74,8 +99,9 @@ hi DiffChange ctermbg=18
 hi DiffText cterm=bold ctermbg=18 ctermfg=03
 
 " ctrlp
-let g:ctrlp_regexp = 1
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 " allow spaces
+let g:ctrlp_regexp = 1
 let g:ctrlp_abbrev = {
 \ 'gmode': 'i',
 \ 'abbrevs': [
@@ -98,10 +124,10 @@ nmap <silent> <Space> :nohlsearch<CR>
 
 
 " Language-specific (spacing and folding)
-autocmd FileType html,htmldjango,css,json
+autocmd FileType html,htmldjango,css,json,yaml,javascript
       \ setlocal shiftwidth=2 tabstop=2 expandtab
 
-autocmd FileType sh,zsh,yaml,python,coffee,php
+autocmd FileType sh,zsh,python,coffee,php
       \ setlocal shiftwidth=4 tabstop=4 expandtab
 
 autocmd FileType json,coffee,php

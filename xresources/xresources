@@ -1,9 +1,9 @@
 ! Colors
 !#include "base16/atelier-estuary" ! swampy
+!#include "base16/ocean" ! washed out
 #include "base16/woodland"
 ! brown
-!#include "base16/ocean" ! washed out
-!#include "base16/marrkesh" ! extra brown
+!#include "base16/marrakesh" ! extra brown
 !#include "base16/unikitty-dark" ! vapour
 
 ! 4K 
@@ -24,7 +24,7 @@ URxvt.letterSpace:		1
 ! appearance
 URxvt.internalBorder: 		1
 urxvt*depth:         		32
-urxvt*background:     		[75]base00
+urxvt*background:     		[85]base00
 urxvt*foreground:     		[100]base05
 
 URxvt.scrollBar:       		false

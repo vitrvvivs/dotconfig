@@ -1,5 +1,5 @@
 # run some configuration commands
-export PYTHONPATH=".:$HOME/.config/pythonlib:$PYTHONPATH"
+export PYTHONPATH="$HOME/.config/pythonlib"
 export PATH="$HOME/bin:$PATH"
 export DOCKER_HOST="unix://$HOME/.config/docker/docker.sock"
 

@@ -1,1 +1,1 @@
-/usr/bin/compton --config ~/.config/compton/config --write-pid-path ~/.config/compton/pid -b &
+~/.local/bin/compton --config ~/.config/compton/config --write-pid-path ~/.config/compton/pid -b &

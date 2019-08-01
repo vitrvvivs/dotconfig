@@ -1,9 +1,14 @@
 #!/usr/bin/sh
 #
-if [[ $EUID -ne 0 ]];
+if [ "$(id -u)" -ne 0 ];
 then
     exec sudo -E /bin/sh "$0" "$@"
     exit
 fi
 
-nohup dockerd -D -H "unix:///$HOME/.config/docker/docker.sock" --data-root="$HOME/containers/docker" -p "$HOME/.config/docker/docker.pid" -b "docker0" &> "$HOME/.config/docker/docker.log" &
+nohup dockerd -D \
+    --host="unix:///$HOME/.config/docker/docker.sock" \
+    --data-root="$HOME/containers/docker" \
+    --pidfile="$HOME/.config/docker/docker.pid" \
+    --bridge="docker0" \
+    > "$HOME/.config/docker/docker.log" 2>&1 &

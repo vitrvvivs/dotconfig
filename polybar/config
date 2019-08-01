@@ -128,7 +128,7 @@ type = internal/mpd
 format-online = <label-song>
 
 label-song = "%title%  %album%"
-label-album = %album%"
+label-album = "%album%"
 label-song-maxlen = 200
 label-song-ellipsis = False
 

@@ -21,4 +21,5 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Button Mapping En
 xautolock -locker "$HOME/bin/i3lock-next" -time 10 &
 
 # Start the Window Manager
+export _JAVA_AWT_WM_NONREPARENTING=1 # bspwm doesn't play nice with java
 exec bspwm

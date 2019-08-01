@@ -21,6 +21,8 @@ compinit
 promptinit
 
 # Theme
+# Colors
+#source $HOME/.config/base16-shell/scripts/base16-woodland.sh
 # Due to antigen's caching, 'source antigen.zsh' runs the later bundle commands; the theme needs to be configured before it's started
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='↑'
@@ -62,9 +64,9 @@ bindkey -M vicmd '/' zaw-history
 bindkey -M vicmd '?' zaw-history
 bindkey -M viins '^R' zaw-history
 bindkey -M viins '^F' zaw-history
-bindkey -M filterselect '^R' down-line-or-history
-bindkey -M filterselect '^F' up-line-or-history
-bindkey -M filterselect '' send-break
+#bindkey -M filterselect '^R' down-line-or-history
+#bindkey -M filterselect '^F' up-line-or-history
+#bindkey -M filterselect '' send-break
 bindkey '' autosuggest-execute
 
 # tty

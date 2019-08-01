@@ -1,0 +1,9 @@
+#!/usr/bin/sh
+#
+if [[ $EUID -ne 0 ]];
+then
+    exec sudo -E /bin/sh "$0" "$@"
+    exit
+fi
+
+kill "$(cat "$HOME/.config/docker/docker.pid")"

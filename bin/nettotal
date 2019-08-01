@@ -9,7 +9,7 @@ DEFAULT_FORMAT = '{name} {downspeed}{downunit}{ ,downloss,%} {upspeed}{upunit}{ 
 SOURCE = "/proc/net/dev"
 INTERVAL = 1.0
 PREFIXES = {"": 1, 'K': 1024, 'M': 1024**2, 'G': 1024**3}
-IGNORE = ['lo', 'docker0', 'ham0', 'veth*']
+IGNORE = ['lo', 'docker0', 'ham0', 'veth*', 'br-*']
 
 def get_key(header_str):
     """takes the second line of /proc/net/dev and turns it into a list of properties"""
@@ -22,6 +22,14 @@ def line_to_status(line, key):
     status = {k: try_int(v) for k, v in zip(key, line.strip().split())}
     status["iface"] = status["iface"].rstrip(":")
     return status
+
+def should_ignore(string):
+    for i in IGNORE:
+        if i[-1] == '*' and string.startswith(i[:-1]):
+            return True
+        elif i == string:
+            return True
+    return False
 
 def get_status(data, key):
     return {v["iface"]: v for v in [line_to_status(line, key) for line in data]}
@@ -63,14 +71,14 @@ def print_format(name, values, unit="", template=DEFAULT_FORMAT, bits=False, pre
     # divide values by proper power
     for k in keys:
         values[k] /= PREFIXES[units[k]]
-        units[k] += {True: 'b', False: 'B'}[bits]
+        units[k] += 'b' if bits else 'B'
 
     loss = {k[0]: int(values[k[0]] / (values[k[1]] or 1) * 100) for k in [
         ("tx_drop", "tx_packets"), ("rx_drop", "rx_packets")]}
 
     if values["tx_bytes"] >= threshold:
         _precision = precision
-        if precision < 0: 
+        if precision < 0:
             _precision = 0 + (0 < values["tx_bytes"] < 100) + (0 < values["tx_bytes"] < 10)
         details.update({
             "upspeed": ("{:.%df}" % _precision).format(values["tx_bytes"]),
@@ -105,7 +113,8 @@ def follow(source, key, args):
         diff = {}
         for values in status:
             iface = values["iface"]
-            if iface not in previous_status or iface in IGNORE: continue
+            if iface not in previous_status or should_ignore(iface):
+                continue
             previous_values = previous_status[iface]
             diff[iface] = {k: (values[k] - previous_values[k]) / args.interval for k in key[1:]}
 
