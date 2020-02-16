@@ -1,8 +1,9 @@
 # compatible with all shells
 # sourced by each *rc
 # for setting to constants
-# compare with .profile:
-#   which modifies
+# at the start of each terminal.
+# Compare with .profile:
+#   which is run onces
 #   and starts services
 #   at login
 #
@@ -10,6 +11,7 @@ export TERM="xterm-256color"
 export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR="vim"
 export PAGER="less"
+export DOCKER_HOST="unix:///var/run/docker.sock"
 
 # Aliases
 alias ls="ls --color=tty --group-directories-first --hide='*.pyc'"
@@ -17,7 +19,7 @@ alias lsblk="lsblk --output NAME,SIZE,LABEL,FSTYPE,UUID"
 alias gitignore="git-ignore"
 alias nw="urxvt &"
 alias waifu2x="waifu2x-converter-cpp"
-alias fucking=sudo
+alias fucking="sudo"
 
 # Functions
 for file in $HOME/.config/shell_functions/*; do

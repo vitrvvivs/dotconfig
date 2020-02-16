@@ -10,11 +10,10 @@
 Xcursor.size: 16
 
 ! Font
-*.font:	xft:Inconsolata For Powerline:pixelsize=12,xft:InconsolataGo Nerd Font Mono,xft:WenQuanYi Micro Hei Mono
+*.font:	xft:Inconsolata For Powerline:pixelsize=16,xft:Inconsolata Nerd Font Mono,xft:WenQuanYi Micro Hei Mono
 Xft.antialias:   		true
 Xft.hinting:     		true
-!Xft.hintstyle:    		hintmedium
-!Xft.hintstyle:    		hintfull
+Xft.hintstyle:    		hintlight
 Xft.rgba:			rgb
 
 
@@ -53,4 +52,4 @@ rofi.color-urgent:		base00, base05, base01, base0D, base00
 ! style
 rofi.separator-style:		solid
 rofi.columns:       		2
-rofi.font:			Inconsolata For Powerline 12
+rofi.font:			Inconsolata For Powerline 16

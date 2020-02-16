@@ -1,0 +1,4 @@
+#!/bin/bash
+if xinput list | grep "Logitech Gaming Mouse G502" &>/dev/null; then
+    xinput set-prop "Logitech Gaming Mouse G502" "libinput Accel Speed" -0.4
+fi

@@ -1,8 +1,8 @@
 #!/bin/sh
 
 sxhkd &
-~/bin/compton &
-~/bin/bspwm-configure-desktops &
+$HOME/.config/bin/compton &
+$HOME/.config/bin/bspwm-configure-desktops &
 
 bspc config border_width	2
 bspc config window_gap		20
@@ -17,5 +17,5 @@ bspc config remove_disabled_monitor true
 bspc rule -a mpv state=floating
 bspc rule -a firefox* state=tiled
 
-~/.config/polybar/launch.sh
-~/bin/autostart.sh
+$HOME/.config/polybar/launch.sh
+$HOME/bin/autostart.sh

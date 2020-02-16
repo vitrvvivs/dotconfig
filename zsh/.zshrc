@@ -1,6 +1,17 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block, everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Import
 [[ -e "$HOME/.env" ]] && source "$HOME/.env"
-ADOTDIR="$ZDOTDIR/antigen"
+
+# Load plugins
+function recompile-plugins() { antibody bundle < "$ZDOTDIR/.zsh_plugins.txt" > "$ZDOTDIR/.zsh_plugins.sh"; }
+[[ -e "$ZDOTDIR/.zsh_plugins.sh" ]] || recompile-plugins
+source "$ZDOTDIR/.zsh_plugins.sh"
 
 # ZSH itself
 HISTFILE=~/.bash_history
@@ -22,21 +33,16 @@ promptinit
 
 # Theme
 # Colors
-#source $HOME/.config/base16-shell/scripts/base16-woodland.sh
-# Due to antigen's caching, 'source antigen.zsh' runs the later bundle commands; the theme needs to be configured before it's started
-POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='↑'
 POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='↓'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv virtualenv aws vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs vi_mode)
-# Theme on tty
-if [[ $(tty) == /dev/tty* ]]; then
-	setfont /usr/share/kbd/consolefonts/ter-powerline-v14n.psf.gz
-	POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=($POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS time battery)
-	POWERLEVEL9K_BATTERY_ICON="B" # fucks up location of first character when an icon is double width in definition (default power icon), but single width in practice (placeholder char)
-	POWERLEVEL9K_HOME_ICON="H"
-fi
-# vcs is hella slow on sshfs; quick way to disable it
+## Theme on tty
+#if [[ $(tty) == /dev/tty* ]]; then
+#	setfont /usr/share/kbd/consolefonts/ter-powerline-v14n.psf.gz
+#	POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=($POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS time battery)
+#	POWERLEVEL9K_BATTERY_ICON="B" # fucks up location of first character when an icon is double width in definition (default power icon), but single width in practice (placeholder char)
+#	POWERLEVEL9K_HOME_ICON="H"
+#fi
+## vcs is hella slow on sshfs; quick way to disable it
 function disable-realtime-extensions() { 
 	POWERLEVEL9K_LEFT_PROMPT_ELEMENTS[(i)vcs]=();
 	ZSH_HIGHLIGHT_HIGHLIGHTERS=()
@@ -46,17 +52,6 @@ function enable-vcs-realtime-extensions() {
 	POWERLEVEL9K_LEFT_PROMPT_ELEMENTS+=(vcs);
 	ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 }
-
-## Antigen
-source "$ADOTDIR/antigen.zsh"
-# Plugins
-antigen bundle vi-mode
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zaw
-antigen theme bhilburn/powerlevel9k
-antigen apply
 
 # Key Commands
 export KEYTIMEOUT=1
@@ -80,3 +75,6 @@ zstyle ':filter-select' max-lines 20 # use 10 lines for filter-select
 zstyle ':filter-select' case-insensitive yes # enable case-insensitive search
 zstyle ':filter-select' extended-search yes # see below
 zstyle ':filter-select' hist-find-no-dups yes # ignore duplicates in history source
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh

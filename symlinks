@@ -1,11 +1,15 @@
-$HOME/.bash_profile -> bash_profile
-$HOME/.gitconfig -> gitconfig
-$HOME/.profile -> profile
-$HOME/.xinitrc -> xinitrc
-$HOME/.zshenv -> zsh/.zshenv
-$HOME/.env -> env
-$HOME/.ssh/config -> ssh_config
-$HOME/.vim -> vim
-$HOME/.vimrc -> vim/vimrc
-$HOME/.mozilla/firefox/*.default/chrome/userChrome.css -> userChrome.css
-$HOME/.mozilla/firefox/*.default/chrome/userContent.css -> userContent.css
+# file in .config   | destination in $HOME
+env                  .env
+env                  .bashrc
+gitconfig            .gitconfig
+profile              .profile
+ssh/authorized_keys  .ssh/authorized_keys
+ssh/config           .ssh/config
+vim                  .vim
+vim/vimrc            .vimrc
+xinitrc              .xinitrc
+zsh/.zshenv          .zshenv
+inputrc	             .inputrc
+
+userChrome.css       .mozilla/firefox/*.default/chrome/userChrome.css
+userContent.css      .mozilla/firefox/*.default/chrome/userContent.css

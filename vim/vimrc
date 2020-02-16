@@ -34,6 +34,7 @@ set number
 set hidden
 set hlsearch
 set viewoptions=cursor,folds,slash,unix
+set encoding=utf-8
 
 " YCM
 let g:ycm_collect_identifiers_from_comments_and_strings = 1

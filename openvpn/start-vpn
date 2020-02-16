@@ -1,2 +1,0 @@
-#!/bin/bash
-sudo openvpn --config "$HOME/.config/openvpn/client.ovpn" --auth-user-pass "$HOME/.config/openvpn/client.up"

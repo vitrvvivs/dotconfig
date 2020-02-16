@@ -15,6 +15,7 @@
 !/userContent.css
 !/xinitrc
 !/gitconfig
+!/package.list
 !/env
 
 !/bspwm/*
@@ -23,6 +24,7 @@
 !/ssh/*
 !/rofi/*
 !/polybar/*
+/polybar/*.log
 !/neofetch/*
 !/compton/config
 !/htop/*
