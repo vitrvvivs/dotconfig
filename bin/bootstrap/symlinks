@@ -1,0 +1,10 @@
+#!/bin/bash
+{
+    while read src dest; do 
+        src="$HOME/.config/$src"
+        dest="$HOME/$dest"
+        if ln -sf "$src" "$dest" &>/dev/null; then
+            echo "$src -> $dest"
+        fi
+    done < <("$HOME/.config/bin/strip-comments" "$HOME/.config/symlinks")
+} | column -t

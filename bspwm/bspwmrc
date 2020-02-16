@@ -1,4 +1,5 @@
 #!/bin/sh
+export _JAVA_AWT_WM_NONREPARENTING=1 # bspwm doesn't play nice with java
 
 sxhkd &
 $HOME/.config/bin/compton &

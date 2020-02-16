@@ -1,0 +1,21 @@
+#!/bin/bash
+# arch-specific setup
+if [[ -e /etc/arch-release ]]; then
+	# enable multilib repositories (for steam)
+	sudo sed -E '/^#\[multilib\]/{s/^#//;n;s/^#//}' -i pacman.conf
+
+	# update mirrors
+	sudo pacman -S reflector
+	sudo reflector --protocol https --age 1 --number 5 --sort rate --save /etc/pacman.d/mirrorlist
+
+	# install yay aur package manager
+	sudo pacman -S base-devel
+	git clone https://aur.archlinux.org/yay.git "$HOME/yay"
+	pushd "$HOME/yay"
+	makepkg -si
+	popd
+	rm -r "$HOME/yay"
+
+	# install the rest of the packages
+	cat "$HOME/.config/package.list" | "$HOME/.config/bin/strip-comments" | yay -S --noconfirm -
+fi

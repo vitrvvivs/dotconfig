@@ -9,17 +9,16 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Button Mapping En
 "$HOME/.config/bin/configure-logitech-g502"
 
 # monitors
-"$HOME/.config/bin/configure-monitors"
+# "$HOME/.config/bin/configure-monitors" # needs-rewriting
 
 # Load xresources
 [[ -f ~/.config/xresources/xresources ]] && xrdb -merge "$HOME/.config/xresources/xresources"
 
 # Set desktop background
-[[ -x "$HOME/.fehbg" ]] && ~/bin/fehbg &
+[[ -x "$HOME/.fehbg" ]] && "$HOME/.fehbg" &
 
 # Start "screensaver"
-xautolock -locker "$HOME/bin/i3lock-next" -time 10 &
+# xautolock -locker "$HOME/bin/i3lock-next" -time 10 &
 
 # Start the Window Manager
-export _JAVA_AWT_WM_NONREPARENTING=1 # bspwm doesn't play nice with java
 exec bspwm
