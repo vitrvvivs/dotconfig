@@ -17,6 +17,7 @@ alias lsblk="lsblk --output NAME,SIZE,LABEL,FSTYPE,UUID"
 alias gitignore="git-ignore"
 alias nw="urxvt &"
 alias waifu2x="waifu2x-converter-cpp"
+alias fucking=sudo
 
 # Functions
 for file in $HOME/.config/shell_functions/*; do

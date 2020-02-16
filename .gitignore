@@ -4,8 +4,7 @@
 */**
 # but recognize that directories exists
 !/*/
-# since an "empty" directory will be ignored,
-# this makes it possible to whitelist a directory with one line instead of two
+# Since an "empty" directory will be ignored, to whitelist do: '!/directory/*'
 
 !.gitignore
 !/bash_profile

@@ -24,6 +24,6 @@ for name res in $monitors; do
 	MONITOR=$name \
 	WIDTH=$(( $(echo $res | sed 's/x.*$//') - $gap - $gap )) \
 	HEIGHT="25" \
-	PADDING=$(( $gap / 2 )) \
+	PADDING=$(( $gap )) \
 	polybar offbar $@ 2> $HOME/.config/polybar/${name}.log &
 done

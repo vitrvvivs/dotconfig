@@ -12,14 +12,18 @@ Host gekkey.github.com
 	IdentityFile ~/.ssh/id_rsa-gekkey
 	IdentitiesOnly yes
 
-Host github.com
-	IdentityFile ~/.ssh/id_rsa-vitruvius
+Host aur.archlinux.org
+	User aur
 
 Host debian
 	HostName localhost
 	Port 10022
 
-Host nas
-	HostName 10.0.110.109
-	ProxyJump 25.13.182.213
-	User gekkey
+# Check the local network, otherwise go through the vpn
+Match host onager exec "not nc -z onager 2>/dev/null"
+	Hostname onager-vpn
+
+Host testudo
+	HostName testudo
+	#ProxyJump onager
+	User root

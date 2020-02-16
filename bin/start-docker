@@ -7,7 +7,7 @@ then
 fi
 
 nohup dockerd -D \
-    --host="unix:///$HOME/.config/docker/docker.sock" \
+    --host="unix:///var/run/docker.sock" \
     --data-root="$HOME/containers/docker" \
     --pidfile="$HOME/.config/docker/docker.pid" \
     --bridge="docker0" \
