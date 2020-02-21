@@ -1,4 +1,5 @@
 #!/bin/bash
+#curl https://git.io/JvRzk | bash
 git clone 'https://github.com/vitrvvivs/dotconfig.git' "$HOME/.config"
 "$HOME/.config/bin/bootstrap/packages"
 "$HOME/.config/bin/bootstrap/symlinks"
