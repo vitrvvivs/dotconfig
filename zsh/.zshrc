@@ -7,6 +7,7 @@ fi
 
 # Import
 [[ -e "$HOME/.env" ]] && source "$HOME/.env"
+[[ -e "$ZDOTDIR/keys.zsh" ]] && source "$ZDOTDIR/keys.zsh"
 
 # Load plugins
 function recompile-plugins() { antibody bundle < "$ZDOTDIR/.zsh_plugins" > "$ZDOTDIR/.zsh_plugins.sh"; }

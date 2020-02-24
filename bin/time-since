@@ -1,0 +1,14 @@
+#!/bin/bash
+
+usage() {
+    echo "$0 start-date [end-date]"
+    echo ""
+    echo "outputs time in seconds between two dates"
+    echo "dates are anything recognized by 'date' command"
+    echo "end-date defaults to \"now\""
+}
+
+[[ "$?" -lt 1 ]] && usage && exit 1
+start_date="$(date -d "$1" '+%s')"
+end_date="$(date -d "${2:-"now"}" '+%s')"
+echo $(( "$start_date" - "$end_date" ))

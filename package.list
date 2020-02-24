@@ -21,22 +21,23 @@ antigen                     # zsh package manager
 vim-plug                    # vim package manager
 vim-youcompleteme-git
 shellcheck-static           # shell script linter
+imagemagick
 python
 python-pip
 
 # xorg and xorg accessories
 xorg
 xorg-xinit
-bspwm                # window manager
+bspwm                    # window manager
 sxhkd
-rofi                 # launcher
-polybar	             # status bar
-networkmanager       # wifi
-powerline-fonts-git
+rofi                     # launcher
+polybar	                 # status bar
+networkmanager           # wifi
 nerd-fonts-complete
 compton-tryone-git
-feh                  # desktop background image
-w3m                  # image rendering in ranger
+feh                      # desktop background image
+python-ueberzug          # image rendering in ranger
+waifu2x-ncnn-vulkan-git  # high quality image upscaler
 
 # audio
 pulseaudio
@@ -50,6 +51,7 @@ brave-bin  # web browser
 steam      # game library
 discord    # chat client
 alacritty  # terminal
+gimp       # image editor
 
 # arch-specific
 reflector   # finds fastest pacman mirror
