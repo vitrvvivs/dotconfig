@@ -9,7 +9,7 @@ fi
 [[ -e "$HOME/.env" ]] && source "$HOME/.env"
 
 # Load plugins
-function recompile-plugins() { antibody bundle < "$ZDOTDIR/.zsh_plugins.txt" > "$ZDOTDIR/.zsh_plugins.sh"; }
+function recompile-plugins() { antibody bundle < "$ZDOTDIR/.zsh_plugins" > "$ZDOTDIR/.zsh_plugins.sh"; }
 [[ -e "$ZDOTDIR/.zsh_plugins.sh" ]] || recompile-plugins
 source "$ZDOTDIR/.zsh_plugins.sh"
 
