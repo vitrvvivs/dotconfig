@@ -9,6 +9,7 @@
 !.gitignore
 !/bash_profile
 !/profile
+!/env
 !/ssh_config
 !/symlinks
 !/userChrome.css
@@ -17,7 +18,7 @@
 !/gitconfig
 !/package.list
 !/compton.conf
-!/env
+!/inputrc
 
 !/bspwm/*
 !/sxhkd/*
