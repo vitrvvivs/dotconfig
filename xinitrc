@@ -9,7 +9,7 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Button Mapping En
 "$HOME/.config/bin/configure-logitech-g502"
 
 # monitors
-# "$HOME/.config/bin/configure-monitors" # needs-rewriting
+"$HOME/.config/bin/configure-monitors"
 
 # Load xresources
 [[ -f ~/.config/xresources/xresources ]] && xrdb -merge "$HOME/.config/xresources/xresources"

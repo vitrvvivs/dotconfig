@@ -2,7 +2,7 @@
 export _JAVA_AWT_WM_NONREPARENTING=1 # bspwm doesn't play nice with java
 
 sxhkd &
-$HOME/.config/bin/compton &
+compton &
 $HOME/.config/bin/bspwm-configure-desktops &
 
 bspc config border_width	2
@@ -19,4 +19,3 @@ bspc rule -a mpv state=floating
 bspc rule -a firefox* state=tiled
 
 $HOME/.config/polybar/launch.sh
-$HOME/bin/autostart.sh

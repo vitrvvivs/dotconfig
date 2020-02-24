@@ -1,4 +1,5 @@
 # run once at login, regardless of X or TTY
+export GOPATH="$HOME/.go"
 export PYTHONPATH="$HOME/.config/pythonlib"
 export PATH="$HOME/bin:$HOME/.config/bin:$PATH"
 

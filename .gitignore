@@ -39,6 +39,7 @@
 
 !/zsh/*
 /zsh/.zcompdump
+/zsh/.zsh_plugins.sh
 
 !/ranger/*
 /ranger/bookmarks

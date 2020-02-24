@@ -10,15 +10,15 @@
 Xcursor.size: 16
 
 ! Font
-*.font:	xft:Inconsolata For Powerline:pixelsize=16,xft:Inconsolata Nerd Font Mono,xft:WenQuanYi Micro Hei Mono
+*.font:	xft:Inconsolata For Powerline:pixelsize=13,xft:Inconsolata Nerd Font Mono,xft:WenQuanYi Micro Hei Mono
 Xft.antialias:   		true
 Xft.hinting:     		true
-Xft.hintstyle:    		hintlight
+!Xft.hintstyle:    		hintlight
 Xft.rgba:			rgb
 
 
 ! URXVT
-URxvt.letterSpace:		1
+URxvt.letterSpace:		0
 
 ! appearance
 URxvt.internalBorder: 		1

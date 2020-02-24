@@ -1,18 +1,10 @@
 #!/bin/bash
 
-# Primitive monitor identification
+names="$("$HOME/.config/bin/connected-monitor-names")"
 
-# VGA
-vga_res="$(xrandr | sed -nE '/^DP-1 connected/{n;s/^ +([^ ]+) .*/\1/;p}')"
-if [ $vga_res = "1920x1200" ]; then
+if [[ "$names" == "unknown,DELL U2412M,DELL U2412M" ]]; then
+unknown,DELL U2412M,DELL U2412M
 	xrandr --output DP-2 --auto --right-of eDP-1 --rotate left 
-    xrandr --output eDP-1 --pos 0x720
-fi
-
-# Mini-DP
-native_res="$(xrandr | sed -nE '/^DP-1 connected/{n;s/^ +([^ ]+) .*/\1/;p}')"
-if [ $native_res = "1920x1200" ]; then
 	xrandr --output DP-1 --auto --right-of DP-2 --rotate left
-elif [ $native_res = "2560x1440" ]; then
-	xrandr --output DP-1 --auto --left-of eDP-1
+    xrandr --output eDP-1 --pos 0x720
 fi

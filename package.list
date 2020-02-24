@@ -5,6 +5,7 @@
 zsh
 vim
 man
+sudo
 git
 yay      # aur package manager
 ranger   # file manager
@@ -20,13 +21,17 @@ antigen                     # zsh package manager
 vim-plug                    # vim package manager
 vim-youcompleteme-git
 shellcheck-static           # shell script linter
+python
+python-pip
 
 # xorg and xorg accessories
 xorg
+xorg-xinit
 bspwm                # window manager
 sxhkd
 rofi                 # launcher
 polybar	             # status bar
+networkmanager       # wifi
 powerline-fonts-git
 nerd-fonts-complete
 compton-tryone-git
@@ -40,12 +45,11 @@ pavucontrol
 
 # applications
 youtube-dl
-mpv                         # video player
-brave-bin                   # web browser
-steam                       # game library
-discord                     # chat client
-rxvt-unicode-256xresources  # terminal
-rxvt-unicode-terminfo
+mpv        # video player
+brave-bin  # web browser
+steam      # game library
+discord    # chat client
+alacritty  # terminal
 
 # arch-specific
 reflector   # finds fastest pacman mirror

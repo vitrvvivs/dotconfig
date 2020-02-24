@@ -15,7 +15,7 @@ ETH=$(ip link show | grep " enp" | sed -E 's/^[0-9]+: (enp.*):.*/\1/') \
 WIDTH=$(( $(xrandr | grep ' connected primary' | cut -d' ' -f4 | sed 's/x.*$//') - $gap - $gap )) \
 HEIGHT="25" \
 PADDING=$(( $gap )) \
-NETTOTAL_SCRIPT="$HOME/bin/nettotal" \
+NETTOTAL_SCRIPT="$HOME/.config/bin/nettotal" \
 polybar topbar $@ &> $HOME/.config/polybar/primary.log &
 
 # other monitors
