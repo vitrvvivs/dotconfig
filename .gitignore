@@ -16,6 +16,7 @@
 !/xinitrc
 !/gitconfig
 !/package.list
+!/compton.conf
 !/env
 
 !/bspwm/*
@@ -24,9 +25,7 @@
 !/ssh/*
 !/rofi/*
 !/polybar/*
-/polybar/*.log
 !/neofetch/*
-!/compton/config
 !/htop/*
 !/pythonlib/**/*
 !/xresources/**/*
@@ -48,7 +47,7 @@
 !/shell_functions/*
 /shell_functions/*.remote.sh
 
-*log
+*.log
 *.sw[po]
 **/__pycache__
 *.pyc
