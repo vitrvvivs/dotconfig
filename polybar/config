@@ -8,22 +8,22 @@
 ;=====================================================
 
 [colors]
-background = 	${xrdb:background}
-background-alt =${xrdb:color18}
-foreground = 	${xrdb:foreground}
-foreground-alt =${xrdb:color19}
-red = 		${xrdb:color1}
-green = 	${xrdb:color2}
-yellow = 	${xrdb:color3}
-blue = 		${xrdb:color4}
-purple =	${xrdb:color5}
-cyan =		${xrdb:color6}
-black =		${xrdb:color0}
-grey0 =		${xrdb:color18}
-grey1 =		${xrdb:color19}
-grey2 =		${xrdb:color20}
-grey3 =		${xrdb:color21}
-white =		${xrdb:color15}
+background = 	${xrdb:polybar.background}
+background-alt =${xrdb:polybar.background_alt}
+foreground = 	${xrdb:polybar.foreground}
+foreground-alt =${xrdb:polybar.foreground_alt}
+red = 		${xrdb:polybar.color1}
+green = 	${xrdb:polybar.color2}
+yellow = 	${xrdb:polybar.color3}
+blue = 		${xrdb:polybar.color4}
+purple =	${xrdb:polybar.color5}
+cyan =		${xrdb:polybar.color6}
+black =		${xrdb:polybar.color0}
+grey0 =		${xrdb:polybar.color18}
+grey1 =		${xrdb:polybar.color19}
+grey2 =		${xrdb:polybar.color20}
+grey3 =		${xrdb:polybar.color21}
+white =		${xrdb:polybar.color15}
 
 ok =		${self.green}
 warn =		${self.yellow}

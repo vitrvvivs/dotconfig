@@ -7,8 +7,8 @@ vim
 man
 sudo
 git
-yay      # aur package manager
-ranger   # file manager
+ranger          # file manager
+networkmanager  # wifi
 
 # monitoring
 iotop
@@ -16,12 +16,13 @@ iftop
 htop-temperature-clockspeed-vim-git
 
 # development
-base-devel                  # compiler meta-package
-antigen                     # zsh package manager
-vim-plug                    # vim package manager
-vim-youcompleteme-git
-shellcheck-static           # shell script linter
-imagemagick
+base-devel               # compiler meta-package
+antigen                  # zsh package manager
+vim-plug                 # vim package manager
+vim-youcompleteme-git    # vim autocomplete
+shellcheck-static        # shell script linter
+ncurses                  # for the terminfo db
+imagemagick              # cli image editing
 python
 python-pip
 
@@ -29,29 +30,31 @@ python-pip
 xorg
 xorg-xinit
 bspwm                    # window manager
-sxhkd
+sxhkd                    # bspwm hotkeys
 rofi                     # launcher
 polybar	                 # status bar
-networkmanager           # wifi
 nerd-fonts-complete
 compton-tryone-git
 feh                      # desktop background image
 python-ueberzug          # image rendering in ranger
-waifu2x-ncnn-vulkan-git  # high quality image upscaler
+waifu2x-converter-cpp-git # high quality image upscaler
 
 # audio
 pulseaudio
 pulseaudio-alsa
-pavucontrol
+pavucontrol              # audio settings
+mpd                      # music server
 
 # applications
 youtube-dl
-mpv        # video player
-brave-bin  # web browser
-steam      # game library
-discord    # chat client
-alacritty  # terminal
-gimp       # image editor
+mpv                      # video player
+brave-bin                # web browser
+steam                    # game library
+discord                  # chat client
+alacritty                # terminal
+gimp                     # image editor
+ncmpcpp                  # mpd controller
 
 # arch-specific
-reflector   # finds fastest pacman mirror
+reflector                # finds fastest pacman mirror
+yay                      # aur package manager

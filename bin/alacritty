@@ -1,0 +1,2 @@
+#!/bin/bash
+WINIT_HIDPI_FACTOR=1 /usr/bin/alacritty "$@"

@@ -1,55 +1,20 @@
+#define background_opacity 85
+
 ! Colors
 !#include "base16/atelier-estuary" ! swampy
 !#include "base16/ocean" ! washed out
 #include "base16/woodland"
-! brown
+! brownish
 !#include "base16/marrakesh" ! extra brown
 !#include "base16/unikitty-dark" ! vapour
+
+#include "font"
+#include "urxvt"
+#include "rofi"
+#include "polybar"
 
 ! 4K 
 Xcursor.size: 16
 
-! Font
-*.font:	xft:InconsolataLGC Nerd Font Mono,xft:WenQuanYi Micro Hei Mono
-Xft.antialias:   		true
-Xft.hinting:     		true
-!Xft.hintstyle:    		hintlight
-Xft.rgba:			rgb
 
 
-! URXVT
-URxvt.letterSpace:		0
-
-! appearance
-URxvt.internalBorder: 		1
-urxvt*depth:         		32
-urxvt*background:     		[85]base00
-urxvt*foreground:     		[100]base05
-
-URxvt.scrollBar:       		false
-URxvt*scrollTtyOutput:		false
-URxvt*scrollWithBuffer:		true
-URxvt*scrollTtyKeypress:	true
-
-! keys
-URxvt.keysym.Home: \033[1~
-URxvt.keysym.End: \033[4~
-URxvt.keysym.KP_Home: \033[1~
-URxvt.keysym.KP_End:  \033[4~
-
-
-! ROFI
-! colors
-rofi.color-enabled:		true
-!                 		bg      border  separator
-rofi.color-window:		base00, base00, base04
-
-!                 		bg      fg      bg-alt  hl-bg   hl-fg
-rofi.color-normal:		base00, base05, base01, base0D, base00
-rofi.color-active:		base00, base05, base01, base0D, base00
-rofi.color-urgent:		base00, base05, base01, base0D, base00
-
-! style
-rofi.separator-style:		solid
-rofi.columns:       		2
-rofi.font:			Inconsolata For Powerline 16

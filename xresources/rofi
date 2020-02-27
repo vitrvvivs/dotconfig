@@ -1,0 +1,13 @@
+rofi.color-enabled:    true
+!                      bg      border  separator
+rofi.color-window:     base00, base00, base04
+
+!                      bg      fg      bg-alt  hl-bg   hl-fg
+rofi.color-normal:     base00, base05, base01, base0D, base00
+rofi.color-active:     base00, base05, base01, base0D, base00
+rofi.color-urgent:     base00, base05, base01, base0D, base00
+
+! style
+rofi.separator-style:  solid
+rofi.columns:          2
+rofi.font:             fontname fontsize

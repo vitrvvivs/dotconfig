@@ -1,14 +1,16 @@
-# run once at login, regardless of X or TTY
-export GOPATH="$HOME/.go"
-export PYTHONPATH="$HOME/.config/pythonlib"
+# vim: set ft=sh:
+# this file is run once at login by all shells, regardless of X or TTY
+
+# We don't want to keep prepending to $PATH's, so these are here
+export GOPATH="$HOME/.go:$GOPATH"
+export PYTHONPATH="$HOME/.config/pythonlib:$PYTHONPATH"
 export PATH="$HOME/bin:$HOME/.config/bin:$PATH"
 
-if [ -z $DISPLAY ]; then
-	setterm -term linux -blength 0
-else
-	xset -b
-fi
+# Mute the bell
+setterm -term linux -blength 0
 
 #eval `ssh-agent` && ssh-add
 #[[ ! -s "~/.config/mpd/pid" ]] && "$HOME/.config/bin/mpd" &
-[[ "$(tty)" == "/dev/tty1" ]] && startx &
+if [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 ]]; then 
+    startx &
+fi

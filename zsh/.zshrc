@@ -34,8 +34,6 @@ promptinit
 
 # Theme
 # Colors
-POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='↑'
-POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='↓'
 ## Theme on tty
 #if [[ $(tty) == /dev/tty* ]]; then
 #	setfont /usr/share/kbd/consolefonts/ter-powerline-v14n.psf.gz
@@ -78,4 +76,5 @@ zstyle ':filter-select' extended-search yes # see below
 zstyle ':filter-select' hist-find-no-dups yes # ignore duplicates in history source
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+[[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
+POWERLEVEL9K_INSTANT_PROMPT=quiet

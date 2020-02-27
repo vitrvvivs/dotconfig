@@ -51,6 +51,7 @@
 /shell_functions/*.remote.sh
 
 *.log
+*.pid
 *.sw[po]
 **/__pycache__
 *.pyc

@@ -1,12 +1,7 @@
-#!/usr/bin/sh
+#!/bin/bash
 MPD="/usr/bin/mpd"
 
 [[ ! -e "$MPD" ]] && echo "mpd not installed" 1>&2 && exit
 
-# Run mpd with arguments if arguments are passed
-[[ ! -z "$*" ]] && $MPD "$@" && exit $?
-
-if pidof mpd; then
-	$MDP --kill
-fi
-$MPD ~/.config/mpd/mpd.conf
+pkill -F "$HOME/.config/mpd/pid" -x mpd
+$MPD "$@"

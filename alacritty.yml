@@ -71,33 +71,55 @@ fonts:
     bold_italic:
       family: InconsolataLGC Nerd Font Mono
       style: BoldItalic
-    size: 7
+    size: 10
     offset:
       x: 0
       y: 0
     glyph_offset:
       x: 0
       y: 0
-  InconsolataGo: &inconsolata_go
+  InconsolataGo: &inconsolata
     normal:
-      family: InconsolataGo Nerd Font Mono
+      family: Inconsolata Nerd Font Mono
       style: Regular
     bold:
-      family: InconsolataGo Nerd Font Mono
+      family: Inconsolata Nerd Font Mono
       style: Bold
     italic:
-      family: InconsolataGo Nerd Font Mono
+      family: Inconsolata Nerd Font Mono
       style: Italic
     bold_italic:
-      family: InconsolataGo Nerd Font Mono
+      family: Inconsolata Nerd Font Mono
       style: BoldItalic
     size: 8
+    offset:
+      x: 0
+      y: 0
+    glyph_offset:
+      x: 0
+      y: 0
+  JetBrainsMono: &jetbrains
+    normal:
+      family: JetBrainsMono Nerd Font Mono
+      style: Regular
+    bold:
+      family: JetBrainsMono Nerd Font Mono
+      style: Bold
+    italic:
+      family: JetBrainsMono Nerd Font Mono
+      style: Italic
+    bold_italic:
+      family: JetBrainsMono Nerd Font Mono
+      style: Bold Italic
+    size: 10
     offset:
       x: 0
       y: 1
     glyph_offset:
       x: 0
       y: 0
+
+font: *inconsolata_lgc
 
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: true
@@ -226,7 +248,6 @@ schemes:
       - { index: 20, color: '0x9f9da2' }
       - { index: 21, color: '0xd8d7da' }
 
-font: *inconsolata_lgc
 colors: *woodland
 background_opacity: 0.85
 

@@ -1,29 +1,31 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Terminate already running bar instances
-killall -q polybar
+pidfile="$HOME/.config/polybar/${DISPLAY/:/}.pid"
+# Match lines in pidfile to processes named "polybar" (don't kill the wrong process on reboot)
+grep -Fxf <(pgrep -x polybar) "$pidfile" | xargs kill &>/dev/null
 
-# Wait until the processes have been shut down
-while pgrep -x polybar >/dev/null; do sleep 1; done
-
-gap=($(bspc config window_gap))
+# gap=($(bspc config window_gap))
+gap=0
 
 # primary monitor
-MONITOR=$(xrandr | grep " connected primary" | cut -d ' ' -f1) \
+MONITOR=$(xrandr | sed -nE 's/^(.+) connected primary.*/\1/p') \
 WLAN=$(ip link show | grep " wlp" | sed -E 's/^[0-9]+: (wlp.*):.*/\1/') \
 ETH=$(ip link show | grep " enp" | sed -E 's/^[0-9]+: (enp.*):.*/\1/') \
-WIDTH=$(( $(xrandr | grep ' connected primary' | cut -d' ' -f4 | sed 's/x.*$//') - $gap - $gap )) \
+WIDTH=$(( $(xrandr | grep ' connected primary' | cut -d' ' -f4 | sed 's/x.*$//') - gap - gap )) \
 HEIGHT="25" \
-PADDING=$(( $gap )) \
+PADDING=$(( gap )) \
 NETTOTAL_SCRIPT="$HOME/.config/bin/nettotal" \
-polybar topbar $@ &> $HOME/.config/polybar/primary.log &
+polybar topbar "$@" &> "$HOME/.config/polybar/primary.log" &
+echo "$!" > "$pidfile"
 
 # other monitors
-monitors=($(xrandr | grep " connected" | grep -v "primary" | awk '{print $1, $3}'))
-for name res in $monitors; do
+xrandr | sed -nE '/primary/d;s/^(.+) connected ([^ ]+).*$/\1 \2/p' |\
+while read -r name res; do
 	MONITOR=$name \
-	WIDTH=$(( $(echo $res | sed 's/x.*$//') - $gap - $gap )) \
+	WIDTH=$(( ${res/x*/} - gap - gap )) \
 	HEIGHT="25" \
-	PADDING=$(( $gap )) \
-	polybar offbar $@ 2> $HOME/.config/polybar/${name}.log &
+	PADDING=$(( gap )) \
+	polybar offbar "$@" 2>"$HOME/.config/polybar/$name.log" &
+    echo "$!" >> "$pidfile"
 done

@@ -12,7 +12,7 @@ if [[ -e /etc/arch-release ]]; then
 	# update mirrors
     last_updated="$(date -d "$(sed -nE 's/# Retrieved:\s+//p' /etc/pacman.d/mirrorlist)" '+%s')"
     one_week_ago="$(( "$(date '+%s')" - "$(( 60*60*24*7 ))" ))"
-    if [[ "$last_updated" -gt "$one_week_ago" ]]; then 
+    if [[ "$last_updated" -lt "$one_week_ago" ]]; then 
         $pacman -S reflector
         "$HOME/.config/bin/reflector"
     fi
@@ -28,5 +28,8 @@ if [[ -e /etc/arch-release ]]; then
     fi
 
 	# install the rest of the packages
-	"$HOME/.config/bin/strip-comments" "$HOME/.config/package.list" | yay -S "${pacflags[@]}" -
+	"$HOME/.config/bin/strip-comments" "$HOME/.config/package.list" \
+        | yay -Qq - 2>&1 | sed -nE "s/error: package '([^']+)' was not found/\1/p" \
+        | yay "${pacflags[@]}" -S -
+    yay "${pacflags[@]}" -Su 
 fi

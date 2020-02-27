@@ -1,0 +1,7 @@
+File order:
+	$HOME/.zshenv      - sets $ZDOTDIR
+	$ZDOTDIR/.zprofile - linked to shared $HOME/.profile; run only at login
+	                     startx needs to be run before p10k starts, or else $TTY gets fucked and X can't find the console
+	$ZDOTDIR/.zshrc    - all the configuration
+	$ZDOTDIR/.zlogin   - unused; custom .profile for only zsh
+	$ZDOTDIR/.zlogout  - unused
