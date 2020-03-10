@@ -1,0 +1,7 @@
+#!/bin/bash
+while read -r dest repo; do 
+    dest="$HOME/$dest"
+    if [[ -e "$dest" ]]; then continue; fi
+    mkdir -p "$(dirname "$dest")"
+    git clone "$repo" "$dest"
+done < <("$HOME/.config/bin/strip-comments" "$HOME/.config/repos")

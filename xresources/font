@@ -1,10 +1,11 @@
-#define fontname InconsolataLGC Nerd Font Mono
-#define fontsize 12
+#define _fontname0 InconsolataLGC Nerd Font Mono
+#define _fontsize0 12
+#define _fontname1 WenQuanYi Micro Hei Mono
+#define _fontsize1 10
 
 ! Font
-*.font:    xft:fontname:pixelsize=fontsize,xft:WenQuanYi Micro Hei Mono
+*.font:    xft:_fontname0:pixelsize=_fontsize0,xft:_fontname1:pixelsize=_fontsize1
 Xft.antialias:           true
 Xft.hinting:             true
 !Xft.hintstyle:          hintlight
 Xft.rgba:                rgb
-

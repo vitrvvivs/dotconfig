@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+import curses
+from argparse import ArgumentParser
+from pathlib import Path
+from ruamel.yaml import YAML
+from xdg.BaseDirectory import xdg_config_home
+from ranger.gui.ui import UI
+
+default_config = Path(xdg_config_home) / 'alacritty.yml'
+
+
+def patch(colorscheme, config_file):
+    yaml = YAML()
+    config = yaml.load(config_file)
+    scheme = yaml.load(colorscheme)
+
+    config.update(scheme)
+
+    yaml.dump(config, config_file)
+
+
+def preview(directory):
+    ui = UI()
+    ui.setup_curses()
+    ui.initialize()
+    
+
+if __name__ == "__main__":
+    parser = ArgumentParser(description="merge alacritty.yml with colorscheme.yml")
+    parser.add_argument("--preview", help="quickly swap between directory full of colorschemes", action='store_true')
+    parser.add_argument("colorscheme", help="yaml file or preview directory which contains 'colors'", type=Path)
+    parser.add_argument("alacritty_config", help="alacritty.yml", default=default_config, type=Path, nargs='?')
+    args = parser.parse_args()
+
+    if args.preview:
+        preview(args.colorscheme)
+    else:
+        patch(args.colorscheme, args.alacritty_config)

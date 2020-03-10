@@ -1,2 +1,9 @@
-polybar.background_alt:      #21231e18
-polybar.background_alt:      base05
+! alpha = printf '%x\n' "$(( 255 * opacity / 100 ))"
+
+polybar.background:      #b0231e18
+polybar.background_alt:  base02
+polybar.forground:       base05
+polybar.foreground_alt:  base06
+
+polybar.font0:           _fontname0:pixelsize=_fontsize0;3
+polybar.font1:           _fontname1:pixelsize=_fontsize1;2

@@ -17,7 +17,7 @@ htop-temperature-clockspeed-vim-git
 
 # development
 base-devel               # compiler meta-package
-antigen                  # zsh package manager
+antibody                 # zsh package manager
 vim-plug                 # vim package manager
 vim-youcompleteme-git    # vim autocomplete
 shellcheck-static        # shell script linter
@@ -25,6 +25,8 @@ ncurses                  # for the terminfo db
 imagemagick              # cli image editing
 python
 python-pip
+python-ruamel.yaml
+python-xdg
 
 # xorg and xorg accessories
 xorg

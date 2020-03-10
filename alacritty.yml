@@ -78,26 +78,6 @@ fonts:
     glyph_offset:
       x: 0
       y: 0
-  InconsolataGo: &inconsolata
-    normal:
-      family: Inconsolata Nerd Font Mono
-      style: Regular
-    bold:
-      family: Inconsolata Nerd Font Mono
-      style: Bold
-    italic:
-      family: Inconsolata Nerd Font Mono
-      style: Italic
-    bold_italic:
-      family: Inconsolata Nerd Font Mono
-      style: BoldItalic
-    size: 8
-    offset:
-      x: 0
-      y: 0
-    glyph_offset:
-      x: 0
-      y: 0
   JetBrainsMono: &jetbrains
     normal:
       family: JetBrainsMono Nerd Font Mono
@@ -118,137 +98,22 @@ fonts:
     glyph_offset:
       x: 0
       y: 0
+  cozette: &cozette
+    normal:
+      family: Cozette
+      style: Regular
+    offset:
+      x: 0
+      y: 0
+    glyph_offset:
+      x: 0
+      y: 0
 
 font: *inconsolata_lgc
 
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: true
 
-schemes:
-  # Base16 Woodland - alacritty color config
-  # Jay Cornwall (https://jcornwall.com)
-  woodland: &woodland
-    # Default colors
-    primary:
-      background: '0x231e18'
-      foreground: '0xcabcb1'
-
-    # Colors the cursor will use if `custom_cursor_colors` is true
-    cursor:
-      text: '0x231e18'
-      cursor: '0xcabcb1'
-
-    # Normal colors
-    normal:
-      black:   '0x231e18'
-      red:     '0xd35c5c'
-      green:   '0xb7ba53'
-      yellow:  '0xe0ac16'
-      blue:    '0x88a4d3'
-      magenta: '0xbb90e2'
-      cyan:    '0x6eb958'
-      white:   '0xcabcb1'
-
-    # Bright colors
-    bright:
-      black:   '0x9d8b70'
-      red:     '0xd35c5c'
-      green:   '0xb7ba53'
-      yellow:  '0xe0ac16'
-      blue:    '0x88a4d3'
-      magenta: '0xbb90e2'
-      cyan:    '0x6eb958'
-      white:   '0xe4d4c8'
-
-    indexed_colors:
-      - { index: 16, color: '0xca7f32' }
-      - { index: 17, color: '0xb49368' }
-      - { index: 18, color: '0x302b25' }
-      - { index: 19, color: '0x48413a' }
-      - { index: 20, color: '0xb4a490' }
-      - { index: 21, color: '0xd7c8bc' }
-  estuary: &estuary
-    # Default colors
-    primary:
-      background: '0x22221b'
-      foreground: '0x929181'
-
-    # Colors the cursor will use if `custom_cursor_colors` is true
-    cursor:
-      text: '0x22221b'
-      cursor: '0x929181'
-
-    # Normal colors
-    normal:
-      black:   '0x22221b'
-      red:     '0xba6236'
-      green:   '0x7d9726'
-      yellow:  '0xa5980d'
-      blue:    '0x36a166'
-      magenta: '0x5f9182'
-      cyan:    '0x5b9d48'
-      white:   '0x929181'
-
-    # Bright colors
-    bright:
-      black:   '0x6c6b5a'
-      red:     '0xba6236'
-      green:   '0x7d9726'
-      yellow:  '0xa5980d'
-      blue:    '0x36a166'
-      magenta: '0x5f9182'
-      cyan:    '0x5b9d48'
-      white:   '0xf4f3ec'
-
-    indexed_colors:
-      - { index: 16, color: '0xae7313' }
-      - { index: 17, color: '0x9d6c7c' }
-      - { index: 18, color: '0x302f27' }
-      - { index: 19, color: '0x5f5e4e' }
-      - { index: 20, color: '0x878573' }
-      - { index: 21, color: '0xe7e6df' }
-  unikitty: &unikitty
-    # Default colors
-    primary:
-      background: '0x2e2a31'
-      foreground: '0xbcbabe'
-
-    # Colors the cursor will use if `custom_cursor_colors` is true
-    cursor:
-      text: '0x2e2a31'
-      cursor: '0xbcbabe'
-
-    # Normal colors
-    normal:
-      black:   '0x2e2a31'
-      red:     '0xd8137f'
-      green:   '0x17ad98'
-      yellow:  '0xdc8a0e'
-      blue:    '0x796af5'
-      magenta: '0xbb60ea'
-      cyan:    '0x149bda'
-      white:   '0xbcbabe'
-
-    # Bright colors
-    bright:
-      black:   '0x838085'
-      red:     '0xd8137f'
-      green:   '0x17ad98'
-      yellow:  '0xdc8a0e'
-      blue:    '0x796af5'
-      magenta: '0xbb60ea'
-      cyan:    '0x149bda'
-      white:   '0xf5f4f7'
-
-    indexed_colors:
-      - { index: 16, color: '0xd65407' }
-      - { index: 17, color: '0xc720ca' }
-      - { index: 18, color: '0x4a464d' }
-      - { index: 19, color: '0x666369' }
-      - { index: 20, color: '0x9f9da2' }
-      - { index: 21, color: '0xd8d7da' }
-
-colors: *woodland
 background_opacity: 0.85
 
 # Visual Bell
@@ -557,3 +422,49 @@ live_config_reload: true
   #- { key: PageDown,  mods: Shift,   action: ScrollPageDown, mode: ~Alt       }
   #- { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }
   #- { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt       }
+
+# %%base16_template: alacritty##default-256 %%
+# Base16 Woodland 256 - alacritty color config
+# Jay Cornwall (https://jcornwall.com)
+colors:
+  # Default colors
+  primary:
+    background: '0x231e18'
+    foreground: '0xcabcb1'
+
+  # Colors the cursor will use if `custom_cursor_colors` is true
+  cursor:
+    text: '0x231e18'
+    cursor: '0xcabcb1'
+
+  # Normal colors
+  normal:
+    black:   '0x231e18'
+    red:     '0xd35c5c'
+    green:   '0xb7ba53'
+    yellow:  '0xe0ac16'
+    blue:    '0x88a4d3'
+    magenta: '0xbb90e2'
+    cyan:    '0x6eb958'
+    white:   '0xcabcb1'
+
+  # Bright colors
+  bright:
+    black:   '0x9d8b70'
+    red:     '0xd35c5c'
+    green:   '0xb7ba53'
+    yellow:  '0xe0ac16'
+    blue:    '0x88a4d3'
+    magenta: '0xbb90e2'
+    cyan:    '0x6eb958'
+    white:   '0xe4d4c8'
+
+  indexed_colors:
+    - { index: 16, color: '0xca7f32' }
+    - { index: 17, color: '0xb49368' }
+    - { index: 18, color: '0x302b25' }
+    - { index: 19, color: '0x48413a' }
+    - { index: 20, color: '0xb4a490' }
+    - { index: 21, color: '0xd7c8bc' }
+
+# %%base16_template_end%%

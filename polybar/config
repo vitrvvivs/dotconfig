@@ -30,6 +30,10 @@ warn =		${self.yellow}
 alert =		${self.red}
 info =		${self.blue}
 
+[font]
+name = ${xrdb:polybar.fontname}
+size = ${xrdb:polybar.fontsize}
+
 [global/wm]
 margin-top = 0
 margin-bottom = 0
@@ -45,16 +49,16 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 
 overline-size = 0
-underline-size = 0
+underline-size = 2
 
 border-size = 0
 
 padding-left = 0
-padding-right = 1
+padding-right = 0
 module-margin = 0.5
 
-font-0 = InconsolataGo Nerd Font Mono:pixelsize=12;2
-font-1 = WenQuanYi Micro Hei Mono:pixelsize=9;1
+font-0 = ${xrdb:polybar.font0}
+font-1 = ${xrdb:polybar.font1}
 
 modules-left = bspwm
 modules-center = mpd
@@ -77,16 +81,6 @@ modules-right = date
 type = internal/xwindow
 label = %title:0:30:...%
 
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
-label-layout = %{F#55}%{F-} %layout%
-label-layout-underline = ${colors.secondary}
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
-
 [module/filesystem]
 type = internal/fs
 interval = 60
@@ -101,24 +95,29 @@ type = internal/bspwm
 format = <label-state>
 
 label-occupied = %name%
-label-occupied-foreground = ${colors.foreground}
 label-occupied-padding = 1
+label-occupied-background = ${colors.background-alt}
+label-occupied-foreground = ${colors.foreground}
 
 label-empty = %name%
-label-empty-foreground = ${colors.grey0}
 label-empty-padding = 1
+label-empty-background = ${colors.background}
+label-empty-foreground = ${colors.foreground}
 
 label-dimmed = %name%
-label-dimmed-background = ${colors.background}
 label-dimmed-padding = 1
+label-dimmed-foreground = ${colors.foreground}
 
 label-focused = %name%
-label-focused-background = ${colors.grey1}
 label-focused-padding = 1
+label-focused-background = ${colors.background-alt}
+label-focused-foreground = ${colors.foreground}
+label-focused-underline = ${colors.yellow}
 
 label-urgent = %name%
-label-urgent-foreground = ${colors.warn}
 label-urgent-padding = 1
+label-urgent-background = ${colors.background}
+label-urgent-foreground = ${colors.warn}
 
 [module/mpd]
 type = internal/mpd
@@ -224,7 +223,9 @@ time = %H:%M:%S
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 
-label = %date% %time%
+label = " %date% %time% "
+label-background = ${colors.background-alt}
+label-underline = ${colors.blue}
 
 [module/volume]
 type = internal/volume

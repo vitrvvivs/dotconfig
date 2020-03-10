@@ -14,6 +14,8 @@ if [[ -e /etc/arch-release ]]; then
     one_week_ago="$(( "$(date '+%s')" - "$(( 60*60*24*7 ))" ))"
     if [[ "$last_updated" -lt "$one_week_ago" ]]; then 
         $pacman -S reflector
+        echo
+        echo "Updating mirrorlist..."
         "$HOME/.config/bin/reflector"
     fi
 
@@ -22,9 +24,9 @@ if [[ -e /etc/arch-release ]]; then
         $pacman -S base-devel
         git clone https://aur.archlinux.org/yay.git "$HOME/yay"
         pushd "$HOME/yay"
-        makepkg -si
+        makepkg "${pacflags[@]}" -si
         popd
-        rm -r "$HOME/yay"
+        rm -rf "$HOME/yay"
     fi
 
 	# install the rest of the packages

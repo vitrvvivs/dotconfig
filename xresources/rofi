@@ -10,4 +10,4 @@ rofi.color-urgent:     base00, base05, base01, base0D, base00
 ! style
 rofi.separator-style:  solid
 rofi.columns:          2
-rofi.font:             fontname fontsize
+rofi.font:             _fontname0 _fontsize0

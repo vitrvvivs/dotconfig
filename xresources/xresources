@@ -1,12 +1,6 @@
 #define background_opacity 85
 
-! Colors
-!#include "base16/atelier-estuary" ! swampy
-!#include "base16/ocean" ! washed out
-#include "base16/woodland"
-! brownish
-!#include "base16/marrakesh" ! extra brown
-!#include "base16/unikitty-dark" ! vapour
+#include "/usr/share/base16/xresources/xresources/base16-woodland-256.Xresources"
 
 #include "font"
 #include "urxvt"
@@ -14,7 +8,4 @@
 #include "polybar"
 
 ! 4K 
-Xcursor.size: 16
-
-
-
+!Xcursor.size: 16
