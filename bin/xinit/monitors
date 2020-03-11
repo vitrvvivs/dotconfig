@@ -4,7 +4,12 @@ names="$("$HOME/.config/bin/monitor-names")"
 
 if [[ "$names" == "N5V8C-LQ156D1" ]]; then
     xrandr --output eDP-1 --dpi 144
-    xrdb -merge "$HOME/.config/xresources/4k"
+    xrdb -merge "$HOME/.config/xresources/1.5scaling"
+fi
+
+if [[ "$names" == "LG Ultra HD" ]]; then
+    xrandr --output DP-3 --primary
+    #xrdb -merge "$HOME/.config/xresources/1.25scaling"
 fi
 
 if [[ "$names" == "unknown,DELL U2412M,DELL U2412M" ]]; then

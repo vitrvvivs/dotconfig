@@ -1,8 +1,44 @@
 #!/bin/bash
 
+function xrdbq() {
+    xrdb -query | grep "$1" | cut -f 2
+}
 
+#pre-adjusted
+width=800
+height=0
+y_pos=0
+notification_count=3
+
+dpi="$(xrdbq Xft.dpi)"
+screen_width="$(xrandr | grep ' connected primary' | cut -d' ' -f4 | sed 's/x.*$//')"
+width="$(( width * 96 / dpi ))"
+height="$(( height * 96 / dpi ))"
+x_pos="$(( (screen_width - width) / 2 ))"
+y_pos="$(( y_pos * 96 / dpi ))"
+
+black="$(xrdbq color0)"
+grey0="$(xrdbq color18)"
+grey1="$(xrdbq color19)"
+grey2="$(xrdbq color08)"
+grey3="$(xrdbq color20)"
+grey4="$(xrdbq color7)"
+white="$(xrdbq color21)"
+red="$(xrdbq color1)"
+green="$(xrdbq color2)"
+blue="$(xrdbq color4)"
+yellow="$(xrdbq color3)"
+purple="$(xrdbq color5)"
+cyan="$(xrdbq color6)"
+
+background="$grey0"
+foreground="$grey4"
 
 /usr/bin/dunst \
     -monitor 0 \
     -geometry "${width}x${notification_count}+${x_pos}+${y_pos}" \
-    -notification_height "$height"
+    -notification_height "$height" \
+    -frame_width 2 \
+    -lb "$background" -lf "$foreground" -lfr "$background" -lto 15 \
+    -nb "$background" -nf "$foreground" -nfr "$background" -nto 15 \
+    -cb "$background" -cf "$foreground" -cfr "$background" -cto 15 \

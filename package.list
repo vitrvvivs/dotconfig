@@ -26,7 +26,7 @@ ncurses                  # for the terminfo db
 imagemagick              # cli image editing
 python
 python-pip
-python-ruamel.yaml
+python-ruamel-yaml
 python-xdg
 bind-tools               # dns debugging
 

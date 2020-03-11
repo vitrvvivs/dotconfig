@@ -6,3 +6,5 @@
 #include "urxvt"
 #include "rofi"
 #include "polybar"
+
+Xft.dpi: 96
