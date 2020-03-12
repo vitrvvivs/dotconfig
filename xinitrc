@@ -1,15 +1,10 @@
 # Disable bell
 xset -b
 
-# Configure trackpad
-xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
-xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Button Mapping Enabled" 0 1
-
-# configure mouse
-"$HOME/.config/bin/configure-logitech-g502"
-
-# monitors
-"$HOME/.config/bin/configure-monitors"
+# run hardware-specific configuration scripts
+for script in "$HOME"/.config/bin/xinit/*; do
+    bash "$script"
+done
 
 # Load xresources
 [[ -f ~/.config/xresources/xresources ]] && xrdb -merge "$HOME/.config/xresources/xresources"
@@ -18,7 +13,7 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Button Mapping En
 [[ -x "$HOME/.fehbg" ]] && "$HOME/.fehbg" &
 
 # Start "screensaver"
-# xautolock -locker "$HOME/bin/i3lock-next" -time 10 &
+xautolock -locker i3lock-fancy -time 10 &
 
 # Start the Window Manager
 exec bspwm

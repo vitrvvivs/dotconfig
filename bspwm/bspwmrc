@@ -3,7 +3,15 @@ export _JAVA_AWT_WM_NONREPARENTING=1 # bspwm doesn't play nice with java
 
 sxhkd &
 compton &
-$HOME/.config/bin/bspwm-configure-desktops &
+
+# split 10 desktops evenly accross monitors (rounding down)
+i=1
+n=$(bspc query -M | wc -l)
+per=$(( 10 / n ))
+for m in $(bspc query -M); do
+	bspc monitor "$m" -d $(seq -s ' ' "$i" $(( i + per - 1 )))
+	i="$(( i + per ))"
+done
 
 bspc config border_width	2
 bspc config window_gap		40
@@ -18,4 +26,4 @@ bspc config remove_disabled_monitor true
 bspc rule -a mpv state=floating
 bspc rule -a firefox* state=tiled
 
-$HOME/.config/polybar/launch.sh
+"$HOME/.config/polybar/launch.sh"

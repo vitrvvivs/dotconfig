@@ -20,23 +20,25 @@
 !/compton.conf
 !/inputrc
 !/alacritty.yml
+!/user-dirs.dirs
 
 !/bspwm/*
 !/sxhkd/*
 !/bin/**
 !/ssh/*
-!/rofi/*
 !/polybar/*
 !/neofetch/*
 !/htop/*
 !/pythonlib/**/*
 !/xresources/**/*
+!/fontconfig/**
 
 !/vim/vimrc
 !/mpd/mpd.conf
 !/openvpn/start-vpn
 !/yaourt/yaourtrc
 !/ncmpcpp/config
+!/dunst/dunstrc
 
 !/zsh/*
 /zsh/.zcompdump

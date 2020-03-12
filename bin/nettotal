@@ -9,7 +9,7 @@ DEFAULT_FORMAT = '{name} {downspeed}{downunit}{ ,downloss,%} {upspeed}{upunit}{ 
 SOURCE = "/proc/net/dev"
 INTERVAL = 1.0
 PREFIXES = {"": 1, 'K': 1024, 'M': 1024**2, 'G': 1024**3}
-IGNORE = ['lo', 'docker0', 'ham0', 'veth*', 'br-*']
+WHITELIST = {'wlp59s0', 'wlp2s0', 'eth0'}
 
 def get_key(header_str):
     """takes the second line of /proc/net/dev and turns it into a list of properties"""
@@ -23,13 +23,8 @@ def line_to_status(line, key):
     status["iface"] = status["iface"].rstrip(":")
     return status
 
-def should_ignore(string):
-    for i in IGNORE:
-        if i[-1] == '*' and string.startswith(i[:-1]):
-            return True
-        elif i == string:
-            return True
-    return False
+def whitelisted(string):
+    return string in WHITELIST
 
 def get_status(data, key):
     return {v["iface"]: v for v in [line_to_status(line, key) for line in data]}
@@ -113,7 +108,7 @@ def follow(source, key, args):
         diff = {}
         for values in status:
             iface = values["iface"]
-            if iface not in previous_status or should_ignore(iface):
+            if not whitelisted(iface) or iface not in previous_status:
                 continue
             previous_values = previous_status[iface]
             diff[iface] = {k: (values[k] - previous_values[k]) / args.interval for k in key[1:]}

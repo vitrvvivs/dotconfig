@@ -1,23 +1,8 @@
 Include ~/.ssh/config_private
 SendEnv LANG
 
-Host firewall
-	user	gekkey
-	IdentityFile ~/.ssh/id_rsa-gekkey
-	IdentitiesOnly yes
-
-Host gekkey.github.com
-	HostName github.com
-	User git
-	IdentityFile ~/.ssh/id_rsa-gekkey
-	IdentitiesOnly yes
-
 Host aur.archlinux.org
 	User aur
-
-Host debian
-	HostName localhost
-	Port 10022
 
 # Check the local network, otherwise go through the vpn
 Match host onager exec "not nc -z onager 2>/dev/null"

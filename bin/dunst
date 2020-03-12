@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+
+/usr/bin/dunst \
+    -monitor 0 \
+    -geometry "${width}x${notification_count}+${x_pos}+${y_pos}" \
+    -notification_height "$height"

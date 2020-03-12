@@ -11,3 +11,6 @@ rofi.color-urgent:     base00, base05, base01, base0D, base00
 rofi.separator-style:  solid
 rofi.columns:          2
 rofi.font:             _fontname0 _fontsize0
+
+! behaviour
+rofi.kb-row-tab:       Tab,super+Tab

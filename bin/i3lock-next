@@ -1,6 +1,5 @@
 #!/bin/bash
 MESSAGES=(
-    "Toasting will resume after the following messages:"
     "IBMのスポンサー"
 )
 if [[ -n "$1" ]]; then
@@ -9,4 +8,4 @@ else
     message="${MESSAGES[$RANDOM % ${#MESSAGES[@]}]}"
 fi
 #/usr/local/bin/i3lock-next "$message" "Inconsolata for Powerline" 20
-"$HOME/.local/bin/i3lock-next" "$message" "WenQuanYi Micro Hei Mono" 20
+"/usr/bin/i3lock-next" "$message" "WenQuanYi Micro Hei Mono" 20

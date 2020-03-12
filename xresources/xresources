@@ -1,11 +1,8 @@
 #define background_opacity 85
 
-#include "/usr/share/base16/xresources/xresources/base16-woodland-256.Xresources"
+#include "base16/woodland"
 
 #include "font"
 #include "urxvt"
 #include "rofi"
 #include "polybar"
-
-! 4K 
-!Xcursor.size: 16

@@ -1,0 +1,5 @@
+#!/bin/bash
+if xinput list | grep "SYNA2393:00 06CB:7A13 Touchpad" &>/dev/null; then
+    xinput set-prop "SYNA2393:00 06CB:7A13 Touchpad" "libinput Tapping Enabled" 1
+    xinput set-prop "SYNA2393:00 06CB:7A13 Touchpad" "libinput Tapping Button Mapping Enabled" 0 1
+fi

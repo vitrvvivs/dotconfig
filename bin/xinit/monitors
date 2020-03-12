@@ -1,9 +1,13 @@
 #!/bin/bash
 
-names="$("$HOME/.config/bin/connected-monitor-names")"
+names="$("$HOME/.config/bin/monitor-names")"
+
+if [[ "$names" == "N5V8C-LQ156D1" ]]; then
+    xrandr --output eDP-1 --dpi 144
+    xrdb -merge "$HOME/.config/xresources/4k"
+fi
 
 if [[ "$names" == "unknown,DELL U2412M,DELL U2412M" ]]; then
-unknown,DELL U2412M,DELL U2412M
 	xrandr --output DP-2 --auto --right-of eDP-1 --rotate left 
 	xrandr --output DP-1 --auto --right-of DP-2 --rotate left
     xrandr --output eDP-1 --pos 0x720

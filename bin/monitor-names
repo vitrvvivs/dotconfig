@@ -1,16 +1,23 @@
 #!/usr/bin/env python
-# scans through connected monitors' edid to find their names
+# parse edid to find monitor name
 from pathlib import Path
 
 def find_name(edid: bytes) -> str:
     # https://en.wikipedia.org/wiki/Extended_Display_Identification_Data#Display_Descriptors
-    offsets = [54, 72, 90, 108]
-    name_code  = 0xFC
+    offsets = (54, 72, 90, 108)
+    text_codes = (0xFC, 0xFE, 0xFF)  # display name, unspecified text, or serial number
 
     for offset in offsets:
-        if edid[offset + 3] == name_code:
-            return edid[offset + 5:offset + 18].decode('ascii').strip()
+        if edid[offset] == 0 and edid[offset + 3] in text_codes:
+            text = edid[offset + 5:offset + 18]
+            return format_text(text)
     return "unknown"
+
+def format_text(text: bytes) -> str:
+    string = text.decode('cp437').strip()
+    # I don't know why SHARP used 0x80 to separate model with submodel, but I don't like it
+    string = string.replace('Ç', '-')
+    return string
 
 def all_names():
     sysdir = Path("/sys/class/drm/")

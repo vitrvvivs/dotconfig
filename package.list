@@ -8,6 +8,7 @@ man
 sudo
 git
 ranger          # file manager
+rsync
 networkmanager  # wifi
 
 # monitoring
@@ -27,6 +28,7 @@ python
 python-pip
 python-ruamel.yaml
 python-xdg
+bind-tools               # dns debugging
 
 # xorg and xorg accessories
 xorg
@@ -40,6 +42,8 @@ compton-tryone-git
 feh                      # desktop background image
 python-ueberzug          # image rendering in ranger
 waifu2x-converter-cpp-git # high quality image upscaler
+i3lock-fancy-git         # screen lock
+dunst                    # notifications
 
 # audio
 pulseaudio

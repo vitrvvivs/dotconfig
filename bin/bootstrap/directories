@@ -1,0 +1,4 @@
+#!/bin/bash
+while read -r path; do 
+	mkdir -p "$(eval echo "$path")"
+done < <(/usr/bin/sed -nE 's/^XDG_[A-Z]+_DIR="(.*)"/\1/p' < "$HOME/.config/user-dirs.dirs")

@@ -1,0 +1,5 @@
+#!/bin/bash
+if xinput list | grep "SynPS/2 Synaptics TouchPad" &>/dev/null; then
+    xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+    xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Button Mapping Enabled" 0 1
+fi
