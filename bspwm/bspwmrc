@@ -2,6 +2,7 @@
 export _JAVA_AWT_WM_NONREPARENTING=1 # bspwm doesn't play nice with java
 
 sxhkd &
+dunst &
 compton &
 
 # split 10 desktops evenly accross monitors (rounding down)

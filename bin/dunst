@@ -1,22 +1,26 @@
 #!/bin/bash
 
+#pkill -x dunst &>/dev/null  # TODO make xorg $DIPLAY-specific
+
 function xrdbq() {
-    xrdb -query | grep "$1" | cut -f 2
+    xrdb -query | grep "$1" | head -n 1 | cut -f 2
 }
 
-#pre-adjusted
-width=800
+#pre-adjustment
+#width=800
 height=0
 y_pos=0
 notification_count=3
 
 dpi="$(xrdbq Xft.dpi)"
 screen_width="$(xrandr | grep ' connected primary' | cut -d' ' -f4 | sed 's/x.*$//')"
-width="$(( width * 96 / dpi ))"
+#width="$(( width * 96 / dpi ))"
+width="$(( screen_width / 2 ))"
 height="$(( height * 96 / dpi ))"
 x_pos="$(( (screen_width - width) / 2 ))"
 y_pos="$(( y_pos * 96 / dpi ))"
 
+# color refrence
 black="$(xrdbq color0)"
 grey0="$(xrdbq color18)"
 grey1="$(xrdbq color19)"

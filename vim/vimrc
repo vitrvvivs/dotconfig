@@ -28,6 +28,10 @@ Plug 'davidhalter/jedi-vim'
 Plug 'pearofducks/ansible-vim'
 Plug 'fatih/vim-go'
 Plug 'Firef0x/PKGBUILD.vim'
+" terraform
+Plug 'jvirtanen/vim-hcl'
+Plug 'hashivim/vim-terraform'
+Plug 'juliosueiras/vim-terraform-completion'
 call plug#end()
 
 " Vim
@@ -132,7 +136,7 @@ nmap <silent> <Space> :nohlsearch<CR>
 
 
 " Language-specific (spacing and folding)
-autocmd FileType html,htmldjango,css,json,yaml,javascript
+autocmd FileType html,htmldjango,css,json,yaml,javascript,hcl,markdown
       \ setlocal shiftwidth=2 tabstop=2 expandtab
 
 autocmd FileType sh,zsh,python,coffee,php
@@ -141,5 +145,5 @@ autocmd FileType sh,zsh,python,coffee,php
 autocmd FileType json,coffee,php
       \ set foldmethod=indent
 
-autocmd FileType go
+autocmd FileType go,terraform
       \ set foldmethod=syntax

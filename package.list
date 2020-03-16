@@ -5,10 +5,11 @@
 zsh
 vim
 man
-sudo
 git
-ranger          # file manager
+sudo
+tmux
 rsync
+ranger          # file manager
 networkmanager  # wifi
 
 # monitoring
@@ -28,7 +29,9 @@ python
 python-pip
 python-ruamel-yaml
 python-xdg
+python-mdv-git           # markdown preview for ranger
 bind-tools               # dns debugging
+logmein-hamachi	         # private vpn
 
 # xorg and xorg accessories
 xorg
@@ -52,9 +55,9 @@ pavucontrol              # audio settings
 mpd                      # music server
 
 # applications
-youtube-dl
-mpv                      # video player
 brave-bin                # web browser
+mpv                      # video player
+youtube-dl               # youtube player for mpv
 steam                    # game library
 discord                  # chat client
 alacritty                # terminal
