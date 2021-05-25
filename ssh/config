@@ -1,6 +1,9 @@
 Include ~/.ssh/config_private
 SendEnv LANG
 
+Host *
+	ForwardAgent yes
+
 Host aur.archlinux.org
 	User aur
 
@@ -12,3 +15,6 @@ Host testudo
 	HostName testudo
 	#ProxyJump onager
 	User root
+
+Host garden
+	User gardener

@@ -4,3 +4,5 @@ zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 zsh-users/zaw
 romkatv/powerlevel10k
+arzzen/calc.plugin.zsh
+

@@ -43,6 +43,7 @@
 !/zsh/*
 /zsh/.zcompdump
 /zsh/.zsh_plugins.sh
+/zsh/.zcalc_history
 
 !/ranger/*
 /ranger/bookmarks

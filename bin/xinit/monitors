@@ -7,13 +7,16 @@ if [[ "$names" == "N5V8C-LQ156D1" ]]; then
     xrdb -merge "$HOME/.config/xresources/1.5scaling"
 fi
 
+if [[ "$names" == "N5V8C-LQ156D1,67YGV84JDGZS" ]]; then
+    echo "correct"
+    xrandr --output eDP-1 --dpi 144 --primary
+    xrandr --output DP-3 --above eDP-1 --scale 1.5x1.5 --auto
+    xrandr --output eDP-1 --pos 0x2160
+    xrdb -merge "$HOME/.config/xresources/1.5scaling"
+fi
+
+
 if [[ "$names" == "LG Ultra HD" ]]; then
     xrandr --output DP-3 --primary
     #xrdb -merge "$HOME/.config/xresources/1.25scaling"
-fi
-
-if [[ "$names" == "unknown,DELL U2412M,DELL U2412M" ]]; then
-	xrandr --output DP-2 --auto --right-of eDP-1 --rotate left 
-	xrandr --output DP-1 --auto --right-of DP-2 --rotate left
-    xrandr --output eDP-1 --pos 0x720
 fi

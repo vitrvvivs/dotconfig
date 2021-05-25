@@ -27,7 +27,11 @@ ncurses                  # for the terminfo db
 imagemagick              # cli image editing
 python
 python-pip
-python-ruamel-yaml
+python-pipenv            # python virtualenv
+pyenv
+flake8                   # python syntax checkers
+mypy
+python-ruamel-yaml       # yaml library which preserves formatting
 python-xdg
 python-mdv-git           # markdown preview for ranger
 bind-tools               # dns debugging
@@ -63,6 +67,7 @@ discord                  # chat client
 alacritty                # terminal
 gimp                     # image editor
 ncmpcpp                  # mpd controller
+mpc                      # mpd controller for scripts
 
 # arch-specific
 reflector                # finds fastest pacman mirror

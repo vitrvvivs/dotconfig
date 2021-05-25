@@ -1,16 +1,20 @@
+#!/bin/sh
+
 # compatible with all shells
 # sourced by each *rc
-# for setting to constants
+# for setting constants
 # at the start of each terminal.
 # Compare with .profile:
-#   which is run onces
+#   which is run once
 #   and starts services
 #   at login
 #
+
 export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR="vim"
 export PAGER="less"
 export DOCKER_HOST="unix:///var/run/docker.sock"
+export GPG_TTY="$(tty)"
 
 # Aliases
 alias ls="ls --color=tty --group-directories-first --hide='*.pyc'"
@@ -19,6 +23,7 @@ alias nw="$TERM &"
 alias fucking="sudo"
 
 # Functions
+eval "$(pyenv init -)"
 for file in "$HOME/.config/shell_functions/"*; do
 	source "$file"
 done

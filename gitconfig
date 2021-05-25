@@ -1,3 +1,8 @@
 [user]
 	email = vitrvvivs.architectus@gmail.com
 	name = Vitruvius
+	signingkey = 4372888C86DEDF23913A3FA02EAB88FCEE4A877B
+[push]
+	gpgsign = false
+[commit]
+	gpgsign = true

@@ -32,6 +32,9 @@ Plug 'Firef0x/PKGBUILD.vim'
 Plug 'jvirtanen/vim-hcl'
 Plug 'hashivim/vim-terraform'
 Plug 'juliosueiras/vim-terraform-completion'
+" helm
+Plug 'towolf/vim-helm'
+Plug 'mustache/vim-mustache-handlebars'
 call plug#end()
 
 " Vim
@@ -75,9 +78,14 @@ let g:go_fold_enable = ['block', 'import', 'varconst', 'package_comment', 'comme
 
 " syntastic
 let g:syntastic_python_checkers = ['mypy', 'flake8', 'pylint']
+let g:syntastic_sh_checkers = ['shellcheck']
+let g:syntastic_yaml_checkers = ['yamllint']
 let g:syntastic_python_flake8_args = '--ignore=F403,F405,W504,E501'
 let g:syntastic_python_pylint_args = '--disable=C0103,C0111,W0621,W504,C0301'
 let g:syntastic_python_mypy_args = '--ignore-missing-imports'
+let g:syntastic_sh_shellcheck_args = '--external-sources'
+let g:syntastic_yaml_yamllint_args = '-c ' . system("git rev-parse --show-toplevel | tr -d '\\n'") . '/.yamllint'
+let g:syntastic_ansible_ansible_lint_args = '-c ' . system("git rev-parse --show-toplevel | tr -d '\\n'") . '/.ansible-lint'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_wq = 0
 
@@ -109,6 +117,11 @@ hi DiffAdd cterm=bold ctermbg=02 ctermfg=18
 hi DiffDelete cterm=bold ctermbg=01 ctermfg=18
 hi DiffChange ctermbg=18
 hi DiffText cterm=bold ctermbg=18 ctermfg=03
+hi clear SignColumn
+hi GitGutterAdd ctermfg=2
+hi GitGutterChange ctermfg=3
+hi GitGutterDelete ctermfg=1
+hi GitGutterChangeDelete ctermfg=16
 
 " ctrlp
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
