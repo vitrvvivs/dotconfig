@@ -21,7 +21,7 @@ done
 [[ -x "$HOME/.fehbg" ]] && "$HOME/.fehbg" &
 
 # Start "screensaver"
-xautolock -locker i3lock-fancy -time 10 &
+#xautolock -locker i3lock-fancy -time 10 &
 
 # Start the Window Manager
 exec bspwm

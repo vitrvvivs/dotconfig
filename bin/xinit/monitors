@@ -8,11 +8,15 @@ if [[ "$names" == "N5V8C-LQ156D1" ]]; then
 fi
 
 if [[ "$names" == "N5V8C-LQ156D1,67YGV84JDGZS" ]]; then
-    echo "correct"
     xrandr --output eDP-1 --dpi 144 --primary
     xrandr --output DP-3 --above eDP-1 --scale 1.5x1.5 --auto
     xrandr --output eDP-1 --pos 0x2160
     xrdb -merge "$HOME/.config/xresources/1.5scaling"
+fi
+
+if [[ "$names" == "JDI" ]]; then
+    xrandr --output eDP-1 --dpi 120 --primary
+    xrdb -merge "$HOME/.config/xresources/1.25scaling"
 fi
 
 

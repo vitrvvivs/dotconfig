@@ -25,4 +25,8 @@ bspc config gapless_monocle	true
 bspc rule -a mpv state=floating
 bspc rule -a firefox* state=tiled
 
-source "$HOME"/.config/bspwm/startup
+# Startup
+"$HOME"/.config/bin/bar &
+sxhkd &
+dunst &
+picom --experimental-backends &

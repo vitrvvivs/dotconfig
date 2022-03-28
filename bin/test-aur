@@ -1,0 +1,7 @@
+#!/bin/bash
+docker pull greyltc/archlinux-aur:yay
+
+docker run --rm -it \
+    --name test-aur \
+    greyltc/archlinux-aur:yay \
+    bash

@@ -28,6 +28,7 @@ Plug 'davidhalter/jedi-vim'
 Plug 'pearofducks/ansible-vim'
 Plug 'fatih/vim-go'
 Plug 'Firef0x/PKGBUILD.vim'
+Plug 'JamshedVesuna/vim-markdown-preview'
 " terraform
 Plug 'jvirtanen/vim-hcl'
 Plug 'hashivim/vim-terraform'
@@ -59,6 +60,7 @@ elseif !empty($PYTHON)
 else
   let g:ycm_python_binary_path = '/usr/bin/python3'
 endif
+let g:ycm_java_binary_path = '/usr/lib/jvm/java-17-openjdk/bin/java'
 
 " jedi-vim, for what YCM can't do
 " let g:ycm_use_ultisnips_completer = 1
@@ -80,6 +82,7 @@ let g:go_fold_enable = ['block', 'import', 'varconst', 'package_comment', 'comme
 let g:syntastic_python_checkers = ['mypy', 'flake8', 'pylint']
 let g:syntastic_sh_checkers = ['shellcheck']
 let g:syntastic_yaml_checkers = ['yamllint']
+let g:syntastic_java_checkers = []
 let g:syntastic_python_flake8_args = '--ignore=F403,F405,W504,E501'
 let g:syntastic_python_pylint_args = '--disable=C0103,C0111,W0621,W504,C0301'
 let g:syntastic_python_mypy_args = '--ignore-missing-imports'
@@ -123,6 +126,12 @@ hi GitGutterChange ctermfg=3
 hi GitGutterDelete ctermfg=1
 hi GitGutterChangeDelete ctermfg=16
 
+" markdown preview
+let g:vim_markdown_preview_use_xdg_open=1
+let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_browser='Brave-browser'
+
+
 " ctrlp
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 " allow spaces
@@ -149,10 +158,10 @@ nmap <silent> <Space> :nohlsearch<CR>
 
 
 " Language-specific (spacing and folding)
-autocmd FileType html,htmldjango,css,json,yaml,javascript,hcl,markdown
+autocmd FileType html,htmldjango,css,json,yaml,javascript,hcl,markdown,helm
       \ setlocal shiftwidth=2 tabstop=2 expandtab
 
-autocmd FileType sh,zsh,python,coffee,php
+autocmd FileType sh,zsh,python,coffee,php,dockerfile,java,nginx
       \ setlocal shiftwidth=4 tabstop=4 expandtab
 
 autocmd FileType json,coffee,php
