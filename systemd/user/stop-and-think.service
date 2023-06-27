@@ -1,0 +1,8 @@
+[Unit]
+Description=Lock the screen to pause and think
+
+[Service]
+ExecStart=-%h/.config/bin/lock --static xc:black "What are you trying to accomplish?\nWhat have you accomplished?"
+
+[Install]
+WantedBy=default.target

@@ -12,6 +12,10 @@ super + Escape
 super + alt + Escape
 	bspc quit
 
+# restart display
+super + F4
+	xset dpms force off && xset dpms force on
+
 ## WINDOW
 
 # close and kill

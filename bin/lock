@@ -1,1 +1,31 @@
-xautolock -locknow
+#!/bin/bash
+
+scrot_command=(maim)
+use_static_bg=false
+
+MESSAGES=(
+    #"IBMのスポンサー"
+    "What are you trying to accomplish?\nWhat have you accomplished?"
+)
+if [[ "$1" == "--static" ]]; then
+    use_static_bg=true
+    source_bg_image="$2"
+    shift 2
+fi
+
+if [[ -n "$1" ]]; then
+    message="$1"
+else
+    message="${MESSAGES[$RANDOM % ${#MESSAGES[@]}]}"
+fi
+
+if $use_static_bg; then
+    image_path="/tmp/lock.png"
+    if [[ ! -e "$image_path" ]]; then
+        screen_resolution="$(xdpyinfo | awk '/^  dimensions(.+([0-9]+))/{print $2}')"
+        convert -size "$screen_resolution" "$source_bg_image" "$image_path"
+    fi
+    scrot_command=(cp "$image_path")
+fi
+
+"/usr/bin/i3lock-fancy" --text "$message" --nofork -- "${scrot_command[@]}"

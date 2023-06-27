@@ -53,6 +53,12 @@
 !/shell_functions/*
 /shell_functions/*.remote.sh
 
+!/nvim/init.lua
+
+!/systemd/user
+!/systemd/user/*
+/systemd/user/grafana*
+
 *.log
 *.pid
 *.sw[po]

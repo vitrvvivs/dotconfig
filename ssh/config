@@ -8,7 +8,7 @@ Host aur.archlinux.org
 	User aur
 
 # Check the local network, otherwise go through the vpn
-Match host onager exec "not nc -z onager 2>/dev/null"
+Match host onager exec "not nc -z onager 22 2>/dev/null"
 	Hostname onager-vpn
 
 Host testudo

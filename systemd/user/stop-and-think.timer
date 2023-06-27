@@ -1,0 +1,9 @@
+[Unit]
+Description=Stop and think every 90 minutes
+
+[Timer]
+OnBootSec=90min
+OnUnitActiveSec=90min
+
+[Install]
+WantedBy=timers.target

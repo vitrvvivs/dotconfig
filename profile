@@ -5,10 +5,11 @@
 export GOPATH="$HOME/.go:$GOPATH"
 export PYTHONPATH="$HOME/.config/pythonlib:$PYTHONPATH"
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$HOME/bin:$HOME/.config/bin:$HOME/.cargo/bin:$PYENV_ROOT/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.config/bin:$HOME/.cargo/bin:$HOME/.config/yarn/global/node_modules/.bin/:$PYENV_ROOT/bin:$PATH"
 
 export OPS_WORKDIR="$HOME/work/private-ops"
 export OASIS_CORE_PATH=$HOME/work/oasis-core
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 eval "$(pyenv init --path)"
 eval $(ssh-agent)

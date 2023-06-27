@@ -11,7 +11,7 @@
 #
 
 export XDG_CONFIG_HOME="$HOME/.config"
-export EDITOR="vim"
+export EDITOR="nvim"
 export PAGER="less"
 export DOCKER_HOST="unix:///var/run/docker.sock"
 export GPG_TTY="$(tty)"
@@ -19,11 +19,20 @@ export GPG_TTY="$(tty)"
 # Aliases
 alias ls="ls --color=tty --group-directories-first --hide='*.pyc'"
 alias lsblk="lsblk --output NAME,SIZE,LABEL,FSTYPE,UUID"
+alias grep="grep --exclude-dir=.terragrunt-cache"
 alias nw="$TERM &"
 alias fucking="sudo"
+alias vim=nvim
 
 # Functions
 eval "$(pyenv init -)"
 for file in "$HOME/.config/shell_functions/"*; do
 	source "$file"
 done
+
+# Base16 Shell
+export BASE16_SHELL_PATH="$HOME/.config/base16-shell"
+[ -n "$PS1" ] && \
+  [ -s "$BASE16_SHELL_PATH/profile_helper.sh" ] && \
+    source "$BASE16_SHELL_PATH/profile_helper.sh"
+

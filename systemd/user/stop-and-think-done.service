@@ -1,0 +1,12 @@
+[Unit]
+Description=Done thinking
+After=stop-and-think.service
+BindsTo=stop-and-think.service
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 90
+ExecStart=%h/.config/bin/unlock
+
+[Install]
+WantedBy=stop-and-think.service

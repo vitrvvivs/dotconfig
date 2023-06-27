@@ -2,23 +2,41 @@
 
 names="$("$HOME/.config/bin/monitor-names")"
 
+
+# XPS-13 4k
 if [[ "$names" == "N5V8C-LQ156D1" ]]; then
     xrandr --output eDP-1 --dpi 144
     xrdb -merge "$HOME/.config/xresources/1.5scaling"
 fi
-
+# XPS-15 4k, LG 4k
 if [[ "$names" == "N5V8C-LQ156D1,67YGV84JDGZS" ]]; then
-    xrandr --output eDP-1 --dpi 144 --primary
     xrandr --output DP-3 --above eDP-1 --scale 1.5x1.5 --auto
-    xrandr --output eDP-1 --pos 0x2160
+    xrandr --output eDP-1 --dpi 144 --primary --pos 0x2160
     xrdb -merge "$HOME/.config/xresources/1.5scaling"
 fi
 
+# XPS-15 1920x1200
+if [[ "$names" == "4DWVJ-156WU1" ]]; then
+    xrandr --output eDP-1 --dpi 96
+fi
+# + Asus 4k
+if [[ "$names" == "4DWVJ-156WU1,1322131231233" ]]; then
+    xrandr --output eDP-1 --dpi 120 --scale 1.5x1.5
+    xrandr --output DP-1 --auto --pos 2880x0 --primary
+    xrdb -merge "$HOME/.config/xresources/1.25scaling"
+fi
+
+
+#??
 if [[ "$names" == "JDI" ]]; then
     xrandr --output eDP-1 --dpi 120 --primary
     xrdb -merge "$HOME/.config/xresources/1.25scaling"
 fi
-
+if [[ "$names" == "JDI,LG Ultra HD" ]]; then
+    xrandr --output eDP-1 --dpi 120
+    xrandr --output DP-2 --right-of eDP-1 --scale 1.25x1.25 --auto --primary
+    xrdb -merge "$HOME/.config/xresources/1.25scaling"
+fi
 
 if [[ "$names" == "LG Ultra HD" ]]; then
     xrandr --output DP-3 --primary
