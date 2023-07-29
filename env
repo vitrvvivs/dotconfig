@@ -10,6 +10,10 @@
 #   at login
 #
 
+HISTFILE="$HOME/.bash_history"
+HISTSIZE=100000
+HISTFILESIZE=1000000
+
 export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR="nvim"
 export PAGER="less"
@@ -19,7 +23,7 @@ export GPG_TTY="$(tty)"
 # Aliases
 alias ls="ls --color=tty --group-directories-first --hide='*.pyc'"
 alias lsblk="lsblk --output NAME,SIZE,LABEL,FSTYPE,UUID"
-alias grep="grep --exclude-dir=.terragrunt-cache"
+alias grep="grep --exclude-dir=.terragrunt-cache --exclude-dir=node_modules"
 alias nw="$TERM &"
 alias fucking="sudo"
 alias vim=nvim
@@ -27,12 +31,13 @@ alias vim=nvim
 # Functions
 eval "$(pyenv init -)"
 for file in "$HOME/.config/shell_functions/"*; do
-	source "$file"
+	. "$file"
 done
 
 # Base16 Shell
 export BASE16_SHELL_PATH="$HOME/.config/base16-shell"
 [ -n "$PS1" ] && \
   [ -s "$BASE16_SHELL_PATH/profile_helper.sh" ] && \
-    source "$BASE16_SHELL_PATH/profile_helper.sh"
+    . "$BASE16_SHELL_PATH/profile_helper.sh"
 
+[ -e "$HOME/.config/private.env" ] && . "$HOME/.config/private.env"

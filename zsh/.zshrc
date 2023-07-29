@@ -15,9 +15,12 @@ function recompile-plugins() { antibody bundle < "$ZDOTDIR/.zsh_plugins" > "$ZDO
 source "$ZDOTDIR/.zsh_plugins.sh"
 
 # ZSH itself
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
 HISTFILE=~/.bash_history
-HISTSIZE=50000
-SAVEHIST=50000
+HISTSIZE=100000
+SAVEHIST=100000
+HISTTIMEFORMAT="[%F %T] "
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
 HYPHEN_INSENSITIVE="true"

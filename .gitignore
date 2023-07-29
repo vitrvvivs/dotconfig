@@ -32,6 +32,7 @@
 !/pythonlib/**/*
 !/xresources/**/*
 !/fontconfig/**
+!/tinted-theming/*
 
 !/vim/vimrc
 !/mpd/mpd.conf

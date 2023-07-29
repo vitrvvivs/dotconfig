@@ -4,42 +4,52 @@ import argparse
 from time import time, sleep
 from sys import exit, stderr
 from re import match
+from typing import Union, TypedDict, cast
 
 DEFAULT_FORMAT = '{name} {downspeed}{downunit}{ ,downloss,%} {upspeed}{upunit}{ ,uploss,%}'
 SOURCE = "/proc/net/dev"
 INTERVAL = 1.0
+PREFIX_ORDER = 'KMGTP'
 PREFIXES = {"": 1, 'K': 1024, 'M': 1024**2, 'G': 1024**3}
-WHITELIST = {'wlp59s0', 'wlp2s0', 'eth0'}
+WHITELIST = {'^wlp.*', '^eth.*'}
 
-def get_key(header_str):
+
+Status = TypedDict('Status', {'iface': str, 'tx_bytes': int, 'rx_bytes': int})
+
+
+def get_key(header: str) -> list[str]:
     """takes the second line of /proc/net/dev and turns it into a list of properties"""
     key = []
-    for prefix, attrs in zip(('i', 'rx_', 'tx_'), header_str.split('|')):
+    for prefix, attrs in zip(('i', 'rx_', 'tx_'), header.split('|')):
         key += [prefix + attr for attr in attrs.strip().split()]
     return key
 
-def line_to_status(line, key):
+def line_to_status(line: str, key: list[str]) -> Status:
     status = {k: try_int(v) for k, v in zip(key, line.strip().split())}
+    status = cast(Status, status)
     status["iface"] = status["iface"].rstrip(":")
     return status
 
-def whitelisted(string):
-    return string in WHITELIST
+def whitelisted(iface: str) -> bool:
+    for regex in WHITELIST:
+        if match(regex, iface):
+            return True
+    return False
 
 def get_status(data, key):
     return {v["iface"]: v for v in [line_to_status(line, key) for line in data]}
 
-def largest_prefix(value):
+def largest_prefix(value: int):
     if  value <= 1024:
         return ''
-    for prefix in PREFIXES.keys():
+    for prefix in PREFIX_ORDER:
         if  value > 1024:
-            value /= 1024
+            value //= 1024
         else:
             return prefix
-    return prefix
+    return '?'
 
-def try_int(x):
+def try_int(x) -> Union[int, str]:
     try:
         return int(x)
     except ValueError:
@@ -91,7 +101,7 @@ def print_format(name, values, unit="", template=DEFAULT_FORMAT, bits=False, pre
 
     print(PrefixSuffixFormatter().format(template, **details), flush=True)
 
-def follow(source, key, args):
+def follow(source: ProcFile, key: list[str], args):
     # set the baseline for comparison
     data = source.read().strip().split('\n')[2:]
     previous_status = get_status(data, key)
@@ -162,4 +172,4 @@ if __name__ == "__main__":
         follow(source, key, args)
     else:
         for index, status in get_status(data[2:], key).items():
-            print_format(status.pop("iface"), status, **vars(args))
+            print_format(status.get("iface"), status, **vars(args))

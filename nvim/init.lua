@@ -1,6 +1,21 @@
 local M = {}
 M.opts = {}
 vim.g.mapleader = '\\'
+GitRoot = vim.fn.system("git rev-parse --show-toplevel 2> /dev/null | tr -d '\\n'")
+
+function Dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. Dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
 
 --------------------------------------------------------------------------------
 -- Packages
@@ -44,7 +59,6 @@ require('lazy').setup({
         branch = 'v2.x',
         dependencies = {
             {'neovim/nvim-lspconfig'},
-            -- Autocompletion
             {'hrsh7th/nvim-cmp'},
             {'hrsh7th/cmp-nvim-lsp'},
             {'hrsh7th/cmp-buffer'},
@@ -73,7 +87,11 @@ require('lazy').setup({
     },
     -- Languages
     {'towolf/vim-helm'},
+    {'jvirtanen/vim-hcl'},
+    {'pearofducks/ansible-vim'},
+    {'mfussenegger/nvim-lint'},
     --Utilities
+    {'chaoren/vim-wordmotion'},
     {
         "nvim-telescope/telescope.nvim",
         branch = '0.1.x',
@@ -93,6 +111,65 @@ require('lazy').setup({
     },
 })
 
+-- Install language servers and linters
+local mason_packages = {
+    -- Ansible
+    "ansible-language-server",
+    "ansible-lint",
+
+    -- Bash
+    "bash-language-server",
+    "shellcheck",
+    "shfmt",
+
+    -- Lua
+    "stylua",
+    "lua-language-server",
+
+    -- Go
+    "delve",
+    "goimports",
+    "gopls",
+
+    -- JSON
+    "json-lsp",
+    "jq-lsp",
+
+    -- Markdown
+    --"marksman",
+    --"markdownlint",
+
+    -- Python
+    "autopep8",
+    "pyright",
+
+    -- Terraform
+    "terraform-ls",
+    "tflint",
+
+    -- YAML
+    "yamlfmt",
+    "yaml-language-server",
+
+    -- javascript, typescript, css, json, markdown, yaml, ...
+    --"prettierd",
+}
+local function install_mason_packaged()
+    local mr = require("mason-registry")
+    local function ensure_installed()
+        for _, package_name in ipairs(mason_packages) do
+            local p = mr.get_package(package_name)
+            if not p:is_installed() then p:install() end
+        end
+    end
+
+    if mr.refresh then
+        mr.refresh(ensure_installed)
+    else
+        ensure_installed()
+    end
+end
+
 --------------------------------------------------------------------------------
 -- Filetypes, Indentation
 --------------------------------------------------------------------------------
@@ -106,6 +183,7 @@ vim.opt.fileencoding = "utf-8"
 vim.opt.smartindent = true
 
 
+-- Soft tabs, 2 spaces
 vim.api.nvim_create_autocmd('FileType', {
     pattern = "html,htmldjango,css,json,yaml,javascript,hcl,markdown,helm",
     callback = function (_)
@@ -115,6 +193,7 @@ vim.api.nvim_create_autocmd('FileType', {
     end
 })
 
+-- Soft tabs, 4 spaces
 vim.api.nvim_create_autocmd('FileType', {
     pattern = "sh,zsh,python,coffee,php,dockerfile,java,nginx",
     callback = function (_)
@@ -124,6 +203,17 @@ vim.api.nvim_create_autocmd('FileType', {
     end
 })
 
+-- Hard tabs, 4 spaces
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = "go",
+    callback = function (_)
+        vim.opt_local.shiftwidth = 4
+        vim.opt_local.tabstop = 4
+        vim.opt_local.expandtab = true
+    end
+})
+
+-- Supports syntax folding
 vim.api.nvim_create_autocmd('FileType', {
     pattern = "go,terraform",
     callback = function (_)
@@ -489,61 +579,6 @@ M.opts.feline = {
 -- Setup LSP
 local lsp = require('lsp-zero').preset({})
 
--- Install language servers and linters
-local mason_packages = {
-    -- BASH
-    "bash-language-server",
-    "shellcheck",
-    "shfmt",
-
-    -- Lua
-    "stylua",
-    "lua-language-server",
-
-    -- Go
-    "delve",
-    "goimports",
-    "gopls",
-
-    -- JSON
-    "json-lsp",
-    "jq-lsp",
-
-    -- Markdown
-    --"marksman",
-    --"markdownlint",
-
-    -- Python
-    "autopep8",
-    "pyright",
-
-    -- Terraform
-    "terraform-ls",
-    "tflint",
-
-    -- YAML
-    "yamlfmt",
-    "yaml-language-server",
-
-    -- javascript, typescript, css, json, markdown, yaml, ...
-    --"prettierd",
-}
-local function install_mason_packaged()
-    local mr = require("mason-registry")
-    local function ensure_installed()
-        for _, package_name in ipairs(mason_packages) do
-            local p = mr.get_package(package_name)
-            if not p:is_installed() then p:install() end
-        end
-    end
-
-    if mr.refresh then
-        mr.refresh(ensure_installed)
-    else
-        ensure_installed()
-    end
-end
-
 -- disable yaml lsp for helm files
 lsp.configure('yamlls', {
     on_attach = function(client, bufnr)
@@ -552,6 +587,20 @@ lsp.configure('yamlls', {
         end
     end
 })
+
+--lsp.configure('solc', {
+--    settings = {
+--        solidity = {
+--            includePath = GitRoot,
+--            remapping = {
+--                ["@openzeppelin/"] = 'node_modules/@openzeppelin/',
+--                ["@opengsn/"] = 'packages/',
+--            }
+--        }
+--    },
+--})
+
+--require('lspconfig.configs').solidity.default_config
 
 -- fuzzy search
 M.opts.telescope = {
@@ -584,7 +633,7 @@ M.opts.copilot = {
 -- completion
 M.opts.cmp = {
     sources = {
-        { name = "copilot", group_index = 2 },
+        --{ name = "copilot", group_index = 2 },
         { name = "nvim_lsp", group_index = 2 },
         { name = "luasnip", group_index = 2 },
         { name = "buffer", group_index = 2 },
@@ -600,11 +649,32 @@ M.opts.cmp = {
 }
 
 
+-- linters
+require('lint').linters_by_ft = {
+}
+-- slow linters
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    require("lint").try_lint()
+  end,
+})
+require('lint').linters.ansible_project = {
+    cmd = 'ansible-lint',
+    cwd = GitRoot,
+    stdin = false,
+    append_fname = false,
+    args = {'--parseable', '--config-file', GitRoot..'/.ansible-lint', },
+    parser = require('lint.parser').from_errorformat('%f:%l: %m')
+}
+
 --------------------------------------------------------------------------------
 -- Keybinds
 --------------------------------------------------------------------------------
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
+
+--vim.keymap.del('n', 'q')
+vim.keymap.set('n', ';', ':')
 
 vim.g.copilot_no_mappings = true
 M.opts.cmp.mapping = {
@@ -651,19 +721,16 @@ M.opts.telescope.defaults = {
             ["<a-t>"] = function(...)
                 return require("trouble.providers.telescope").open_selected_with_trouble(...)
             end,
-            ["<a-i>"] = function() M.telescope("find_files", { no_ignore = true })() end,
-            ["<a-h>"] = function() M.telescope("find_files", { hidden = true })() end,
+
             ["<C-Down>"] = function(...) return require("telescope.actions").cycle_history_next(...) end,
             ["<C-Up>"] = function(...) return require("telescope.actions").cycle_history_prev(...) end,
-            ["<C-f>"] = function(...) return require("telescope.actions").preview_scrolling_down(...) end,
-            ["<C-b>"] = function(...) return require("telescope.actions").preview_scrolling_up(...) end,
         },
         n = {
             ["q"] = function(...) return require("telescope.actions").close(...) end,
-            ["<C-p>"] = function() M.telescope("find_files", { no_ignore = true })() end,
         },
     },
 }
+vim.keymap.set('n', '<C-p>', function() require("telescope.builtin").git_files() end)
 
 local trouble = require('trouble')
 M.opts.trouble.defaults = {
@@ -685,8 +752,8 @@ require('lsp-zero').setup()
 require("luasnip.loaders.from_vscode").lazy_load()
 require('mason').setup()
 install_mason_packaged()
-require('copilot').setup(M.opts.copilot)
-require('copilot_cmp').setup()
+--require('copilot').setup(M.opts.copilot)
+--equire('copilot_cmp').setup()
 require('cmp').setup(M.opts.cmp)
 
 require('telescope').setup(M.opts.telescope)
