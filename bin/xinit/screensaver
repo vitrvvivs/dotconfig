@@ -1,2 +1,2 @@
 #!/bin/bash
-exec xautolock -locker i3lock-fancy -time 10
+#exec xautolock -locker i3lock-fancy -time 10

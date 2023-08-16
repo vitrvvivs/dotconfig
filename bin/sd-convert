@@ -1,0 +1,14 @@
+#!/bin/zsh
+set -euo pipefail
+
+basename="${1%(.png|.jpg)}"
+old="${basename}.png"
+new="${basename}.jpg"
+
+convert "$old" -quality 95 "$new"
+
+tag_src="$old"
+gen="${basename}_gen.png"
+[[ -e "$gen" ]] && tag_src="$gen"
+
+exiftool -tagsfromfile "$tag_src" -overwrite_original '-UserComment<Parameters' "$new"

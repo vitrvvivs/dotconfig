@@ -2,8 +2,8 @@
 Description=Stop and think every 90 minutes
 
 [Timer]
-OnBootSec=90min
-OnUnitActiveSec=90min
+OnBootSec=60min
+OnUnitActiveSec=60min
 
 [Install]
 WantedBy=timers.target

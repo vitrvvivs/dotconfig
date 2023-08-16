@@ -1,1 +1,1 @@
-mpv ~/music/alarm.wav --loop=inf
+while true; do bell; sleep 3; done

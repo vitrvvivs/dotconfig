@@ -1,0 +1,9 @@
+[Unit]
+Description=generate ssh config from ansible inventory
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 %h/.config/bin/oasislabs-ansible-inventory-to-ssh-config.py
+
+[Install]
+WantedBy=default.target

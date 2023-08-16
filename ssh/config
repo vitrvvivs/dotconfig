@@ -16,6 +16,3 @@ Host testudo
 	HostName testudo
 	#ProxyJump onager
 	User root
-
-Host garden
-	User gardener
