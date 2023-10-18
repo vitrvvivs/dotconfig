@@ -5,4 +5,4 @@
 [push]
 	gpgsign = false
 [commit]
-	gpgsign = true
+	gpgsign = true    

@@ -5,8 +5,12 @@
 # but recognize that directories exists
 !/*/
 # Since an "empty" directory will be ignored, to whitelist do: '!/directory/*'
-
 !.gitignore
+
+# submodules
+!/pyenv
+!/base16-shell
+
 !/bash_profile
 !/profile
 !/env
@@ -21,6 +25,7 @@
 !/inputrc
 !/alacritty.yml
 !/user-dirs.dirs
+
 
 !/bspwm/*
 !/sxhkd/*

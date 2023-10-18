@@ -1,0 +1,6 @@
+[submodule "pyenv"]
+	path = pyenv
+	url = git@github.com:pyenv/pyenv.git
+[submodule "base16-shell"]
+	path = base16-shell
+	url = https://github.com/tinted-theming/base16-shell.git
