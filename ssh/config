@@ -3,6 +3,7 @@ Include ~/.ssh/config_auto
 SendEnv LANG
 
 Host *
+    StrictHostKeyChecking no
 	ForwardAgent yes
 
 Host aur.archlinux.org

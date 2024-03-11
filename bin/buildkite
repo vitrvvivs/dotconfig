@@ -3,18 +3,30 @@ import os
 import sys
 import requests
 
-path = sys.argv[1]
+method = sys.argv[1].upper()
+path = sys.argv[2]
 token = os.getenv("BUILDKITE_TOKEN")
 if not token:
     print("need to set BUILDKITE_TOKEN")
     sys.exit(1)
 
 headers = {"Authorization": f"Bearer {token}"}
-next_page = f"https://api.buildkite.com/{path}"
-i = 1
-while next_page:
-    response = requests.get(next_page, headers=headers)
+url = f"https://api.buildkite.com/{path}"
+
+if method == "GET":
+    next_page = url
+    i = 1
+    while next_page:
+        response = requests.get(next_page, headers=headers)
+        print(response.text)
+        next_page = response.links.get('next', {}).get('url')
+        #print(f"page: {i}", file=sys.stderr)
+        i += 1
+
+elif method == "POST":
+    headers['Content-Type'] = "application/json"
+    print(headers)
+    body = sys.argv[3]
+    response = requests.post(url, data=body, headers=headers)
+    print(response.headers)
     print(response.text)
-    next_page = response.links.get('next', {}).get('url')
-    print(f"page: {i}", file=sys.stderr)
-    i += 1

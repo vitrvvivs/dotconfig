@@ -1,2 +1,0 @@
-#!/bin/bash
-[[ -x "$HOME/.fehbg" ]] && "$HOME/.fehbg" &

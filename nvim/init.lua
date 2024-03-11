@@ -141,7 +141,6 @@ local mason_packages = {
 
     -- Python
     "autopep8",
-    "pyright",
 
     -- Terraform
     "terraform-ls",
@@ -209,7 +208,7 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function (_)
         vim.opt_local.shiftwidth = 4
         vim.opt_local.tabstop = 4
-        vim.opt_local.expandtab = true
+        vim.opt_local.expandtab = false
     end
 })
 
@@ -587,6 +586,19 @@ lsp.configure('yamlls', {
         end
     end
 })
+
+--lsp.configure("pyright", {
+--  settings = {
+--    python = {
+--      analysis = {
+--        autoSearchPaths = true,
+--        useLibraryCodeForTypes = true,
+--        diagnosticMode = 'openFilesOnly',
+--      },
+--    },
+--  },
+--})
+
 
 --lsp.configure('solc', {
 --    settings = {

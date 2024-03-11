@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+import subprocess
+from vitruvius import monitor_names
+
+
+monitor_interfaces = dict(monitor_names.all_names())
+monitors = set(monitor_interfaces.keys())
+
+configs = [
+    ( # XPS-15 1920x1200
+        ("4DWVJ-156WU1"),
+        [
+        "xrandr --output eDP-1 --dpi 96",
+        ]
+    ),
+    ( # XPS-15 1920x1200, Asus 4k
+        ("4DWVJ-156WU1", "1322131231233"),
+        [
+        "xrandr --output {4DWVJ-156WU1} --dpi 120 --scale 1.5x1.5",
+        "xrandr --output {1322131231233} --auto --pos 2880x0 --primary",
+        "xrdb -merge \"$HOME/.config/xresources/1.25scaling\"",
+        ]
+    ),
+    ( # XPS-15 1920x1200, LG 4k
+        ("4DWVJ-156WU1", "LG Ultra HD"),
+        [
+        "xrandr --output {4DWVJ-156WU1} --scale 1.5x1.5 --dpi 120 --pos 0x0",
+        "xrandr --output {LG Ultra HD} --primary --pos 2880x0",
+        "xrdb -merge \"$HOME/.config/xresources/1.25scaling\"",
+        ]
+    ),
+    ( # XPS-15 4k
+        ("N5V8C-LQ156D1",),
+        [
+        "xrandr --output {N5V8C-LQ156D1} --dpi 144",
+        "xrdb -merge \"$HOME/.config/xresources/1.5scaling\"",
+        ]
+    ),
+    (
+        ("JDI"),
+        [
+        "xrandr --output {JDI} --dpi 120 --primary",
+        "xrdb -merge \"$HOME/.config/xresources/1.25scaling\"",
+        ]
+    ),
+    (
+        ("JDI", "LG Ultra HD"),
+        [
+        "xrandr --output {JDI} --dpi 120",
+        "xrandr --output {LG Ultra HD} --right-of eDP-1 --scale 1.25x1.25 --auto --primary",
+        "xrdb -merge \"$HOME/.config/xresources/1.25scaling\"",
+        ]
+    ),
+    (
+        ("LG Ultra HD"),
+        [
+        "xrandr --output {LG Ultra HD} --primary",
+        #"xrdb -merge \"$HOME/.config/xresources/1.25scaling\"",
+        ]
+    ),
+]
+
+if __name__ == "__main__":
+    for key, commands in configs:
+        if monitors == set(key):
+            print(monitor_interfaces)
+            for command in commands:
+                for monitor, interface in monitor_interfaces.items():
+                    command = command.replace('{' + monitor + '}', interface)
+                print(command)
+                subprocess.run(command, shell=True)

@@ -110,6 +110,10 @@ ctrl + alt + {Down,Left,Right}
 # Launch shortcuts
 #
 
+Pause
+    echo | nc -cu localhost 3000
+    ssh onager ./discord-toggle-mic.exe
+
 super + Return
 	alacritty
 

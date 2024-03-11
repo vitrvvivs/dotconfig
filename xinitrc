@@ -8,7 +8,7 @@ systemctl --user import-environment DISPLAY XAUTHORITY
 
 # run hardware-specific configuration scripts
 for script in "$HOME"/.config/bin/xinit/*; do
-    bash "$script" &
+    "$script"
 done
 
 # Start the Window Manager
